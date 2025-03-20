@@ -23,6 +23,16 @@ On a choisi de générer un fichier WAV pour gagner en fluidité et en maniabili
 
 > Idée : reprendre l'idée des notations du langage ABC et au lieu d'en faire une partition, en faire un fichier audio ?
 
+## Format de fichier
+
+`my_file.melo`, notation anglo-saxone
+
+```melo
+Signature : 4/4
+BPM : 120
+(C4, C4, C4, D4) (E4, D4) (C4, E4, D4, D4) (C4)
+
+```
 
 # Interpreteur
 
