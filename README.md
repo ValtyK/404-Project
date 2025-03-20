@@ -22,3 +22,19 @@ On a choisi de générer un fichier WAV pour gagner en fluidité et en maniabili
 - [ABC (notation)](https://fr.wikipedia.org/wiki/ABC_(notation)) - Langage de prog de musique !
 
 > Idée : reprendre l'idée des notations du langage ABC et au lieu d'en faire une partition, en faire un fichier audio ?
+
+
+# Interpreteur
+
+L'idee de base est de lire un fichier avec une syntaxe arbitraire afin de generer un "fichier.wav".
+
+## Grammaire 
+- **notes** : {"A", "B", "C", "D", "E", "F", "G"}
+- **nom de variable** : {"a", "b",...,"z"}
+
+## Exemples de base d'un fichier lu par notre interpreteur :
+
+**Suite de notes** 
+```
+C C C D E D C E D D C
+```
