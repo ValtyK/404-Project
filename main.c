@@ -10,7 +10,7 @@ int main() {
     }
 
     // Placeholder pour l'en-tête WAV
-    write_wav_header(file, SAMPLE_RATE * 10);  // 10 secondes max
+    write_wav_header(file, SAMPLE_RATE * 30);  // 10 secondes max
 
     // Melodie : Do Do Do Re Mi Re Do Mi Re Re Do
     // Note melody_1[] = {
@@ -24,7 +24,19 @@ int main() {
         {"DO5", 0.3}, {"DO5", 0.3}, {"DO5", 0.3},
         {"RE5", 0.3}, {"MI5", 0.6}, {"RE5", 0.6},
         {"DO5", 0.3}, {"MI5", 0.3}, {"RE5", 0.3},
-        {"RE5", 0.3}, {"DO5", 0.6}
+        {"RE5", 0.3}, {"DO5", 1.2},
+        {"DO5", 0.3}, {"DO5", 0.3}, {"DO5", 0.3},
+        {"RE5", 0.3}, {"MI5", 0.6}, {"RE5", 0.6},
+        {"DO5", 0.3}, {"MI5", 0.3}, {"RE5", 0.3},
+        {"RE5", 0.3}, {"DO5", 1.2},
+        {"RE5", 0.3}, {"RE5", 0.3}, {"RE5", 0.3},
+        {"RE5", 0.3}, {"LA4", 0.6}, {"LA4", 0.6},
+        {"RE5", 0.3}, {"DO5", 0.3}, {"SI4", 0.3},
+        {"LA4", 0.3}, {"SOL4", 1.2},
+        {"DO5", 0.3}, {"DO5", 0.3}, {"DO5", 0.3},
+        {"RE5", 0.3}, {"MI5", 0.6}, {"RE5", 0.6},
+        {"DO5", 0.3}, {"MI5", 0.3}, {"RE5", 0.3},
+        {"RE5", 0.3}, {"DO5", 1.2}
     };
 
     Note melody_2[] = {
@@ -43,15 +55,15 @@ int main() {
         {"DO6", 0.2}
     };
 
-    size_t melody_size = sizeof(melody_2) / sizeof(Note);
+    size_t melody_size = sizeof(melody_1) / sizeof(Note);
     
     for (size_t i = 0; i < melody_size; i++) {
 
-        double frequency = note_to_frequency(melody_2[i].name);
+        double frequency = note_to_frequency(melody_1[i].name);
 
-        printf("[%s] -> Frequence : %.2f Hz\n", melody_2[i].name, frequency);
+        printf("[%s] -> Frequence : %.2f Hz\n", melody_1[i].name, frequency);
 
-        play_sine_wave(file, frequency, melody_2[i].duration);
+        play_sine_wave(file, frequency, melody_1[i].duration);
 
     }
 
