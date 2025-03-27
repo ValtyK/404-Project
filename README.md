@@ -41,13 +41,13 @@ L'idee de base est de lire un fichier avec une syntaxe arbitraire afin de genere
 ## Alphabet 
 - **notes** : {"A", "B", "C", "D", "E", "F", "G"}
 - **alteration** : {"#"}
-- **nom de variable** : {"a", "b",...,"z"}
+- **lettres minuscules** : {"a", "b",...,"z"}
 - **chiffres** : {1,2,3,4,5,6,7,8,9}
-- 
+- **type notes** : {"!",
 
-## Exemples de base d'un fichier lu par notre interpreteur :
+## Exemple 1 : Au clair de la lune
 
 **Suite de notes** 
 ```
-C C C D E D C E D D C
+n(C C C D) b(E D) n(C E D D C
 ```
