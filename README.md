@@ -38,7 +38,7 @@ BPM : 120
 
 L'idee de base est de lire un fichier avec une syntaxe arbitraire afin de generer un "fichier.wav".
 
-## Grammaire 
+## Alphabet 
 - **notes** : {"A", "B", "C", "D", "E", "F", "G"}
 - **nom de variable** : {"a", "b",...,"z"}
 
