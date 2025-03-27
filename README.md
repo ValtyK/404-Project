@@ -43,11 +43,10 @@ L'idee de base est de lire un fichier avec une syntaxe arbitraire afin de genere
 - **alteration** : {"#"}
 - **lettres minuscules** : {"a", "b",...,"z"}
 - **chiffres** : {1,2,3,4,5,6,7,8,9}
-- **type notes** : {"!",
 
 ## Exemple 1 : Au clair de la lune
 
 **Suite de notes** 
 ```
-n(C C C D) b(E D) n(C E D D C
+n(C C C D) b(E D) n(C E D D C)
 ```
