@@ -40,7 +40,10 @@ L'idee de base est de lire un fichier avec une syntaxe arbitraire afin de genere
 
 ## Alphabet 
 - **notes** : {"A", "B", "C", "D", "E", "F", "G"}
+- **alteration** : {"#"}
 - **nom de variable** : {"a", "b",...,"z"}
+- **chiffres** : {1,2,3,4,5,6,7,8,9}
+- 
 
 ## Exemples de base d'un fichier lu par notre interpreteur :
 
