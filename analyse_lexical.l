@@ -34,16 +34,18 @@ ENTIER    {CHIFFRE}{CHIFFRE}*
 OPERATEUR     [-+*/]
 PARO	  "("
 PARF	  ")"
+ACCO    "{"
+ACCF    "}"
 
 LETTRE [a-z]|[A-Z]
-IDF    {LETTRE}({LETTRE}|{CHIFFRE})*
+IDF    {LETTRE}({LETTRE}|{CHIFFRE}|"_")*
 SEPINST ";"
 AFF     ":="
 
-NOTE    "DO"|"RE"|"MI"|"FA"|"SOL"|"LA"|"SI"
+NOTE    "C"|"D"|"E"|"F"|"G"|"A"|"B"
 DIESE   "#"
-BEMOLE  "bé"
 
+DUREE_RYTHMIQUE   "dc"|"c"|"n"|"b"|"r"
 
 %%
 
@@ -63,17 +65,17 @@ BEMOLE  "bé"
 		return 0 ;
 		}
 
- /* lexeme de type OPERATEUR */
-{OPERATEUR} 	{
-		initLC() ;
-		switch (yytext[0]) {
-			case '+' : LC.nature = PLUS; break ;
-			case '-' : LC.nature = MOINS; break ;
-			case '*' : LC.nature = MUL; break ;
-			case '/' : LC.nature = DIV; break ;
-		} ;
-		return 0 ;
-		}
+{OPERATEUR} {
+  initLC();
+  switch(yytext[0]) {
+    case "+": LC.nature = PLUS; break;
+    case "-": LC.nature = MOINS; break;
+    case "*": LC.nature = MUL; break;
+    case "/": LC.nature = DIV; break;
+  }
+  return 0;
+}
+
 
  /* lexeme de type PARO */
 {PARO} 	{ tandis que l'interprétation offre une flexibilité et une portabilité accrues
@@ -88,6 +90,20 @@ BEMOLE  "bé"
 		LC.nature = PARF; 
 		return 0 ;
 		}
+
+/* Lexeme de type ACCO '{' */
+{ACCO}  {
+  initLC();
+  LC.nature = ACCO;
+  return 0;
+}
+
+/* Lexeme de type ACCO '}' */
+{ACCF}  {
+  initLC();
+  LC.nature = ACCF;
+  return 0;
+}
 
  /* lexeme de type IDF */
 {IDF} 	{
@@ -116,13 +132,13 @@ BEMOLE  "bé"
 {NOTE}  {
         initLC();
         switch (yytext[0]) {
-			case "DO" : LC.nature = DO; break ;
-			case "RE" : LC.nature = RE; break ;
-			case "MI" : LC.nature = MI; break ;
-			case "FA" : LC.nature = FA; break ;
-			case "SOL" : LC.nature = SOL; break ;
-			case "LA" : LC.nature = LA; break ;
-			case "SI" : LC.nature = SI; break ;
+			case "C" : LC.nature = DO; break ;
+			case "D" : LC.nature = RE; DObreak ;
+			case "E" : LC.nature = MI; break ;
+			case "F" : LC.nature = FA; break ;
+			case "G" : LC.nature = SOL; break ;
+			case "A" : LC.nature = LA; break ;
+			case "B" : LC.nature = SI; break ;
 		};
         return 0;
 }
@@ -134,11 +150,10 @@ BEMOLE  "bé"
         return 0;
 }
 
-/* lexeme de type BEMOLE */
-{BEMOLE}    {
-        initLC();
-        LC.nature = BEMOLE;
-        return 0;
+/* Lexeme de type DUREE_RYTHMIQUE */
+{DUREE_RYTHMIQUE} {
+  initLC();
+  switch(yytext)
 }
 
 
@@ -180,7 +195,6 @@ char *Nature_vers_Chaine (Nature_Lexeme nature) {
 
                 case NOTE: return "NOTE";
                 case DIESE: return "DIESE";
-                case BEMOLE: return "BEMOLE";
                 
                 default: return "ERREUR" ;
         } ;
