@@ -1,7 +1,3 @@
-
-  /* Spécification de l'analyse lexicale de la V1 de la calculette
-         pour l'outil flex */
-
 %{
 
   /* types et variables utlisés par l'analyseur */
@@ -68,17 +64,17 @@ DUREE_RYTHMIQUE   "dc"|"c"|"n"|"b"|"r"
 {OPERATEUR} {
   initLC();
   switch(yytext[0]) {
-    case "+": LC.nature = PLUS; break;
-    case "-": LC.nature = MOINS; break;
-    case "*": LC.nature = MUL; break;
-    case "/": LC.nature = DIV; break;
-  }
+  case '+': LC.nature = PLUS; break;
+  case '-': LC.nature = MOINS; break;
+  case '*': LC.nature = MUL; break;
+  case '/': LC.nature = DIV; break;
+}
   return 0;
 }
 
 
  /* lexeme de type PARO */
-{PARO} 	{ tandis que l'interprétation offre une flexibilité et une portabilité accrues
+{PARO} 	{ 
 		initLC() ;
 		LC.nature = PARO; 
 		return 0 ;
@@ -91,14 +87,14 @@ DUREE_RYTHMIQUE   "dc"|"c"|"n"|"b"|"r"
 		return 0 ;
 		}
 
-/* Lexeme de type ACCO '{' */
-{ACCO}  {
-  initLC();
-  LC.nature = ACCO;
-  return 0;
-}
+ /* Lexeme de type ACCO */
+{ACCO} 	{
+		initLC() ;
+		LC.nature = ACCO;
+		return 0 ;
+		}
 
-/* Lexeme de type ACCO '}' */
+ /* Lexeme de type ACCO */
 {ACCF}  {
   initLC();
   LC.nature = ACCF;
@@ -128,32 +124,38 @@ DUREE_RYTHMIQUE   "dc"|"c"|"n"|"b"|"r"
 
 
 
-/* lexeme de type NOTE */
-{NOTE}  {
-        initLC();
-        switch (yytext[0]) {
-			case "C" : LC.nature = DO; break ;
-			case "D" : LC.nature = RE; DObreak ;
-			case "E" : LC.nature = MI; break ;
-			case "F" : LC.nature = FA; break ;
-			case "G" : LC.nature = SOL; break ;
-			case "A" : LC.nature = LA; break ;
-			case "B" : LC.nature = SI; break ;
-		};
-        return 0;
-}
+ /* lexeme de type NOTE */
+{NOTE} 	{
+		initLC() ;
+		switch (yytext[0]) {
+			case 'C' : LC.nature = C; break ;
+			case 'D' : LC.nature = D; break ;
+			case 'E' : LC.nature = E; break ;
+			case 'F' : LC.nature = F; break ;
+      case 'G' : LC.nature = G; break ;
+      case 'A' : LC.nature = A; break ;
+      case 'B' : LC.nature = B; break ;
+		} ;
+		return 0 ;
+		}
 
-/* lexeme de type DIESE */
+ /* lexeme de type DIESE */
 {DIESE} {
         initLC();
         LC.nature = DIESE;
         return 0;
 }
 
-/* Lexeme de type DUREE_RYTHMIQUE */
+ /* Lexeme de type DUREE_RYTHMIQUE */
 {DUREE_RYTHMIQUE} {
   initLC();
-  switch(yytext)
+  if (strcmp(yytext, "dc") == 0) LC.nature = D_CROCHE;
+  else if (strcmp(yytext, "c") == 0) LC.nature = CROCHE;
+  else if (strcmp(yytext, "n") == 0) LC.nature = NOIR;
+  else if (strcmp(yytext, "b") == 0) LC.nature = BLANCHE;
+  else if (strcmp(yytext, "r") == 0) LC.nature = RONDE;
+
+  return 0;
 }
 
 
@@ -193,7 +195,14 @@ char *Nature_vers_Chaine (Nature_Lexeme nature) {
                 case AFF: return "AFF" ;
                 case FIN_SEQUENCE: return "FIN_SEQUENCE" ;
 
-                case NOTE: return "NOTE";
+                case C: return "DO";
+                case D: return "RE";
+                case E: return "MI";
+                case F: return "FA";
+                case G: return "SOL";
+                case A: return "LA";
+                case B: return "SI";
+
                 case DIESE: return "DIESE";
                 
                 default: return "ERREUR" ;
