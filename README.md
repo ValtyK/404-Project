@@ -23,18 +23,30 @@ On a choisi de générer un fichier WAV pour gagner en fluidité et en maniabili
 
 > Idée : reprendre l'idée des notations du langage ABC et au lieu d'en faire une partition, en faire un fichier audio ?
 
+## Format de fichier
+
+`my_file.melo`, notation anglo-saxone
+
+```melo
+Signature : 4/4
+BPM : 120
+(C4, C4, C4, D4) (E4, D4) (C4, E4, D4, D4) (C4)
+
+```
 
 # Interpreteur
 
 L'idee de base est de lire un fichier avec une syntaxe arbitraire afin de generer un "fichier.wav".
 
-## Grammaire 
+## Alphabet 
 - **notes** : {"A", "B", "C", "D", "E", "F", "G"}
-- **nom de variable** : {"a", "b",...,"z"}
+- **alteration** : {"#"}
+- **lettres minuscules** : {"a", "b",...,"z"}
+- **chiffres** : {1,2,3,4,5,6,7,8,9}
 
-## Exemples de base d'un fichier lu par notre interpreteur :
+## Exemple 1 : Au clair de la lune
 
 **Suite de notes** 
 ```
-C C C D E D C E D D C
+n(C C C D) b(E D) n(C E D D C)
 ```
