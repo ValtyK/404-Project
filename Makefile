@@ -10,10 +10,10 @@ CFLAGS = -Wall -Wextra -O2
 LDFLAGS = -lm
 
 # variable pour FLEX
-LEX = analyse_lexical
+LEX = analyse_lexicale
 
 # fichiers sources
-SRCS = analyse_lexical.c main.c musique.c
+SRCS = analyse_lexicale.c main.c musique.c
 
 # liste des fichiers objets en remplacant .c par .o
 OBJS = $(SRCS:.c=.o)
