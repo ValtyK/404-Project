@@ -156,11 +156,11 @@ WHILE 'while'
 {DUREE_RYTHMIQUE} {
   initLC();
   switch (yytext[0]) {
-    case 'dc': LC.nature = DOUBLE_CROCHE; break;
+    case 'dc': LC.nature = D_CROCHE; break;
     case 'c': LC.nature = CROCHE; break;
     case 'n': LC.nature = NOIR; break;
     case 'b': LC.nature = BLANCHE; break;
-    case 'r'; LC.nature = RONDE; break;
+    case 'r': LC.nature = RONDE; break;
   }
   return 0;
 }
@@ -232,7 +232,13 @@ char *Nature_vers_Chaine (Nature_Lexeme nature) {
     case B: return "SI";
 
     case DIESE: return "DIESE";
-    
+
+    case D_CROCHE: return "DOUBLE_CROCHE";
+    case CROCHE: return "CROCHE";
+    case NOIR: return "NOIR";
+    case BLANCHE: return "BLANCHE";
+    case RONDE: return "RONDE";
+
     case ACCORD: return "ACCORD";
 
     case PLAY: return "play";

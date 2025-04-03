@@ -1,6 +1,6 @@
-#line 1 "analyse_lexical.c"
+#line 1 "analyse_lexicale.c"
 
-#line 3 "analyse_lexical.c"
+#line 3 "analyse_lexicale.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -521,8 +521,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "analyse_lexical.l"
-#line 2 "analyse_lexical.l"
+#line 1 "analyse_lexicale.l"
+#line 2 "analyse_lexicale.l"
 
   /* types et variables utlisés par l'analyseur */
 
@@ -541,10 +541,10 @@ char *yytext;
 		LC.colonne=numcol;
 		numcol=numcol+yyleng;
 	      } ;
-#line 544 "analyse_lexical.c"
-#line 26 "analyse_lexical.l"
+#line 544 "analyse_lexicale.c"
+#line 26 "analyse_lexicale.l"
  /* expressions régulières définissant les catégories lexicales */
-#line 547 "analyse_lexical.c"
+#line 547 "analyse_lexicale.c"
 
 #define INITIAL 0
 
@@ -761,13 +761,13 @@ YY_DECL
 		}
 
 	{
-#line 53 "analyse_lexical.l"
+#line 53 "analyse_lexicale.l"
 
 
   /* actions effectuées par l'analyseur lors de la reconnaissance d'un lexème */
 
  /* Pour les séparateurs on met juste à jour la valeur de numcol */
-#line 770 "analyse_lexical.c"
+#line 770 "analyse_lexicale.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -836,24 +836,24 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 58 "analyse_lexical.l"
+#line 58 "analyse_lexicale.l"
 {numcol = numcol + 1;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 59 "analyse_lexical.l"
+#line 59 "analyse_lexicale.l"
 {numcol = numcol + 4;}
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 60 "analyse_lexical.l"
+#line 60 "analyse_lexicale.l"
 {numcol = 1;}
 	YY_BREAK
 /* lexeme de type ENTIER */
 case 4:
 YY_RULE_SETUP
-#line 64 "analyse_lexical.l"
+#line 64 "analyse_lexicale.l"
 {
 		initLC() ;
 		LC.nature = ENTIER; 
@@ -863,7 +863,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 71 "analyse_lexical.l"
+#line 71 "analyse_lexicale.l"
 {
   initLC();
   switch(yytext[0]) {
@@ -878,7 +878,7 @@ YY_RULE_SETUP
 /* lexeme de type PARO */
 case 6:
 YY_RULE_SETUP
-#line 84 "analyse_lexical.l"
+#line 84 "analyse_lexicale.l"
 { 
 		initLC() ;
 		LC.nature = PARO; 
@@ -888,7 +888,7 @@ YY_RULE_SETUP
 /* lexeme de type PARF */
 case 7:
 YY_RULE_SETUP
-#line 91 "analyse_lexical.l"
+#line 91 "analyse_lexicale.l"
 {
 		initLC() ;
 		LC.nature = PARF; 
@@ -898,7 +898,7 @@ YY_RULE_SETUP
 /* Lexeme de type ACCO */
 case 8:
 YY_RULE_SETUP
-#line 98 "analyse_lexical.l"
+#line 98 "analyse_lexicale.l"
 {
 		initLC() ;
 		LC.nature = ACCO;
@@ -908,7 +908,7 @@ YY_RULE_SETUP
 /* Lexeme de type ACCO */
 case 9:
 YY_RULE_SETUP
-#line 105 "analyse_lexical.l"
+#line 105 "analyse_lexicale.l"
 {
   initLC();
   LC.nature = ACCF;
@@ -918,7 +918,7 @@ YY_RULE_SETUP
 /* lexeme de type IDF */
 case 10:
 YY_RULE_SETUP
-#line 112 "analyse_lexical.l"
+#line 112 "analyse_lexicale.l"
 {
 		initLC() ;
 		LC.nature = IDF; 
@@ -928,7 +928,7 @@ YY_RULE_SETUP
 /* lexeme de type SEPINST */
 case 11:
 YY_RULE_SETUP
-#line 119 "analyse_lexical.l"
+#line 119 "analyse_lexicale.l"
 {
 		initLC() ;
 		LC.nature = SEPINST; 
@@ -938,7 +938,7 @@ YY_RULE_SETUP
 /* lexeme de type AFF */
 case 12:
 YY_RULE_SETUP
-#line 126 "analyse_lexical.l"
+#line 126 "analyse_lexicale.l"
 {
 		initLC() ;
 		LC.nature = AFF; 
@@ -948,7 +948,7 @@ YY_RULE_SETUP
 /* lexeme de type NOTE */
 case 13:
 YY_RULE_SETUP
-#line 135 "analyse_lexical.l"
+#line 135 "analyse_lexicale.l"
 {
 		initLC() ;
 		switch (yytext[0]) {
@@ -966,7 +966,7 @@ YY_RULE_SETUP
 /* lexeme de type DIESE */
 case 14:
 YY_RULE_SETUP
-#line 150 "analyse_lexical.l"
+#line 150 "analyse_lexicale.l"
 {
         initLC();
         LC.nature = DIESE;
@@ -976,15 +976,15 @@ YY_RULE_SETUP
 /* Lexeme de type DUREE_RYTHMIQUE */
 case 15:
 YY_RULE_SETUP
-#line 157 "analyse_lexical.l"
+#line 157 "analyse_lexicale.l"
 {
   initLC();
   switch (yytext[0]) {
-    case 'dc': LC.nature = DOUBLE_CROCHE; break;
+    case 'dc': LC.nature = D_CROCHE; break;
     case 'c': LC.nature = CROCHE; break;
     case 'n': LC.nature = NOIR; break;
     case 'b': LC.nature = BLANCHE; break;
-    case 'r'; LC.nature = RONDE; break;
+    case 'r': LC.nature = RONDE; break;
   }
   return 0;
 }
@@ -992,7 +992,7 @@ YY_RULE_SETUP
 /* Lexeme de type ACCORD */
 case 16:
 YY_RULE_SETUP
-#line 170 "analyse_lexical.l"
+#line 170 "analyse_lexicale.l"
 {
   initLC();
   LC.nature = ACCORD;
@@ -1002,7 +1002,7 @@ YY_RULE_SETUP
 /* Lexeme du mot-clé "play" */
 case 17:
 YY_RULE_SETUP
-#line 178 "analyse_lexical.l"
+#line 178 "analyse_lexicale.l"
 {
   initLC();
   LC.nature = PLAY;
@@ -1012,7 +1012,7 @@ YY_RULE_SETUP
 /* Lexeme du mot-clé "while" */
 case 18:
 YY_RULE_SETUP
-#line 185 "analyse_lexical.l"
+#line 185 "analyse_lexicale.l"
 {
   initLC();
   LC.nature = WHILE;
@@ -1021,7 +1021,7 @@ YY_RULE_SETUP
 	YY_BREAK
 /* lexeme de type FIN_DE_SEQUENCE  */
 case YY_STATE_EOF(INITIAL):
-#line 192 "analyse_lexical.l"
+#line 192 "analyse_lexicale.l"
 {
 		initLC() ;	
 		LC.nature=FIN_SEQUENCE ; 
@@ -1031,7 +1031,7 @@ case YY_STATE_EOF(INITIAL):
 /* Tous les autres cas  sont des erreurs lexicales  ...  */
 case 19:
 YY_RULE_SETUP
-#line 202 "analyse_lexical.l"
+#line 202 "analyse_lexicale.l"
 {
 		initLC() ;	
 		LC.nature=ERREUR ;
@@ -1040,10 +1040,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 208 "analyse_lexical.l"
+#line 208 "analyse_lexicale.l"
 ECHO;
 	YY_BREAK
-#line 1046 "analyse_lexical.c"
+#line 1046 "analyse_lexicale.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2058,7 +2058,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 208 "analyse_lexical.l"
+#line 208 "analyse_lexicale.l"
 
 
 	/* fonctions auxilliaires fournies/utilisées par l'analyseur */
@@ -2087,7 +2087,13 @@ char *Nature_vers_Chaine (Nature_Lexeme nature) {
     case B: return "SI";
 
     case DIESE: return "DIESE";
-    
+
+    case D_CROCHE: return "DOUBLE_CROCHE";
+    case CROCHE: return "CROCHE";
+    case NOIR: return "NOIR";
+    case BLANCHE: return "BLANCHE";
+    case RONDE: return "RONDE";
+
     case ACCORD: return "ACCORD";
 
     case PLAY: return "play";

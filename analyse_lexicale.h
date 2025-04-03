@@ -20,6 +20,10 @@ typedef enum
 
 typedef enum
 {
+    PLUS,         // +
+    MOINS,        // -
+    MUL,          // *
+    DIV,          // /
     ENTIER,       // sequence de chiffres
     PARO,         // (
     PARF,         // )
@@ -37,7 +41,9 @@ typedef enum
     G,            // SOL
     A,            // LA
     B,            // SI
+    DIESE,
     SEPMESURE,    // | séparateur de mesure
+
 // Durée rythmique
     D_CROCHE,   //dc
     CROCHE,  // c
