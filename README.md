@@ -34,11 +34,12 @@ BPM : 120
 
 ```
 
-# Interpreteur
+## Interpreteur
 
 L'idee de base est de lire un fichier avec une syntaxe arbitraire afin de generer un "fichier.wav".
 
-## Alphabet 
+## Alphabet
+
 - **notes** : {"A", "B", "C", "D", "E", "F", "G"}
 - **alteration** : {"#"}
 - **lettres minuscules** : {"a", "b",...,"z"}
@@ -46,7 +47,6 @@ L'idee de base est de lire un fichier avec une syntaxe arbitraire afin de genere
 
 ## Exemple 1 : Au clair de la lune
 
-**Suite de notes** 
-```
+```melo
 n(C C C D) b(E D) n(C E D D C)
 ```
