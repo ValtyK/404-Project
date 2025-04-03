@@ -1,11 +1,12 @@
 #include "musique.h"
+#include <stdio.h>
 
-int main() {
+int main(int argc, char ** argv) {
 
-    FILE *file = fopen("musique.wav", "wb");
+    FILE *file = fopen(argv[1], "wb");
     
     if (!file) {
-        perror("Erreur : impossible d'ouvrir musique.wav");
+        fprintf(stderr, "Erreur : impossible d'ouvrir %s", argv[1]);
         return 1;
     }
 
