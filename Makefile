@@ -1,35 +1,18 @@
 CC = gcc
-
-# Options de compil :
-# -Wall      : avertissements courants
-# -Wextra    : avertissements supplémentaires
-# -O2        : Opti du code pour meilleures perf
 CFLAGS = -Wall -Wextra -O2
-
-# Biblio à lier (math.h nécessite -lm)
 LDFLAGS = -lm
 
-# fichiers sources
 SRCS = main.c musique.c
-
-# liste des fichiers objets en remplacant .c par .o
 OBJS = $(SRCS:.c=.o)
-
-# Nom de l'executable final
 EXEC = musique
 
-# Regle principale : compilation du programme
 all: $(EXEC)
 
-# créer l'executable
 $(EXEC): $(OBJS)
-    $(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
 
-# compiler chaque fichier .c en .o
-# (générique et s'applique à tous les fichiers sources)
 %.o: %.c musique.h
-    $(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# nettoyer les fichiers générés (executable, objets, fichier WAV)
 clean:
-    rm -f $(OBJS) $(EXEC) musique.wav
+	rm -f $(OBJS) $(EXEC) musique.wav
