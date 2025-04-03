@@ -9,11 +9,15 @@ CFLAGS = -Wall -Wextra -O2
 # Biblio à lier (math.h nécessite -lm)
 LDFLAGS = -lm
 
+# differents chemin des fichiers
+LEX_PATH = lexique
+WAV_PATH = wav
+
 # variable pour FLEX
-LEX = analyse_lexicale
+LEX = $(LEX_PATH)/analyse_lexicale
 
 # fichiers sources
-SRCS = analyse_lexicale.c main.c musique.c
+SRCS = $(LEX).c main.c musique.c
 
 # liste des fichiers objets en remplacant .c par .o
 OBJS = $(SRCS:.c=.o)
