@@ -9,33 +9,32 @@ CFLAGS = -Wall -Wextra -O2
 # Biblio à lier (math.h nécessite -lm)
 LDFLAGS = -lm
 
-# variable pour FLEX
-LEX = analyse_lexical
-
 # fichiers sources
-SRCS = analyse_lexical.c main.c musique.c
+SRCS = main.c musique.c $(LEX).c
 
 # liste des fichiers objets en remplacant .c par .o
 OBJS = $(SRCS:.c=.o)
 
+# variable pour FLEX
+LEX = analyse_lexical
 
 # Nom de l'executable final
 EXEC = musique
 
+# crée le .c d'analyse lexicale
+$(LEX).c: $(LEX).l 
+	flex -o $(LEX).c $(LEX).l
+
 # Regle principale : compilation du programme
-all: $(LEX).c $(EXEC)
+all: $(EXEC)
 
 # créer l'executable
 $(EXEC): $(OBJS)
 	$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
 
-# crée le .c d'analyse lexicale
-$(LEX).c: $(LEX).l 
-	flex -o $@ $<
-
 # compiler chaque fichier .c en .o
 # (générique et s'applique à tous les fichiers sources)
-%.o: %.c
+%.o: %.c musique.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # nettoyer les fichiers générés (executable, objets, fichier WAV)

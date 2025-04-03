@@ -502,7 +502,7 @@ char *yytext;
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "analyse_lexicale.h"
+#include "analyse_lexical.h"
 
    unsigned int numcol=1 ; // numero de colonne courant
 
