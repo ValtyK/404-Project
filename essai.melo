@@ -1,5 +1,6 @@
 ---
-Authors: Tavib & MaThEo & Vlnaeitn
+Name: Ma musique de ZINZIN
+Authors: Tavib & MaTttThéEau & Vlnaeitn
 Date: aozidgyauzdhg 12 caca
 ---
 Signature: 4/4
@@ -35,6 +36,5 @@ while (n < 4) {
 
     n = n + 1
 }
-
 
 /* Idée : afficher la melo finale apres interpretation dans le terminal */
