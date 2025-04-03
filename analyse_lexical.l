@@ -38,10 +38,10 @@ IDF    {LETTRE}({LETTRE}|{CHIFFRE}|"_")*
 SEPINST ";"
 AFF     ":="
 
-NOTE    "C"|"D"|"E"|"F"|"G"|"A"|"B"
+NOTE    'C'|'D'|'E'|'F'|'G'|'A'|'B'
 DIESE   "#"
 
-DUREE_RYTHMIQUE   "dc"|"c"|"n"|"b"|"r"
+DUREE_RYTHMIQUE   'dc'|'c'|'n'|'b'|'r'
 
 %%
 
@@ -149,12 +149,13 @@ DUREE_RYTHMIQUE   "dc"|"c"|"n"|"b"|"r"
  /* Lexeme de type DUREE_RYTHMIQUE */
 {DUREE_RYTHMIQUE} {
   initLC();
-  if (strcmp(yytext, "dc") == 0) LC.nature = D_CROCHE;
-  else if (strcmp(yytext, "c") == 0) LC.nature = CROCHE;
-  else if (strcmp(yytext, "n") == 0) LC.nature = NOIR;
-  else if (strcmp(yytext, "b") == 0) LC.nature = BLANCHE;
-  else if (strcmp(yytext, "r") == 0) LC.nature = RONDE;
-
+  switch (yytext[0]) {
+    case 'dc': LC.nature = DOUBLE_CROCHE; break;
+    case 'c': LC.nature = CROCHE; break;
+    case 'n': LC.nature = NOIR; break;
+    case 'b': LC.nature = BLANCHE; break;
+    case 'r'; LC.nature = RONDE; break;
+  }
   return 0;
 }
 
