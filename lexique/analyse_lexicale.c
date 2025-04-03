@@ -1,6 +1,6 @@
-#line 1 "analyse_lexical.c"
+#line 1 "lexique/analyse_lexicale.c"
 
-#line 3 "analyse_lexical.c"
+#line 3 "lexique/analyse_lexicale.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -495,8 +495,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "analyse_lexical.l"
-#line 2 "analyse_lexical.l"
+#line 1 "lexique/analyse_lexicale.l"
+#line 2 "lexique/analyse_lexicale.l"
 
   /* types et variables utlisés par l'analyseur */
 
@@ -515,10 +515,10 @@ char *yytext;
 		LC.colonne=numcol;
 		numcol=numcol+yyleng;
 	      } ;
-#line 518 "analyse_lexical.c"
-#line 26 "analyse_lexical.l"
+#line 518 "lexique/analyse_lexicale.c"
+#line 26 "lexique/analyse_lexicale.l"
  /* expressions régulières définissant les catégories lexicales */
-#line 521 "analyse_lexical.c"
+#line 521 "lexique/analyse_lexicale.c"
 
 #define INITIAL 0
 
@@ -735,13 +735,13 @@ YY_DECL
 		}
 
 	{
-#line 47 "analyse_lexical.l"
+#line 47 "lexique/analyse_lexicale.l"
 
 
   /* actions effectuées par l'analyseur lors de la reconnaissance d'un lexème */
 
  /* Pour les séparateurs on met juste à jour la valeur de numcol */
-#line 744 "analyse_lexical.c"
+#line 744 "lexique/analyse_lexicale.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -810,24 +810,24 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 52 "analyse_lexical.l"
+#line 52 "lexique/analyse_lexicale.l"
 {numcol = numcol + 1;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 53 "analyse_lexical.l"
+#line 53 "lexique/analyse_lexicale.l"
 {numcol = numcol + 4;}
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 54 "analyse_lexical.l"
+#line 54 "lexique/analyse_lexicale.l"
 {numcol = 1;}
 	YY_BREAK
 /* lexeme de type ENTIER */
 case 4:
 YY_RULE_SETUP
-#line 58 "analyse_lexical.l"
+#line 58 "lexique/analyse_lexicale.l"
 {
 		initLC() ;
 		LC.nature = ENTIER; 
@@ -837,7 +837,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 65 "analyse_lexical.l"
+#line 65 "lexique/analyse_lexicale.l"
 {
   initLC();
   switch(yytext[0]) {
@@ -852,7 +852,7 @@ YY_RULE_SETUP
 /* lexeme de type PARO */
 case 6:
 YY_RULE_SETUP
-#line 78 "analyse_lexical.l"
+#line 78 "lexique/analyse_lexicale.l"
 { 
 		initLC() ;
 		LC.nature = PARO; 
@@ -862,7 +862,7 @@ YY_RULE_SETUP
 /* lexeme de type PARF */
 case 7:
 YY_RULE_SETUP
-#line 85 "analyse_lexical.l"
+#line 85 "lexique/analyse_lexicale.l"
 {
 		initLC() ;
 		LC.nature = PARF; 
@@ -872,7 +872,7 @@ YY_RULE_SETUP
 /* Lexeme de type ACCO */
 case 8:
 YY_RULE_SETUP
-#line 92 "analyse_lexical.l"
+#line 92 "lexique/analyse_lexicale.l"
 {
 		initLC() ;
 		LC.nature = ACCO;
@@ -882,7 +882,7 @@ YY_RULE_SETUP
 /* Lexeme de type ACCO */
 case 9:
 YY_RULE_SETUP
-#line 99 "analyse_lexical.l"
+#line 99 "lexique/analyse_lexicale.l"
 {
   initLC();
   LC.nature = ACCF;
@@ -892,7 +892,7 @@ YY_RULE_SETUP
 /* lexeme de type IDF */
 case 10:
 YY_RULE_SETUP
-#line 106 "analyse_lexical.l"
+#line 106 "lexique/analyse_lexicale.l"
 {
 		initLC() ;
 		LC.nature = IDF; 
@@ -902,7 +902,7 @@ YY_RULE_SETUP
 /* lexeme de type SEPINST */
 case 11:
 YY_RULE_SETUP
-#line 113 "analyse_lexical.l"
+#line 113 "lexique/analyse_lexicale.l"
 {
 		initLC() ;
 		LC.nature = SEPINST; 
@@ -912,7 +912,7 @@ YY_RULE_SETUP
 /* lexeme de type AFF */
 case 12:
 YY_RULE_SETUP
-#line 120 "analyse_lexical.l"
+#line 120 "lexique/analyse_lexicale.l"
 {
 		initLC() ;
 		LC.nature = AFF; 
@@ -922,7 +922,7 @@ YY_RULE_SETUP
 /* lexeme de type NOTE */
 case 13:
 YY_RULE_SETUP
-#line 129 "analyse_lexical.l"
+#line 129 "lexique/analyse_lexicale.l"
 {
 		initLC() ;
 		switch (yytext[0]) {
@@ -940,7 +940,7 @@ YY_RULE_SETUP
 /* lexeme de type DIESE */
 case 14:
 YY_RULE_SETUP
-#line 144 "analyse_lexical.l"
+#line 144 "lexique/analyse_lexicale.l"
 {
         initLC();
         LC.nature = DIESE;
@@ -950,7 +950,7 @@ YY_RULE_SETUP
 /* Lexeme de type DUREE_RYTHMIQUE */
 case 15:
 YY_RULE_SETUP
-#line 151 "analyse_lexical.l"
+#line 151 "lexique/analyse_lexicale.l"
 {
   initLC();
   switch (yytext[0]) {
@@ -965,7 +965,7 @@ YY_RULE_SETUP
 	YY_BREAK
 /* lexeme de type FIN_DE_SEQUENCE  */
 case YY_STATE_EOF(INITIAL):
-#line 165 "analyse_lexical.l"
+#line 165 "lexique/analyse_lexicale.l"
 {
 		initLC() ;	
 		LC.nature=FIN_SEQUENCE ; 
@@ -975,7 +975,7 @@ case YY_STATE_EOF(INITIAL):
 /* Tous les autres cas  sont des erreurs lexicales  ...  */
 case 16:
 YY_RULE_SETUP
-#line 175 "analyse_lexical.l"
+#line 175 "lexique/analyse_lexicale.l"
 {
 		initLC() ;	
 		LC.nature=ERREUR ;
@@ -984,10 +984,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 181 "analyse_lexical.l"
+#line 181 "lexique/analyse_lexicale.l"
 ECHO;
 	YY_BREAK
-#line 990 "analyse_lexical.c"
+#line 990 "lexique/analyse_lexicale.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2002,7 +2002,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 181 "analyse_lexical.l"
+#line 181 "lexique/analyse_lexicale.l"
 
 
 	/* fonctions auxilliaires fournies/utilisées par l'analyseur */
