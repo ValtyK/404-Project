@@ -23,13 +23,13 @@ all: $(EXEC)
 
 # créer l'executable
 $(EXEC): $(OBJS)
-    $(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
 
 # compiler chaque fichier .c en .o
 # (générique et s'applique à tous les fichiers sources)
 %.o: %.c musique.h
-    $(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # nettoyer les fichiers générés (executable, objets, fichier WAV)
 clean:
-    rm -f $(OBJS) $(EXEC) musique.wav
+	rm -f $(OBJS) $(EXEC) musique.wav
