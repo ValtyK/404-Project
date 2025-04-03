@@ -45,6 +45,43 @@ typedef enum
     BLANCHE, // b
     RONDE,   // r
 
-    ACCORD, // -
+    ACCORD, // NOTE-NOTE-NOTE...
+
+// mots-clé
+    PLAY,
+    WHILE,
+    
     ERREUR // erreur lexicale
 } Nature_Lexeme;
+
+typedef struct
+{
+   Nature_Lexeme nature; // nature du lexeme
+   unsigned int ligne;   // numero de ligne
+   unsigned int colonne; // numero de colonne
+   char chaine[256];     // chaine de caracteres
+   int valeur;           // valeur d'un entier
+} Lexeme;
+
+
+// renvoie la chaine de caracteres correspondant a la nature du lexeme
+char *Nature_vers_Chaine (Nature_Lexeme nature);
+
+// affichage d'un lexème 
+void afficher(Lexeme l);
+
+// lecture du lexeme suivant
+void avancer();
+
+// valeur du lexeme courant
+Lexeme lexeme_courant();
+
+// fin de sequence de lexemes
+int fin_de_sequence();
+
+// ouverture du fichier d'entrée (s'il existe)
+void demarrer(char *nom_fichier);
+
+// fermeture du fichier d'entrée (s'il existe)
+void arreter();
+

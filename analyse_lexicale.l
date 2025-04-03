@@ -36,12 +36,18 @@ ACCF    "}"
 LETTRE [a-z]|[A-Z]
 IDF    {LETTRE}({LETTRE}|{CHIFFRE}|"_")*
 SEPINST ";"
-AFF     ":="
+AFF     "="
 
 NOTE    'C'|'D'|'E'|'F'|'G'|'A'|'B'
 DIESE   "#"
 
 DUREE_RYTHMIQUE   'dc'|'c'|'n'|'b'|'r'
+
+ACCORD  {NOTE}'-'{NOTE}('-'{NOTE})*
+
+PLAY  'play'
+
+WHILE 'while'
 
 %%
 
@@ -159,6 +165,27 @@ DUREE_RYTHMIQUE   'dc'|'c'|'n'|'b'|'r'
   return 0;
 }
 
+ /* Lexeme de type ACCORD */
+{ACCORD}  {
+  initLC();
+  LC.nature = ACCORD;
+  return 0;
+}
+
+
+ /* Lexeme du mot-clé "play" */
+{PLAY}  {
+  initLC();
+  LC.nature = PLAY;
+  return 0;
+}
+
+ /* Lexeme du mot-clé "while" */
+{WHILE} {
+  initLC();
+  LC.nature = WHILE;
+  return 0;
+}
 
  /* lexeme de type FIN_DE_SEQUENCE  */
 <<EOF>>     {
@@ -183,32 +210,36 @@ DUREE_RYTHMIQUE   'dc'|'c'|'n'|'b'|'r'
 
 // renvoie la chaine de caracteres correspondant a la nature du lexeme
 char *Nature_vers_Chaine (Nature_Lexeme nature) {
-        switch (nature) {
-                case ENTIER: return "ENTIER" ;
-                case PLUS: return "PLUS" ;
-                case MOINS: return "MOINS" ;
-                case MUL: return "MUL" ;
-                case DIV: return "DIV" ;
-                case PARO: return "PARO" ;
-                case PARF: return "PARF" ;
-                case IDF: return "IDF" ;
-                case SEPINST: return "SEPINST" ;
-                case AFF: return "AFF" ;
-                case FIN_SEQUENCE: return "FIN_SEQUENCE" ;
+  switch (nature) {
+    case ENTIER: return "ENTIER" ;
+    case PLUS: return "PLUS" ;
+    case MOINS: return "MOINS" ;
+    case MUL: return "MUL" ;
+    case DIV: return "DIV" ;
+    case PARO: return "PARO" ;
+    case PARF: return "PARF" ;
+    case IDF: return "IDF" ;
+    case SEPINST: return "SEPINST" ;
+    case AFF: return "AFF" ;
+    case FIN_SEQUENCE: return "FIN_SEQUENCE" ;
 
-                case C: return "DO";
-                case D: return "RE";
-                case E: return "MI";
-                case F: return "FA";
-                case G: return "SOL";
-                case A: return "LA";
-                case B: return "SI";
+    case C: return "DO";
+    case D: return "RE";
+    case E: return "MI";
+    case F: return "FA";
+    case G: return "SOL";
+    case A: return "LA";
+    case B: return "SI";
 
-                case DIESE: return "DIESE";
-                
-                default: return "ERREUR" ;
-        } ;
-   }
+    case DIESE: return "DIESE";
+    
+    case ACCORD: return "ACCORD";
+
+    case PLAY: return "play";
+    case WHILE: return "while";    
+    default: return "ERREUR" ;
+  } ;
+}
 
 // affichage d'un lexème 
 void afficher(Lexeme l) {
