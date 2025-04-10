@@ -33,6 +33,13 @@ typedef enum
     SEPINST,      // ;
     AFF,          // :=
     FIN_SEQUENCE, // pseudo lexeme ajoute en fin de sequence
+//OPCOMP
+    INF,          // <
+    INF_EG,       // <=
+    SUP,          // >
+    SUP_EG,       // >=
+    EG,           // ==
+    DIFF,         // !=  
 // Notes
     C,            // DO
     D,            // RÉ
@@ -41,9 +48,8 @@ typedef enum
     G,            // SOL
     A,            // LA
     B,            // SI
-    DIESE,
+    DIESE,        // #
     SEPMESURE,    // | séparateur de mesure
-
 // Durée rythmique
     D_CROCHE,   //dc
     CROCHE,  // c
@@ -51,6 +57,8 @@ typedef enum
     BLANCHE, // b
     RONDE,   // r
 
+    SEPNOTE,    // ,
+    COMMENTAIRE,    // /* blablabla */ ou //
     ACCORD, // NOTE-NOTE-NOTE...
 
 // mots-clé
