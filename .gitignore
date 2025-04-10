@@ -1,7 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/c
 # Edit at https://www.toptal.com/developers/gitignore?templates=c
 wav/*.wav
-lexique/analyse_lexical.c
+lexique/analyse_lexicale.c
 ### C ###
 # Prerequisites
 *.d

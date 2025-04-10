@@ -28,6 +28,7 @@ CHIFFRE [0-9]
 
 ENTIER    {CHIFFRE}{CHIFFRE}*
 OPERATEUR     [-+*/]
+OPCOMP  '<<'|'>>'|'<='|'>='|'=='|'!='
 PARO	  "("
 PARF	  ")"
 ACCO    "{"
@@ -41,7 +42,11 @@ AFF     "="
 NOTE    'C'|'D'|'E'|'F'|'G'|'A'|'B'
 DIESE   "#"
 
-DUREE_RYTHMIQUE   'dc'|'c'|'n'|'b'|'r'
+SEPNOTE ','
+
+COMMENTAIRE "/*"({LETTRE}|{CHIFFRE}|" "|\n)*"*/"|"//"({LETTRE}|{CHIFFRE}|" ")*\n
+
+DUREE_RYTHMIQUE   'd'|'c'|'n'|'b'|'r'
 
 ACCORD  {NOTE}'-'{NOTE}('-'{NOTE})*
 
@@ -70,11 +75,43 @@ WHILE 'while'
 {OPERATEUR} {
   initLC();
   switch(yytext[0]) {
-  case '+': LC.nature = PLUS; break;
-  case '-': LC.nature = MOINS; break;
-  case '*': LC.nature = MUL; break;
-  case '/': LC.nature = DIV; break;
+    case '+': LC.nature = PLUS; break;
+    case '-': LC.nature = MOINS; break;
+    case '*': LC.nature = MUL; break;
+    case '/': LC.nature = DIV; break;
 }
+  return 0;
+}
+
+ /* lexeme de type OPCOMP */
+{OPCOMP}  {
+  initLC();
+  switch(yytext[0]) {
+    case '<': 
+      if(yytext[1]=='<'){     /* INF STRICT (<<) ou INF OU EG (<=) */
+        LC.nature = INF; break;
+      }else{
+        LC.nature = INF_EG; break;
+      }
+    case '>': 
+      if(yytext[1]=='>'){     /* SUP STRICT (>>) ou SUP OU EG (>=) */
+        LC.nature = SUP; break;
+      }else{
+        LC.nature = SUP_EG; break;
+      }
+    case '=': 
+      if(yytext[1]=='='){
+        LC.nature = EG; break;
+      }else{
+        printf("ERREUR LEXICALE, found %s\n",LC.chaine); exit(0);
+      }
+    case '!': 
+      if(yytext[1]=='='){
+        LC.nature = DIFF; break;
+      }else{
+        printf("ERREUR LEXICALE, found %s\n",LC.chaine); exit(0);
+      }
+  }
   return 0;
 }
 
@@ -132,31 +169,50 @@ WHILE 'while'
 
  /* lexeme de type NOTE */
 {NOTE} 	{
-		initLC() ;
-		switch (yytext[0]) {
-			case 'C' : LC.nature = C; break ;
-			case 'D' : LC.nature = D; break ;
-			case 'E' : LC.nature = E; break ;
-			case 'F' : LC.nature = F; break ;
-      case 'G' : LC.nature = G; break ;
-      case 'A' : LC.nature = A; break ;
-      case 'B' : LC.nature = B; break ;
-		} ;
-		return 0 ;
-		}
+  initLC() ;
+  switch (yytext[0]) {
+    case 'C' : LC.nature = C; break ;
+    case 'D' : LC.nature = D; break ;
+    case 'E' : LC.nature = E; break ;
+    case 'F' : LC.nature = F; break ;
+    case 'G' : LC.nature = G; break ;
+    case 'A' : LC.nature = A; break ;
+    case 'B' : LC.nature = B; break ;
+  } ;
+  return 0 ;
+}
 
  /* lexeme de type DIESE */
 {DIESE} {
-        initLC();
-        LC.nature = DIESE;
-        return 0;
+  initLC();
+  LC.nature = DIESE;
+  return 0;
+}
+
+ /* lexeme de type SEPNOTE */
+{SEPNOTE} {
+  initLC();
+  LC.nature = SEPNOTE;
+  return 0;
+}
+
+ /* lexeme de type COMMENTAIRE */
+{COMMENTAIRE} {
+  initLC();
+  LC.nature = COMMENTAIRE;
+  return 0;
 }
 
  /* Lexeme de type DUREE_RYTHMIQUE */
 {DUREE_RYTHMIQUE} {
   initLC();
   switch (yytext[0]) {
-    case 'dc': LC.nature = D_CROCHE; break;
+    case 'd': 
+      if(yytext[1]=='c'){
+        LC.nature = D_CROCHE; break;
+      }else{
+        printf("ERREUR LEXICALE, found %s\n",LC.chaine); exit(0);
+      }
     case 'c': LC.nature = CROCHE; break;
     case 'n': LC.nature = NOIR; break;
     case 'b': LC.nature = BLANCHE; break;
