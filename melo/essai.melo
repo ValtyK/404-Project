@@ -14,7 +14,7 @@ melo_piano = {
     n(C4, E4, D4, D4) | r(C4) |
 }
 
-melo_piano_2 = { c(D D D D D D D D) | r(C4) | }
+melo_piano_2 = { c(D4, D4, D4, D4, D4, D4, D4, D4) | r(C4) | }
 
 /*
     La fonction play ecrit une melodie dans le .wav

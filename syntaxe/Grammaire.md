@@ -30,3 +30,20 @@ notes &rarr; NOTE ENTIER VIRGULE notes
 notes &rarr; NOTE ENTIER
 suite_seqmelo &rarr; seqmelo
 suite_seqmelo &rarr; \(\epsilon\)
+
+## 3. Affectation
+
+```
+melo_piano_2 = { c(D4, D4, D4, D4, D4, D4, D4, D4) | r(C4) | }
+```
+
+> IDF -> melo
+
+## 4. Fonctions
+
+```
+play(melo_piano, 1-3)
+play(melo_piano, 4)
+```
+
+> fonc -> mc PARO IDF VIRGULE
