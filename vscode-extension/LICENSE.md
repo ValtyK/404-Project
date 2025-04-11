@@ -1,6 +1,6 @@
 # License
 
-Copyright © 2025 Valentin Slotwinski
+Copyright © 2025 Valentin Slotwinski, Mathéo Cartalade, Davin Roland
 
 Tous droits réservés.
 
