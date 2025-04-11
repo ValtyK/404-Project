@@ -1,0 +1,45 @@
+{
+  "name": "melo",
+  "displayName": "Melo Language",
+  "description": "Language support for Melo, a musical programming language - Valentin S.",
+  "version": "0.1.4",
+  "publisher": "ValentinS",
+  "icon": "icon.jpg",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "melo",
+        "aliases": [
+          "melo",
+          "melo"
+        ],
+        "extensions": [
+          ".melo"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "melo",
+        "scopeName": "source.melo",
+        "path": "./syntaxes/melo.tmLanguage.json"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/valtyk/404-Project"
+  },
+  "bugs": {
+    "url": "https://github.com/valtyk/404-Project/issues"
+  },
+  "homepage": "https://github.com/valtyk/404-Project#readme",
+  "license": "Proprietary"
+}

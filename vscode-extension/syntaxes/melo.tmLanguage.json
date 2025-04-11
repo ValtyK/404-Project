@@ -1,0 +1,105 @@
+{
+	"scopeName": "source.melo",
+	"name": "Melo Language",
+	"patterns": [
+		{
+			"name": "comment.line.double-slash",
+			"match": "//.*",
+			"captures": {
+				"0": {
+				"name": "comment.line.double-slash"
+				}
+			}
+		},
+
+		{
+			"name": "keyword.operator.symbol.melo",
+			"match": "(\\*|:)"
+		},		  
+		  
+		{
+			"name": "comment.block",
+			"begin": "/\\*",
+			"end": "\\*/",
+			"captures": {
+				"0": {
+				"name": "comment.block"
+				}
+			}
+		},
+
+		{
+			"name": "string.quoted.double.melo",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+			  {
+				"match": "\\\\.",
+				"name": "constant.character.escape.melo"
+			  }
+			]
+		},		  
+
+		{
+		"name": "meta.header.melo",
+		"begin": "^---$",
+		"end": "^---$",
+		"contentName": "meta.header.melo.content",
+		"patterns": [
+			{
+			"name": "keyword.other.header-key.melo",
+			"match": "(?<=^)(Name|Authors|Date|Signature|BPM):"
+			},
+			{
+				"name": "constant.language.header-value.melo",
+				"match": "(?<=Signature:\\s)[0-9]+/[0-9]+|(?<=BPM:\\s)[0-9]+"
+			}			  
+		]
+		},
+
+		{
+		"name": "entity.name.function.melo",
+		"match": "\\bplay\\b"
+		},
+		{
+		"name": "support.function.note.n.melo",
+		"match": "\\bn(?=\\s*\\()"
+		},
+		{
+		"name": "support.function.note.b.melo",
+		"match": "\\bb(?=\\s*\\()"
+		},
+		{
+		"name": "support.function.note.c.melo",
+		"match": "\\bc(?=\\s*\\()"
+		},
+		{
+		"name": "support.function.note.r.melo",
+		"match": "\\br(?=\\s*\\()"
+		},
+
+	  {
+		"name": "string.note.melo",
+		"match": "\\b[A-Ga-g]#?[0-9]\\b"
+	  },
+	  {
+		"name": "variable.assignment.melo",
+		"match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b(?=\\s*=)"
+	  },
+	  {
+		"name": "constant.numeric.melo",
+		"match": "\\b\\d+\\b"
+	  },
+	  {
+		"name": "keyword.control.flow.melo",
+		"match": "\\b(if|while)\\b"
+	  },
+	  {
+		"name": "keyword.operator.melo",
+		"match": "(=|<|\\+|\\-|\\||\\{|\\}|\\(|\\))"
+	  }
+	],
+	"fileTypes": ["melo"],
+	"uuid": "melo-lang-syntax"
+  }
+  
