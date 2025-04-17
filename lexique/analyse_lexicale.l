@@ -28,31 +28,38 @@ CHIFFRE [0-9]
 
 ENTIER    {CHIFFRE}{CHIFFRE}*
 OPERATEUR     [-+*/]
-OPCOMP  '<<'|'>>'|'<='|'>='|'=='|'!='
+OPCOMP  "<"|">"|"<="|">="|"=="|"!="
 PARO	  "("
 PARF	  ")"
 ACCO    "{"
 ACCF    "}"
 
-LETTRE [a-z]|[A-Z]
-IDF    {LETTRE}({LETTRE}|{CHIFFRE}|"_")*
+LETTRE [a-z]|[A-Z]|"à"|"é"|"è"|"ù"|"ç"
 SEPINST ";"
+SEPNOTE ","
+SEPMESURE  "|"
 AFF     "="
 
-NOTE    'C'|'D'|'E'|'F'|'G'|'A'|'B'
+NOTE    ("C"|"D"|"E"|"F"|"G"|"A"|"B"){DIESE}?{ENTIER}
+
 DIESE   "#"
 
-SEPNOTE ','
+INTERVALLE  ":"
 
-COMMENTAIRE "/*"({LETTRE}|{CHIFFRE}|" "|\n)*"*/"|"//"({LETTRE}|{CHIFFRE}|" ")*\n
+COMMENTAIRE "/*"({LETTRE}|{CHIFFRE}|" "|":"|\n|","|"_"|"."|"=")*"*/"
 
-DUREE_RYTHMIQUE   'd'|'c'|'n'|'b'|'r'
+DUREE_RYTHMIQUE   "dc"|"c"|"n"|"b"|"r"
 
-ACCORD  {NOTE}'-'{NOTE}('-'{NOTE})*
+ACCORD  @
 
-PLAY  'play'
+PLAY  "play"
 
-WHILE 'while'
+WHILE "while"
+
+IF "if"
+
+IDF    {LETTRE}({LETTRE}|{CHIFFRE}|"_")*
+
 
 %%
 
@@ -87,17 +94,17 @@ WHILE 'while'
 {OPCOMP}  {
   initLC();
   switch(yytext[0]) {
-    case '<': 
-      if(yytext[1]=='<'){     /* INF STRICT (<<) ou INF OU EG (<=) */
-        LC.nature = INF; break;
-      }else{
+    case '<':
+      if(yytext[1]=='='){     /* INF STRICT (<) ou INF OU EG (<=) */
         LC.nature = INF_EG; break;
+      }else{
+        LC.nature = INF; break;
       }
     case '>': 
-      if(yytext[1]=='>'){     /* SUP STRICT (>>) ou SUP OU EG (>=) */
-        LC.nature = SUP; break;
-      }else{
+      if(yytext[1]=='='){     /* SUP STRICT (>) ou SUP OU EG (>=) */
         LC.nature = SUP_EG; break;
+      }else{
+        LC.nature = SUP; break;
       }
     case '=': 
       if(yytext[1]=='='){
@@ -144,12 +151,7 @@ WHILE 'while'
   return 0;
 }
 
- /* lexeme de type IDF */
-{IDF} 	{
-		initLC() ;
-		LC.nature = IDF; 
-		return 0 ;
-		}
+
 
  /* lexeme de type SEPINST */
 {SEPINST} 	{
@@ -157,6 +159,14 @@ WHILE 'while'
 		LC.nature = SEPINST; 
 		return 0 ;
 		}
+
+
+  /* lexeme de type SEPMES */ 
+{SEPMESURE}  {
+  initLC();
+  LC.nature = SEPMESURE;
+  return 0;
+}
 
  /* lexeme de type AFF */
 {AFF} 	{
@@ -170,15 +180,7 @@ WHILE 'while'
  /* lexeme de type NOTE */
 {NOTE} 	{
   initLC() ;
-  switch (yytext[0]) {
-    case 'C' : LC.nature = C; break ;
-    case 'D' : LC.nature = D; break ;
-    case 'E' : LC.nature = E; break ;
-    case 'F' : LC.nature = F; break ;
-    case 'G' : LC.nature = G; break ;
-    case 'A' : LC.nature = A; break ;
-    case 'B' : LC.nature = B; break ;
-  } ;
+  LC.nature = NOTE;
   return 0 ;
 }
 
@@ -189,10 +191,18 @@ WHILE 'while'
   return 0;
 }
 
+ /* Lexeme de type INTERVALLE */
+{INTERVALLE}  {
+  initLC();
+  LC.nature = INTERVALLE;
+  return 0;
+}
+
  /* lexeme de type SEPNOTE */
 {SEPNOTE} {
   initLC();
   LC.nature = SEPNOTE;
+
   return 0;
 }
 
@@ -206,18 +216,7 @@ WHILE 'while'
  /* Lexeme de type DUREE_RYTHMIQUE */
 {DUREE_RYTHMIQUE} {
   initLC();
-  switch (yytext[0]) {
-    case 'd': 
-      if(yytext[1]=='c'){
-        LC.nature = D_CROCHE; break;
-      }else{
-        printf("ERREUR LEXICALE, found %s\n",LC.chaine); exit(0);
-      }
-    case 'c': LC.nature = CROCHE; break;
-    case 'n': LC.nature = NOIR; break;
-    case 'b': LC.nature = BLANCHE; break;
-    case 'r': LC.nature = RONDE; break;
-  }
+  LC.nature = DUREE_RYTHMIQUE;
   return 0;
 }
 
@@ -242,6 +241,20 @@ WHILE 'while'
   LC.nature = WHILE;
   return 0;
 }
+
+ /* Lexeme du mot-clé "if" */
+{IF} {
+  initLC();
+  LC.nature = IF;
+  return 0;
+}
+
+ /* lexeme de type IDF */
+{IDF} 	{
+		initLC() ;
+		LC.nature = IDF; 
+		return 0 ;
+		}
 
  /* lexeme de type FIN_DE_SEQUENCE  */
 <<EOF>>     {
@@ -274,31 +287,38 @@ char *Nature_vers_Chaine (Nature_Lexeme nature) {
     case DIV: return "DIV" ;
     case PARO: return "PARO" ;
     case PARF: return "PARF" ;
+    case ACCO: return "ACCO";
+    case ACCF: return "ACCF";
     case IDF: return "IDF" ;
     case SEPINST: return "SEPINST" ;
+    case SEPNOTE: return "SEPNOTE";
+    case SEPMESURE: return "SEPMESURE";
     case AFF: return "AFF" ;
     case FIN_SEQUENCE: return "FIN_SEQUENCE" ;
 
-    case C: return "DO";
-    case D: return "RE";
-    case E: return "MI";
-    case F: return "FA";
-    case G: return "SOL";
-    case A: return "LA";
-    case B: return "SI";
+
+    case INF: return "INFÉRIEUR STRICT";
+    case INF_EG: return "INFÉRIEUR OU ÉGALE";
+    case SUP: return "SUPÉRIEUR STRICT";
+    case SUP_EG: return "SUPÉRIEUR OU ÉGALES";
+    case EG: return "ÉGALE";
+    case DIFF: return "DIFFÉRENT";
+
+    case COMMENTAIRE: return "COMMENTAIRE";
+
+    case NOTE: return "NOTE";
 
     case DIESE: return "DIESE";
+    case INTERVALLE: return "INTERVALLE";
 
-    case D_CROCHE: return "DOUBLE_CROCHE";
-    case CROCHE: return "CROCHE";
-    case NOIR: return "NOIR";
-    case BLANCHE: return "BLANCHE";
-    case RONDE: return "RONDE";
+    case DUREE_RYTHMIQUE: return "DUREE_RYTHMIQUE";
 
     case ACCORD: return "ACCORD";
 
-    case PLAY: return "play";
-    case WHILE: return "while";    
+    case PLAY: return "PLAY";
+    case WHILE: return "WHILE";    
+    case IF: return "IF";
+
     default: return "ERREUR" ;
   } ;
 }
@@ -314,14 +334,15 @@ void afficher(Lexeme l) {
             printf("colonne: %d, ", l.colonne);
             printf("[") ;
             printf("nature = %s", Nature_vers_Chaine(l.nature)) ;
-            printf(", chaine = %s, ", l.chaine) ;
+            printf(", chaine = %s", l.chaine) ;
             switch(l.nature) {
                  case ENTIER:
-                      printf("valeur = %d", l.valeur); break;
+                      printf(", valeur = %d", l.valeur); break;
+
                  default:
                       break;
             } ;
-            printf("]\n") ;
+            printf(" ]\n") ;
         } ;
    }
 

@@ -9,14 +9,7 @@
 -- Date création : 28 mars 2025
 ------------------------------------------------------------------------ */
 
-typedef enum
-{
-    CHIFFRE,        // chiffre [0-9]
-    SYMBOLE,        // symboles (#, |, les parenthèses/accolades, +-*/  <>=)
-    LETTRE,         // lettres [a-z] ou [A-Z]
-    C_FIN_SEQUENCE, // caractere de fin de sequence
-    ERREUR_CAR      // caractere incorrect
-} Nature_Caractere;
+
 
 typedef enum
 {
@@ -29,9 +22,8 @@ typedef enum
     PARF,         // )
     ACCO,         // {
     ACCF,         // }
-    IDF,          // sequence de lettres/chiffres
     SEPINST,      // ;
-    AFF,          // :=
+    AFF,          // =
     FIN_SEQUENCE, // pseudo lexeme ajoute en fin de sequence
 //OPCOMP
     INF,          // <
@@ -40,31 +32,21 @@ typedef enum
     SUP_EG,       // >=
     EG,           // ==
     DIFF,         // !=  
-// Notes
-    C,            // DO
-    D,            // RÉ
-    E,            // MI
-    F,            // FA
-    G,            // SOL
-    A,            // LA
-    B,            // SI
+    NOTE,        // C, D, E, F, G, A, B
     DIESE,        // #
+    INTERVALLE,   // :
     SEPMESURE,    // | séparateur de mesure
-// Durée rythmique
-    D_CROCHE,   //dc
-    CROCHE,  // c
-    NOIR,    // n
-    BLANCHE, // b
-    RONDE,   // r
-
+    DUREE_RYTHMIQUE, // dc, c, n, b, r
     SEPNOTE,    // ,
     COMMENTAIRE,    // /* blablabla */ ou //
-    ACCORD, // NOTE-NOTE-NOTE...
+    ACCORD, // @
 
 // mots-clé
     PLAY,
     WHILE,
-    
+    IF,
+
+    IDF,          // sequence de lettres/chiffres
     ERREUR // erreur lexicale
 } Nature_Lexeme;
 
