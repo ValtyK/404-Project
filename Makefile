@@ -47,4 +47,4 @@ test_lexeme: lexique/analyse_lexicale.o test_lexeme.o
 
 # nettoyer les fichiers générés (executable, objets, fichier WAV)
 clean:
-	rm -f $(OBJS) $(EXEC) $(LEX).c musique.wav
+	rm -f $(OBJS) $(EXEC) $(LEX).c musique.wav test_lexeme
