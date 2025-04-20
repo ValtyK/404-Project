@@ -17,14 +17,14 @@ WAV_PATH = wav
 LEX = $(LEX_PATH)/analyse_lexicale
 
 # fichiers sources
-SRCS = $(LEX).c main.c musique.c
+SRCS = $(LEX).c main.c musique.c test_lexeme.c
 
 # liste des fichiers objets en remplacant .c par .o
 OBJS = $(SRCS:.c=.o)
 
 
 # Nom de l'executable final
-EXEC = musique
+EXEC = musique 
 
 # Regle principale : compilation du programme
 all: $(LEX).c $(EXEC)
@@ -42,6 +42,9 @@ $(LEX).c: $(LEX).l
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+test_lexeme: lexique/analyse_lexicale.o test_lexeme.o
+	$(CC) -o $@ $^ 
+
 # nettoyer les fichiers générés (executable, objets, fichier WAV)
 clean:
-	rm -f $(OBJS) $(EXEC) $(LEX).c musique.wav
+	rm -f $(OBJS) $(EXEC) $(LEX).c musique.wav test_lexeme
