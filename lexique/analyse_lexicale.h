@@ -26,9 +26,9 @@ typedef enum
     AFF,          // =
     FIN_SEQUENCE, // pseudo lexeme ajoute en fin de sequence
 //OPCOMP
-    INF,          // <
+    INF,          // <<
     INF_EG,       // <=
-    SUP,          // >
+    SUP,          // >>
     SUP_EG,       // >=
     EG,           // ==
     DIFF,         // !=  
