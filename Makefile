@@ -1,35 +1,18 @@
-# Nom de l'exécutable
-TARGET = main
-
-# Compilateur et flags
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99 -O2
-LDFLAGS =
+CFLAGS = -Wall -std=c99 -O2
+LDFLAGS = -lm
 
-# Fichiers sources et objets
+TARGET = main
 SRCS = main.c musique.c
-OBJS = $(SRCS:.c=.o)
-DEPS = $(SRCS:.c=.d)
+OUTFILE = output.wav
 
-# Cible par défaut
-all: $(TARGET)
+all:
+	$(CC) $(CFLAGS) -o $(TARGET) $(SRCS) $(LDFLAGS)
 
-# Link
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+run: all
+	./$(TARGET) $(OUTFILE)
 
-# Compilation et génération des dépendances
-%.o: %.c
-	$(CC) $(CFLAGS) -MMD -c $< -o $@
-
--include $(DEPS)
-
-# Nettoyage
 clean:
-	rm -f $(TARGET) $(OBJS) $(DEPS)
+	rm -f $(TARGET) $(OUTFILE)
 
-# Exécuter le programme
-run: $(TARGET)
-	./$(TARGET)
-
-.PHONY: all clean run
+.PHONY: all run clean
