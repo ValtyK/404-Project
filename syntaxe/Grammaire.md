@@ -31,7 +31,7 @@ notes &rarr; ACCORD \
 notes &rarr; NOTE ENTIER SEPNOTE notes \
 notes &rarr; NOTE ENTIER \
 suite_seqmelo &rarr; seqmelo \
-suite_seqmelo &rarr; \(\epsilon\) 
+suite_seqmelo &rarr; ε
 
 ## 3. Affectation
 
