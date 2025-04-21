@@ -31,7 +31,7 @@ notes &rarr; ACCORD \
 notes &rarr; NOTE ENTIER SEPNOTE notes \
 notes &rarr; NOTE ENTIER \
 suite_seqmelo &rarr; seqmelo \
-suite_seqmelo &rarr; \(\epsilon\) \
+suite_seqmelo &rarr; \(\epsilon\) 
 
 ## 3. Affectation
 
@@ -49,11 +49,11 @@ play(melo_piano, 1:3)
 play(melo_piano, 4)
 ```
 
-> fonc &rarr; mc PARO zic SEPNOTE mesure PARF FINSEQ
-mc &rarr; PLAY
-zic &rarr; IDF
-zic &rarr; melo
-mesure &rarr; ENTIER
+> fonc &rarr; mc PARO zic SEPNOTE mesure PARF FINSEQ \
+mc &rarr; PLAY \
+zic &rarr; IDF \
+zic &rarr; melo \
+mesure &rarr; ENTIER \
 mesure &rarr; ENTIER MOINS ENTIER 
 
 ## 5. Condition
