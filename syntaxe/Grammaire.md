@@ -22,16 +22,16 @@ Nous définissons la grammaire pour une **séquence de notes** que nous appelons
 ```
 ---
 
-> melo &rarr; mea FIN_SEQUENCE
-mea &rarr; ACCO seqmelo ACCF
-seqmelo &rarr; mesure SEPMESURE suite_seqmelo
-mesure &rarr; DUREE_RYTHMIQUE PARO notes PARF
-notes &rarr; ACCORD SEPNOTE notes
-notes &rarr; ACCORD
-notes &rarr; NOTE ENTIER SEPNOTE notes
-notes &rarr; NOTE ENTIER
-suite_seqmelo &rarr; seqmelo
-suite_seqmelo &rarr; \(\epsilon\)
+> melo &rarr; mea FIN_SEQUENCE \
+mea &rarr; ACCO seqmelo ACCF \
+seqmelo &rarr; mesure SEPMESURE suite_seqmelo \
+mesure &rarr; DUREE_RYTHMIQUE PARO notes PARF \
+notes &rarr; ACCORD SEPNOTE notes \
+notes &rarr; ACCORD \
+notes &rarr; NOTE ENTIER SEPNOTE notes \
+notes &rarr; NOTE ENTIER \
+suite_seqmelo &rarr; seqmelo \
+suite_seqmelo &rarr; \(\epsilon\) \
 
 ## 3. Affectation
 
