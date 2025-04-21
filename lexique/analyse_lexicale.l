@@ -40,7 +40,7 @@ SEPNOTE ","
 SEPMESURE  "|"
 AFF     "="
 
-NOTE    ("C"|"D"|"E"|"F"|"G"|"A"|"B"){DIESE}?{ENTIER}
+NOTE    "C"|"D"|"E"|"F"|"G"|"A"|"B"
 
 DIESE   "#"
 
@@ -58,7 +58,8 @@ WHILE "while"
 
 IF "if"
 
-IDF    {LETTRE}({LETTRE}|{CHIFFRE}|"_")*
+IDF     ([H-Zh-z_àéèùç])([a-zA-Z0-9_àéèùç]*) 
+
 
 
 %%
@@ -253,7 +254,7 @@ IDF    {LETTRE}({LETTRE}|{CHIFFRE}|"_")*
 {IDF} 	{
 		initLC() ;
 		LC.nature = IDF; 
-		return 0 ;
+    return 0 ;
 		}
 
  /* lexeme de type FIN_DE_SEQUENCE  */
