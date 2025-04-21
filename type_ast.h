@@ -12,6 +12,7 @@ typedef struct noeud {
     typeDureeRythmique dr;
     struct noeud *gauche, *droite;
     int valeur;
+    char* idf;
 } NoeudAst;
 
 typedef NoeudAst* Ast;

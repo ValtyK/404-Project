@@ -19,13 +19,15 @@ Nous définissons la grammaire pour une **séquence de notes** que nous appelons
     n(C4, C4@D5@E#4, C4, D4) | b(E4, D4) |
     n(C4, E4, D4, D4) | r(C4) |
 }
+
+{ b(C4) n(C4, D4) | }
 ```
 ---
 
 > melo &rarr; mea FIN_SEQUENCE \
 mea &rarr; ACCO seqmelo ACCF \
 seqmelo &rarr; mesure SEPMESURE suite_seqmelo \
-mesure &rarr; DUREE_RYTHMIQUE PARO notes PARF \
+mesure &rarr; DUREE_RYTHMIQUE PARO notes PARF suite_seqmelo\
 notes &rarr; NOTE ENTIER SEPNOTE notes \
 notes &rarr; NOTE DIESE ENTIER SEPNOTE notes \
 notes &rarr; NOTE ENTIER ACCORD notes
@@ -39,10 +41,11 @@ suite_seqmelo &rarr; ε
 
 ```
 melo_piano_2 = { c(D4, D4, D4, D4, D4, D4, D4, D4) | r(C4) | }
-x = 0f
+x = 10
 ```
 
-> IDF &rarr; melo
+> identifiant &rarr; IDF AFF melo \
+identifiant &rarr; IDF AFF ENTIER
 
 ## 4. Fonctions
 
