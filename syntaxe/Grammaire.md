@@ -16,39 +16,28 @@ Nous définissons la grammaire pour une **séquence de notes** que nous appelons
 
 ```
 {
-    n(C4, C4-D5-E#4, C4, D4) | b(E4, D4) |
+    n(C4, C4@D5@E#4, C4, D4) | b(E4, D4) |
     n(C4, E4, D4, D4) | r(C4) |
 }
 ```
 ---
 
-> melo &rarr; emea FIN_SEQUENCE
-emea &rarr; ACCO seqmelo ACCF
-seqmelo &rarr; seqnote SEPMESURE suite_seqmelo
-seqnote &rarr; dr PARO notes PARF
+> melo &rarr; mea FIN_SEQUENCE
+mea &rarr; ACCO seqmelo ACCF
+seqmelo &rarr; mesure SEPMESURE suite_seqmelo
+mesure &rarr; DUREE_RYTHMIQUE PARO notes PARF
 notes &rarr; ACCORD SEPNOTE notes
 notes &rarr; ACCORD
-notes &rarr; note ENTIER SEPNOTE notes
-notes &rarr; note ENTIER
+notes &rarr; NOTE ENTIER SEPNOTE notes
+notes &rarr; NOTE ENTIER
 suite_seqmelo &rarr; seqmelo
 suite_seqmelo &rarr; \(\epsilon\)
-dr &rarr; D_CROCHE
-dr &rarr; CROCHE
-dr &rarr; NOIR
-dr &rarr; BLANCHE
-dr &rarr; RONDE
-note &rarr; A
-note &rarr; B
-note &rarr; C
-note &rarr; D
-note &rarr; E
-note &rarr; F
-note &rarr; G
 
 ## 3. Affectation
 
 ```
 melo_piano_2 = { c(D4, D4, D4, D4, D4, D4, D4, D4) | r(C4) | }
+x = 0f
 ```
 
 > IDF &rarr; melo
@@ -56,7 +45,7 @@ melo_piano_2 = { c(D4, D4, D4, D4, D4, D4, D4, D4) | r(C4) | }
 ## 4. Fonctions
 
 ```
-play(melo_piano, 1-3)
+play(melo_piano, 1:3)
 play(melo_piano, 4)
 ```
 
