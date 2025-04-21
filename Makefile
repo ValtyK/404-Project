@@ -12,12 +12,16 @@ LDFLAGS = -lm
 # differents chemin des fichiers
 LEX_PATH = lexique
 WAV_PATH = wav
+TS_PATH = Table_symbole
 
 # variable pour FLEX
 LEX = $(LEX_PATH)/analyse_lexicale
 
+# variable pour TS
+TS = $(TS_PATH)/Table_symbole
+
 # fichiers sources
-SRCS = $(LEX).c main.c musique.c test_lexeme.c
+SRCS = $(LEX).c main.c musique.c test_lexeme.c $(TS).c
 
 # liste des fichiers objets en remplacant .c par .o
 OBJS = $(SRCS:.c=.o)
