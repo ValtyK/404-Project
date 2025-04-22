@@ -6,7 +6,7 @@ int main(int argc, char **argv) {
     int sample_rate = SAMPLE_RATE;      // 44100 Hz
     int num_channels = 2;               // 1 = mono, 2 = stéréo
     int bits_per_sample = 16;           // 16-bit PCM
-    double duration = 5.0;              // durée du fichier WAV en secondes
+    double duration = 7.0;              // durée du fichier WAV en secondes
 
     FILE *file = fopen(argv[1], "wb");
 
@@ -22,7 +22,11 @@ int main(int argc, char **argv) {
     generate_signal(0, 3.0, 220.0, 3000.0, sample_rate);  // LA3
     generate_signal(1.0, 3.0, 220.0 * pow(2.0, 7.0 / 12.0), 3000.0, sample_rate);  // MI
     generate_signal(3.0, 5.0, 330.0 * pow(2.0, 7.0 / 12.0), 3000.0, sample_rate);  // MI
-    generate_signal(3.2, 7.0, 110.0 * pow(2.0, 7.0 / 12.0), 3000.0, sample_rate);  // MI
+    generate_signal(5.0, 7.0, 110.0 * pow(2.0, 7.0 / 12.0), 3000.0, sample_rate);  // MI
+    
+    // ici je génère plusieurs accords en synthèse additive qui se superposent dans le .wav
+    
+    generate_envelope(0, 7, 30.0, 20.0, 80.0, 30.0, sample_rate);
 
     write_normalized_audio(file, bits_per_sample);
 

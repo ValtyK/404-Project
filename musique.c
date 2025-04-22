@@ -96,6 +96,7 @@ void generate_signal(double t1, double t2, double freq, double amp, int sample_r
 
     unsigned int start = (unsigned int)(t1 * sample_rate);
     unsigned int end   = (unsigned int)(t2 * sample_rate);
+
     if (end > total_samples) end = total_samples;
 
     for (i = start; i < end; i++) {
@@ -130,6 +131,50 @@ void write_normalized_audio(FILE *file, int bits_per_sample) {
         int16_t s_r = (int16_t)((right_buffer[i] / max_val) * max_amp);
         write_little_endian((unsigned short)s_l, 2, file);
         write_little_endian((unsigned short)s_r, 2, file);
+    }
+}
+
+void generate_envelope(double t1, double t2, double attack, double decay, double sustain, double release, int sample_rate) {
+    unsigned int i;
+
+    unsigned int i1 = (unsigned int)(t1 * sample_rate);
+    unsigned int i5 = (unsigned int)(t2 * sample_rate);
+    if (i5 > total_samples) i5 = total_samples;
+
+    unsigned int i2 = i1 + (unsigned int)((i5 - i1) * (attack / 100.0));
+    unsigned int i3 = i1 + (unsigned int)((i5 - i1) * ((attack + decay) / 100.0));
+    unsigned int i4 = i1 + (unsigned int)((i5 - i1) * (1.0 - release / 100.0));
+
+    if (i2 > i5) i2 = i5;
+    if (i3 > i5) i3 = i5;
+    if (i4 > i5) i4 = i5;
+
+    // Attack
+    for (i = i1; i < i2; i++) {
+        double env = (i - i1) / (double)(i2 - i1);
+        left_buffer[i] *= env;
+        right_buffer[i] *= env;
+    }
+
+    // Decay
+    for (i = i2; i < i3; i++) {
+        double env = (100.0 - ((i - i2) / (double)(i3 - i2)) * (100.0 - sustain)) / 100.0;
+        left_buffer[i] *= env;
+        right_buffer[i] *= env;
+    }
+
+    // Sustain
+    for (i = i3; i < i4; i++) {
+        double env = sustain / 100.0;
+        left_buffer[i] *= env;
+        right_buffer[i] *= env;
+    }
+
+    // Release
+    for (i = i4; i < i5; i++) {
+        double env = (sustain - ((i - i4) / (double)(i5 - i4)) * sustain) / 100.0;
+        left_buffer[i] *= env;
+        right_buffer[i] *= env;
     }
 }
 

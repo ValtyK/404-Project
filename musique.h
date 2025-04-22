@@ -47,5 +47,7 @@ void free_audio_buffers(void);
 
 void generate_signal(double t1, double t2, double freq, double amp, int sample_rate);
 void write_normalized_audio(FILE *file, int bits_per_sample);
+void generate_envelope(double t1, double t2, double attack, double decay, double sustain, double release, int sample_rate);
+
 
 #endif
