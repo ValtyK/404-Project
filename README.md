@@ -48,8 +48,5 @@ L'idee de base est de lire un fichier avec une syntaxe arbitraire afin de genere
 
 **Suite de notes** 
 ```
-{
-    n(C4, C4-D5-E#4, C4, D4) | b(E4, D4) |
-    n(C4, E4, D4, D4) | r(C4) |
-}
+n(C C C D) b(E D) n(C E D D C)
 ```
