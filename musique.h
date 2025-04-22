@@ -34,11 +34,16 @@ typedef struct Chord {
     double duration;
 } Chord;
 
-// Ecrire en little endian
-void write_little_endian(unsigned int octets, int taille, FILE *fichier);
+// Buffers audio globaux
+extern double *left_buffer;
+extern double *right_buffer;
+extern unsigned long total_samples;
 
-// Fonction pour le .wav
+// Fonctions de gestion audio
+void write_little_endian(unsigned int octets, int taille, FILE *fichier);
 void write_wav_header(FILE *file, int sample_rate, int num_channels, int bits_per_sample, double duration_sec);
+void init_audio_buffers(int sample_rate, int num_channels, double duration_sec);
+void free_audio_buffers(void);
 
 
 #endif
