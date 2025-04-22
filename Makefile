@@ -11,13 +11,17 @@ LDFLAGS = -lm
 
 # differents chemin des fichiers
 LEX_PATH = lexique
+SYNT_PATH = syntaxe
 WAV_PATH = wav
 
 # variable pour FLEX
 LEX = $(LEX_PATH)/analyse_lexicale
 
+# variable pour FSYNT
+SYNT = $(SYNT_PATH)/analyse_syntaxique
+
 # fichiers sources
-SRCS = $(LEX).c main.c musique.c test_lexeme.c
+SRCS = $(LEX).c $(SYNT).c main.c musique.c test_lexeme.c test_syntaxe.c
 
 # liste des fichiers objets en remplacant .c par .o
 OBJS = $(SRCS:.c=.o)
@@ -42,9 +46,12 @@ $(LEX).c: $(LEX).l
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-test_lexeme: lexique/analyse_lexicale.o test_lexeme.o
+test_lexeme: $(LEX).o test_lexeme.o
 	$(CC) -o $@ $^ 
+
+test_syntaxe: $(LEX).o $(SYNT).o test_syntaxe.o
+	$(CC) -o $@ $^
 
 # nettoyer les fichiers générés (executable, objets, fichier WAV)
 clean:
-	rm -f $(OBJS) $(EXEC) $(LEX).c musique.wav test_lexeme
+	rm -f $(OBJS) $(EXEC) $(LEX).c musique.wav test_lexeme test_syntaxe
