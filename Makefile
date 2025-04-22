@@ -4,7 +4,7 @@ CC = gcc
 # -Wall      : avertissements courants
 # -Wextra    : avertissements supplémentaires
 # -O2        : Opti du code pour meilleures perf
-CFLAGS = -Wall -Wextra -O2
+CFLAGS = -Wall -Wextra
 
 # Biblio à lier (math.h nécessite -lm)
 LDFLAGS = -lm
@@ -26,12 +26,12 @@ SRCS = $(LEX).c $(SYNT).c main.c musique.c test_lexeme.c test_syntaxe.c
 # liste des fichiers objets en remplacant .c par .o
 OBJS = $(SRCS:.c=.o)
 
-
 # Nom de l'executable final
 EXEC = musique 
 
+
 # Regle principale : compilation du programme
-all: $(LEX).c $(EXEC)
+all: $(LEX).c $(SYNT).o $(EXEC)
 
 # créer l'executable
 $(EXEC): $(OBJS)
