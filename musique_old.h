@@ -21,24 +21,21 @@
 // Frequence reference du LA4 (changable)
 #define REF_FREQUENCY 440.0
 
-// Nombre max de notes dans un accord
-#define MAX_NOTES_IN_CHORD 8
-
 typedef struct Note {
-    char name[3];       // Nom de la note (C, D#, etc.)
+    char name[5];       // Nom de la note (DO, RE#, etc.)
+    double duration;    // Durée en secondes
 } Note;
 
-typedef struct Chord {
-    Note notes[MAX_NOTES_IN_CHORD];
-    int note_count;
-    double duration;
-} Chord;
-
-// Ecrire en little endian
-void write_little_endian(unsigned int octets, int taille, FILE *fichier);
-
 // Fonction pour le .wav
-void write_wav_header(FILE *file, int sample_rate, int num_channels, int bits_per_sample, double duration_sec);
+void write_wav_header(FILE *file, int sample_count);
+void play_sine_wave(FILE *file, double frequency, double duration);
+
+// Nouvelle fonction pour les accords
+void play_chord(FILE *file, const char *note_str, double duration);
+
+// Conversion note en freq.
+double note_to_frequency(const char *note);
+
 
 
 #endif
