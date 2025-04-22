@@ -88,3 +88,48 @@ void free_audio_buffers(void) {
     total_samples = 0;
 }
 
+void generate_signal(double t1, double t2, double freq, double amp, int sample_rate) {
+    unsigned int i, j;
+    double omega = 2.0 * M_PI * freq;
+    double dt = 1.0 / sample_rate;
+    double t = 0.0;
+
+    unsigned int start = (unsigned int)(t1 * sample_rate);
+    unsigned int end   = (unsigned int)(t2 * sample_rate);
+    if (end > total_samples) end = total_samples;
+
+    for (i = start; i < end; i++) {
+        double sum = 0.0;
+
+        for (j = 1; j <= 7; j++) {
+            sum += amp / (pow(j, 2) * (1.0 + pow(t, j))) *
+                (sin(j * omega * t)
+                + sin(j * omega * pow(2.0, 3.0 / 12.0) * t)
+                + sin(j * omega * pow(2.0, 7.0 / 12.0) * t));
+        }
+
+        left_buffer[i] += sum;
+        right_buffer[i] += sum;
+
+        t += dt;
+    }
+}
+
+void write_normalized_audio(FILE *file, int bits_per_sample) {
+    unsigned long i;
+    double max_val = 1e-16;
+    int max_amp = (1 << (bits_per_sample - 1)) - 1;
+
+    for (i = 0; i < total_samples; i++) {
+        if (fabs(left_buffer[i]) > max_val)  max_val = fabs(left_buffer[i]);
+        if (fabs(right_buffer[i]) > max_val) max_val = fabs(right_buffer[i]);
+    }
+
+    for (i = 0; i < total_samples; i++) {
+        int16_t s_l = (int16_t)((left_buffer[i]  / max_val) * max_amp);
+        int16_t s_r = (int16_t)((right_buffer[i] / max_val) * max_amp);
+        write_little_endian((unsigned short)s_l, 2, file);
+        write_little_endian((unsigned short)s_r, 2, file);
+    }
+}
+
