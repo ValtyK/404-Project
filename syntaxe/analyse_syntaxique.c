@@ -65,16 +65,16 @@ void rec_mesure() {
 void rec_notes() {
     switch (lexeme_courant().nature) {
         case C:
-        case CDIESE:
+        case C#:
         case D:
-        case DDIESE:
+        case D#:
         case E:
         case F:
-        case FDIESE:
+        case F#:
         case G:
-        case GDIESE:
+        case G#:
         case A:
-        case ADIESE:
+        case A#:
         case B:
             avancer();
             if (lexeme_courant().nature != ENTIER) {
