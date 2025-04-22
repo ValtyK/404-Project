@@ -115,3 +115,26 @@ void play_sine_wave(FILE *file, double frequency, double duration) {
     }
 }
 
+void play_chord(FILE *file, const char *note_str, double duration){
+    char buffer[128];
+    strncpy(buffer, note_str, sizeof(buffer));
+    buffer[sizeof(buffer) - 1] = '\0';
+
+    char *note = strtok(buffer, "-");
+    double *samples = calloc(SAMPLE_RATE * duration, sizeof(double));
+
+    while (note) {
+        double freq = note_to_frequency(note);
+        for (int i = 0; i < SAMPLE_RATE * duration; i++) {
+            samples[i] += sin(2.0 * M_PI * freq * i / SAMPLE_RATE);
+        }
+        note = strtok(NULL, "-");
+    }
+
+    for (int i = 0; i < SAMPLE_RATE * duration; i++) {
+        int16_t sample = (int16_t)(samples[i] * (VOLUME / 3)); // Normalisation
+        fwrite(&sample, sizeof(int16_t), 1, file);
+    }
+
+    free(samples);
+}

@@ -30,7 +30,12 @@ typedef struct Note {
 void write_wav_header(FILE *file, int sample_count);
 void play_sine_wave(FILE *file, double frequency, double duration);
 
+// Nouvelle fonction pour les accords
+void play_chord(FILE *file, const char *note_str, double duration);
+
 // Conversion note en freq.
 double note_to_frequency(const char *note);
+
+
 
 #endif
