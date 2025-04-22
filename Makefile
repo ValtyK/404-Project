@@ -5,7 +5,6 @@ CC = gcc
 # -Wextra    : avertissements supplémentaires
 # -O2        : Opti du code pour meilleures perf
 CFLAGS = -Wall -Wextra
-
 # Biblio à lier (math.h nécessite -lm)
 LDFLAGS = -lm
 
@@ -14,14 +13,18 @@ LEX_PATH = lexique
 SYNT_PATH = syntaxe
 WAV_PATH = wav
 
+
 # variable pour FLEX
 LEX = $(LEX_PATH)/analyse_lexicale
+
+# variable pour TS
+TS = $(TS_PATH)/Table_symbole
 
 # variable pour FSYNT
 SYNT = $(SYNT_PATH)/analyse_syntaxique
 
 # fichiers sources
-SRCS = $(LEX).c $(SYNT).c main.c musique.c test_lexeme.c test_syntaxe.c
+SRCS = $(LEX).c $(SYNT).c main.c musique.c test_lexeme.c test_syntaxe.c 
 
 # liste des fichiers objets en remplacant .c par .o
 OBJS = $(SRCS:.c=.o)
@@ -47,10 +50,13 @@ $(LEX).c: $(LEX).l
 	$(CC) $(CFLAGS) -c $< -o $@
 
 test_lexeme: $(LEX).o test_lexeme.o
-	$(CC) -o $@ $^ 
+	$(CC) -o $@ $^
 
 test_syntaxe: $(LEX).o $(SYNT).o test_syntaxe.o
 	$(CC) -o $@ $^
+
+test_TS: Table_symbole/test_TS.c Table_symbole/table_symbole.c 
+	$(CC) $(CFLAGS) $< -o $@
 
 # nettoyer les fichiers générés (executable, objets, fichier WAV)
 clean:

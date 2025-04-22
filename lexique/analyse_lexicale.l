@@ -40,7 +40,7 @@ SEPNOTE ","
 SEPMESURE  "|"
 AFF     "="
 
-NOTE    "C"|"D"|"E"|"F"|"G"|"A"|"B"
+NOTE    "C"|"C"{DIESE}|"D"|"D"{DIESE}|"E"|"F"|"F"{DIESE}|"G"|"G"{DIESE}|"A"|"A"{DIESE}|"B"
 
 DIESE   "#"
 
