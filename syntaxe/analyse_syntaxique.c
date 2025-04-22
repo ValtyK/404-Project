@@ -41,7 +41,7 @@ void rec_seqmelo() {
 
 void rec_mesure() {
 
-    lc = lexeme_courant().nature;
+    Nature_Lexeme lc = lexeme_courant().nature;
 
     if (lc != dc && lc != c && lc != n && lc != b && lc != r) {
         printf("Erreur : DUREE_RYTHMIQUE attendu (ligne %u, colonne %u)",lexeme_courant().ligne, lexme_courant().colonne);
@@ -103,7 +103,12 @@ void rec_suite_notes() {
 
 
 void rec_suite_seqmelo() {
-    rec_seqmelo();
+    Nature_Lexeme lc = lexeme_courant().nature;
+    avancer();
+    if (lc == dc || lc == c || lc == n || lc == b || lc == r) {
+        rec_seqmelo();
+    }
+    // sinon bztamere
 }
 
 
