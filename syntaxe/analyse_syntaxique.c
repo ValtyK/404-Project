@@ -40,18 +40,21 @@ void rec_seqmelo() {
 }
 
 void rec_mesure() {
-    if (lexeme_courant().nature != DUREE_RYTHMIQUE) {
+
+    lc = lexeme_courant().nature;
+
+    if (lc != dc && lc != c && lc != n && lc != b && lc != r) {
         printf("Erreur : DUREE_RYTHMIQUE attendu (ligne %u, colonne %u)",lexeme_courant().ligne, lexme_courant().colonne);
         exit(1);
     }
     avancer();
-    if (lexeme_courant().nature != PARO) {
+    if (lc != PARO) {
         printf("Erreur : PARO attendu (ligne %u, colonne %u)",lexeme_courant().ligne, lexme_courant().colonne);
         exit(1);
     }
     avancer();
     rec_notes();
-    if (lexeme_courant().nature != PARF) {
+    if (lc != PARF) {dr &rarr; dc \
         printf("Erreur : PARF attendu (ligne %u, colonne %u)",lexeme_courant().ligne, lexme_courant().colonne);
         exit(1);
     }
@@ -60,32 +63,47 @@ void rec_mesure() {
 }
 
 void rec_notes() {
-    if (lexeme_courant().nature != NOTE) {
-        printf("Erreur : NOTE attendu (ligne %u, colonne %u)",lexeme_courant().ligne, lexme_courant().colonne);
-        exit(1);
-    }
-    avancer();
-    
     switch (lexeme_courant().nature) {
-        case ENTIER:
+        case C:
+        case CDIESE:
+        case D:
+        case DDIESE:
+        case E:
+        case F:
+        case FDIESE:
+        case G:
+        case GDIESE:
+        case A:
+        case ADIESE:
+        case B:
             avancer();
-            switch (lexeme_courant().nature) {
-                case SEPNOTE:
-                case
+            if (lexeme_courant().nature != ENTIER) {
+                printf("Erreur : ENTIER attendu (ligne %u, colonne %u)",lexeme_courant().ligne, lexme_courant().colonne);
+                exit(1);
             }
-            break;
-        
-        case DIESE:
-            break;
-        
+            avancer();
+            rec_suite_notes();
         default:
-            printf("Erreur : ENTIER ou DIESE attendu (ligne %u, colonne %u)", lexeme_courant().linge, lexeme_courant().colonne);\
+            printf("Erreur : Une note est attendu (ligne %u, colonne %u)",lexeme_courant().ligne, lexme_courant().colonne);
             exit(1);
     }
 }
 
-void rec_suite_seqmelo() {
+void rec_suite_notes() {
+    switch (lexeme_courant().nature) {
+        case SEPNOTE:
+        case ACCORD:
+            avancer();
+            rec_notes();
+            break;
+        default:
+            break;
+    }
+}
 
+
+void rec_suite_seqmelo() {
+    rec_seqmelo();
 }
 
 
