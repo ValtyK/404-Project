@@ -28,12 +28,22 @@ Nous définissons la grammaire pour une **séquence de notes** que nous appelons
 mea &rarr; ACCO seqmelo ACCF \
 seqmelo &rarr; mesure SEPMESURE suite_seqmelo \
 mesure &rarr; DUREE_RYTHMIQUE PARO notes PARF suite_seqmelo\
-notes &rarr; NOTE ENTIER SEPNOTE notes \
-notes &rarr; NOTE DIESE ENTIER SEPNOTE notes \
-notes &rarr; NOTE ENTIER ACCORD notes
-notes &rarr; NOTE DIESE ENTIER ACCORD notes
-notes &rarr; NOTE DIESE ENTIER \
-notes &rarr; NOTE ENTIER \
+notes &rarr; note ENTIER SEPNOTE notes \
+notes &rarr; note ENTIER ACCORD notes \
+notes &rarr; note ENTIER \
+note &rarr; C \
+note &rarr; C# \
+note &rarr; D \
+note &rarr; D# \
+note &rarr; E \
+note &rarr; F \
+note &rarr; F# \
+note &rarr; C \
+note &rarr; G \
+note &rarr; G# \
+note &rarr; A \
+note &rarr; A# \
+note &rarr; B \
 suite_seqmelo &rarr; seqmelo \
 suite_seqmelo &rarr; ε
 
