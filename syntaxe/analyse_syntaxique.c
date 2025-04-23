@@ -3,6 +3,8 @@
 #include <stdlib.h>
 
 #include "analyse_syntaxique.h"
+
+
 char* couleurToString(Nature_Lexeme c) {
     switch (c) {
         case SEPMESURE: return "SEPMESURE";
