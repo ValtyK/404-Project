@@ -116,7 +116,7 @@ void generate_signal_perso(double t1, double t2, double freq, double amp, int sa
     }
 }
 
-void generate_chord(double t1, double t2, double freq, double amp, int sample_rate) {
+void generate_truc(double t1, double t2, double freq, double amp, int sample_rate) {
     unsigned int i, j;
     double omega = 2.0 * M_PI * freq; // pulsation angulaire (base de l'onde sinusoidale)
     double dt = 1.0 / sample_rate; // pas de temps entre chaque echantillon
@@ -144,6 +144,54 @@ void generate_chord(double t1, double t2, double freq, double amp, int sample_ra
         t += dt;
     }
 }
+
+
+void generate_chord(double t1, double t2, const double *frequencies, int count, double amp, int sample_rate) {
+    
+    unsigned int i, j, k;
+    // i: index echantillon buffer
+    // j: index d'harmonique (1 à 7)
+    // k: index des frequences dans l'accord
+    double dt = 1.0 / sample_rate; // durée d'un echantillon
+    double t = 0.0; // horloge locale en secondes (temps accumulé)
+
+    // Indices d'echantillon correspondant a t1 et t2
+    unsigned int start = (unsigned int)(t1 * sample_rate);
+    unsigned int end = (unsigned int)(t2 * sample_rate);
+    if (end > total_samples) end = total_samples;
+
+    // parcours des echant. de t1 à t2
+    for (i = start; i < end; i++) {
+
+        // Somme des signaux a un instant t
+        double sample = 0.0;
+
+        // parcours de chaque frequence f de l'accord
+        for (k = 0; k < count; k++) {
+
+            double omega = 2.0 * M_PI * frequencies[k]; // pulsation angulaire
+            
+            // ajout des 7 premiers harmoniques pour chaque note (synth. additive)
+            // on enrichit une onde en ajoutant les multiples entiers de sa fondamentale
+            for (j = 1; j <= 7; j++) {
+                sample += (amp / count) / (pow(j, 2) * (1.0 + pow(t, j))) *
+                    sin(j * omega * t);
+                // (amp / count) : repartir l'amplitude entre les notes
+                // 1 / pow(j, 2) : l'amplitude des harmoniques diminue prop à 1/j²
+                // 1 / (1 + pow(t, j)) : transitions douces (ajout perso)
+                // sin(j * omega * t) : sinusoide de frequence j*f (harmonique j)
+            }
+        }
+
+        // Ajout du résultat dans les buffers stereo
+        left_buffer[i] += sample;
+        right_buffer[i] += sample;
+
+        // On incrémente le temps courant
+        t += dt;
+    }
+}
+
 
 void write_normalized_audio(FILE *file, int bits_per_sample) {
     unsigned long i;
