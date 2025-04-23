@@ -1,75 +1,49 @@
-#include "musique.h"
 #include <stdio.h>
+#include "musique.h"
 
-int main(int argc, char ** argv) {
+int main(int argc, char **argv) {
+
+    int sample_rate = SAMPLE_RATE;  // 44100 Hz
+    int num_channels = 2;           // 1 = mono, 2 = stéréo
+    int bits_per_sample = 16;       // 16-bit PCM
+    double duration = 11;            // durée du fichier WAV en secondes
 
     FILE *file = fopen(argv[1], "wb");
-    
+
     if (!file) {
         fprintf(stderr, "Erreur : impossible d'ouvrir %s", argv[1]);
         return 1;
     }
 
-    // Placeholder pour l'en-tête WAV
-    write_wav_header(file, SAMPLE_RATE * 30);  // 10 secondes max
+    init_audio_buffers(sample_rate, num_channels, duration);
+    write_wav_header(file, sample_rate, num_channels, bits_per_sample, duration);
 
-    // Melodie : Do Do Do Re Mi Re Do Mi Re Re Do
-    // Note melody_1[] = {
-    //     {261.63, 0.3}, {261.63, 0.3}, {261.63, 0.3},
-    //     {293.66, 0.3}, {329.63, 0.6}, {293.66, 0.6},
-    //     {261.63, 0.3}, {329.63, 0.3}, {293.66, 0.3},
-    //     {293.66, 0.3}, {261.63, 0.6}
-    // };
-
-    Note melody_1[] = {
-        {"DO5", 0.3}, {"DO5", 0.3}, {"DO5", 0.3},
-        {"RE5", 0.3}, {"MI5", 0.6}, {"RE5", 0.6},
-        {"DO5", 0.3}, {"MI5", 0.3}, {"RE5", 0.3},
-        {"RE5", 0.3}, {"DO5", 1.2},
-        {"DO5", 0.3}, {"DO5", 0.3}, {"DO5", 0.3},
-        {"RE5", 0.3}, {"MI5", 0.6}, {"RE5", 0.6},
-        {"DO5", 0.3}, {"MI5", 0.3}, {"RE5", 0.3},
-        {"RE5", 0.3}, {"DO5", 1.2},
-        {"RE5", 0.3}, {"RE5", 0.3}, {"RE5", 0.3},
-        {"RE5", 0.3}, {"LA4", 0.6}, {"LA4", 0.6},
-        {"RE5", 0.3}, {"DO5", 0.3}, {"SI4", 0.3},
-        {"LA4", 0.3}, {"SOL4", 1.2},
-        {"DO5", 0.3}, {"DO5", 0.3}, {"DO5", 0.3},
-        {"RE5", 0.3}, {"MI5", 0.6}, {"RE5", 0.6},
-        {"DO5", 0.3}, {"MI5", 0.3}, {"RE5", 0.3},
-        {"RE5", 0.3}, {"DO5", 1.2}
-    };
-
-    Note melody_2[] = {
-        {"DO5", 0.3}, // 1
-        {"DO#5", 0.15}, // binaire (1/2)
-        {"RE5", 0.15},
-        {"RE#5", 0.3},
-        {"MI5", 0.1}, // ternaire (1/3)
-        {"FA5", 0.1},
-        {"FA#5", 0.1},
-        {"SOL5", 0.3},
-        {"SOL#5", 0.3},
-        {"LA5", 0.3},
-        {"LA#5", 0.2}, // ternaire (2/3)
-        {"SI5", 0.2},
-        {"DO6", 0.2}
-    };
-
-    size_t melody_size = sizeof(melody_1) / sizeof(Note);
+    // Exemple : un accord autour de LA3 (220 Hz), de 1s à 3s
+    // ici je génère plusieurs accords en synthèse additive qui se superposent dans le .wav
+    generate_signal_perso(0.0, 3.0, 220.0, 3000.0, sample_rate);  // LA3
+    generate_signal_perso(1.0, 3.0, 220.0 * pow(2.0, 7.0 / 12.0), 3000.0, sample_rate);  // MI
+    generate_signal_perso(3.0, 5.0, 330.0 * pow(2.0, 7.0 / 12.0), 3000.0, sample_rate);  // MI
+    generate_signal_perso(5.0, 7.0, 110.0 * pow(2.0, 7.0 / 12.0), 3000.0, sample_rate);  // MI
     
-    for (size_t i = 0; i < melody_size; i++) {
+    // Hop là faire des accords sympa
+    double freqs[] = {261.626, 329.628, 391.995}; // Do, Mi, Sol
+    generate_chord(7.0, 9.0, freqs, 3, 3000.0, sample_rate);
+    
+    // Utilisation de note_to_frequency
+    double note1 = note_to_frequency("C", 4);
+    double note2 = note_to_frequency("E", 4);
+    double note3 = note_to_frequency("G", 4);
+    printf("note1 = %.3f Hz\nnote2 = %.3f Hz\nnote3 = %.3f Hz\n", note1, note2, note3);
+    double freqs_2[] = {note1, note2, note3}; // Do, Mi, Sol
+    generate_chord(9.0, 11.0, freqs_2, 3, 3000.0, sample_rate);
+    
+    generate_envelope(0.0, 11.0, 30.0, 20.0, 80.0, 30.0, sample_rate);
 
-        double frequency = note_to_frequency(melody_1[i].name);
-
-        printf("[%s] -> Frequence : %.2f Hz\n", melody_1[i].name, frequency);
-
-        play_sine_wave(file, frequency, melody_1[i].duration);
-
-    }
+    write_normalized_audio(file, bits_per_sample);
 
     fclose(file);
-    
-    printf("> Fichier 'musique.wav' généré.\n");
+    free_audio_buffers();
+
+    printf("> File '%s' successfully generated.\n", argv[1]);
     return 0;
 }

@@ -1,21 +1,253 @@
 #include "musique.h"
 
 #include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
 
-// Fonction pour calculer la fréquence d'une note donnée sous forme "DO4", "RE#3", etc.
-double note_to_frequency(const char *note) {
+double *left_buffer = NULL;
+double *right_buffer = NULL;
+unsigned long total_samples = 0;
 
-    const char *notes[] = {"DO", "DO#", "RE", "RE#", "MI", "FA", "FA#", "SOL", "SOL#", "LA", "LA#", "SI"};
-
-    int semitone_offset = 0;
-    int octave = 0;
-    char note_name[6] = ""; // taille max : "SOL#4\0"
-
-    // Extraire le nom de la note et l’octave depuis la chaîne (ex: "FA#3")
-    if (sscanf(note, "%5[^0123456789]%d", note_name, &octave) != 2) {
-        return 0;  // Erreur si le format est invalide
+void write_little_endian(unsigned int octets, int taille, FILE *fichier) {
+    unsigned char faible ;
+    
+    while(taille > 0) {   
+        faible = octets & 0x000000FF ;
+        fwrite(&faible, 1, 1, fichier) ;
+        octets = octets >> 8 ;
+        taille = taille - 1 ;
     }
+}
+
+void write_wav_header(FILE *file, int sample_rate, int num_channels, int bits_per_sample, double duration_sec) {
+
+    // Calculs de con
+    unsigned int byte_rate = sample_rate * num_channels * bits_per_sample / 8; // Debit en octet par seconde
+    unsigned short block_align = num_channels * bits_per_sample / 8; // nb d'octets pour un echantillon complet
+    unsigned int data_size = (int)(sample_rate * duration_sec) * block_align; // taille totale des donnees audio en octets
+    unsigned int chunk_size = 36 + data_size; // taille du fichier moins 8 octets
+
+    // Header RIFF
+    fwrite("RIFF", 1, 4, file); // Chunck ID
+    write_little_endian(chunk_size, 4, file); // Chunk Size
+    fwrite("WAVE", 1, 4, file); // Format
+
+    // FMT subchunk
+    fwrite("fmt ", 1, 4, file); // Subchunk1 ID
+    write_little_endian(16, 4, file); // Subchunk1 size (PCM)
+    write_little_endian(1, 2, file); // Audio format (1 = PCM)
+    write_little_endian(num_channels, 2, file); // Nombre de canaux (1 = mono, 2 = stereo)
+    write_little_endian(sample_rate, 4, file); // Freq. echantillonage
+    write_little_endian(byte_rate, 4, file);
+    write_little_endian(block_align, 2, file);
+    write_little_endian(bits_per_sample, 2, file); // bits par echantillon (16 bits par exemple)
+
+    // DATA subchunk
+    fwrite("data", 1, 4, file); // Subchunk2 ID
+    write_little_endian(data_size, 4, file); // Subchunk2 size
+}
+
+void init_audio_buffers(int sample_rate, int num_channels, double duration_sec) {
+
+    // Calcul nb total echantillons
+    total_samples = (unsigned long)(sample_rate * duration_sec);
+
+    if (num_channels == 1) {
+        left_buffer = calloc(total_samples, sizeof(double));
+        if (!left_buffer) {
+            fprintf(stderr, "Error: failed to allocate mono buffer\n");
+            free(left_buffer);
+            exit(EXIT_FAILURE);
+        }
+        right_buffer = left_buffer; // meme buffer en mono
+    } else if (num_channels == 2) {
+        left_buffer = calloc(total_samples, sizeof(double));
+        right_buffer = calloc(total_samples, sizeof(double));
+        if (!left_buffer || !right_buffer) {
+            fprintf(stderr, "Error: failed to allocate stereo buffers\n");
+            free(left_buffer);
+            free(right_buffer);
+            exit(EXIT_FAILURE);
+        }
+    } else {
+        fprintf(stderr, "Error: unsupported channel count (%d).\n", num_channels);
+        exit(EXIT_FAILURE);
+    }
+}
+
+void free_audio_buffers(void) {
+    if (left_buffer) {
+        free(left_buffer);
+    }
+    if (right_buffer && (right_buffer != left_buffer)) {
+        free(right_buffer);
+    }
+
+    left_buffer = NULL;
+    right_buffer = NULL;
+    total_samples = 0;
+}
+
+void generate_signal_perso(double t1, double t2, double freq, double amp, int sample_rate) {
+    unsigned int i, j;
+    double omega = 2.0 * M_PI * freq;
+    double dt = 1.0 / sample_rate;
+    double t = 0.0;
+
+    unsigned int start = (unsigned int)(t1 * sample_rate);
+    unsigned int end   = (unsigned int)(t2 * sample_rate);
+
+    if (end > total_samples) end = total_samples;
+
+    for (i = start; i < end; i++) {
+        double sum = 0.0;
+
+        for (j = 1; j <= 7; j++) {
+            sum += amp / (pow(j, 2) * (1.0 + pow(t, j))) *
+                (sin(j * omega * t)
+                + sin(j * omega * pow(2.0, 3.0 / 12.0) * t)
+                + sin(j * omega * pow(2.0, 7.0 / 12.0) * t));
+        }
+
+        left_buffer[i] += sum;
+        right_buffer[i] += sum;
+
+        t += dt;
+    }
+}
+
+void generate_chord(double t1, double t2, const double *frequencies, int count, double amp, int sample_rate) {
+    
+    unsigned int i, j, k;
+    // i: index echantillon buffer
+    // j: index d'harmonique (1 à 7)
+    // k: index des frequences dans l'accord
+    double dt = 1.0 / sample_rate; // durée d'un echantillon
+    double t = 0.0; // horloge locale en secondes (temps accumulé)
+
+    // Indices d'echantillon correspondant a t1 et t2
+    unsigned int start = (unsigned int)(t1 * sample_rate);
+    unsigned int end = (unsigned int)(t2 * sample_rate);
+    if (end > total_samples) end = total_samples;
+
+    // parcours des echant. de t1 à t2
+    for (i = start; i < end; i++) {
+
+        // Somme des signaux a un instant t
+        double sample = 0.0;
+
+        // parcours de chaque frequence f de l'accord
+        for (k = 0; k < count; k++) {
+
+            double omega = 2.0 * M_PI * frequencies[k]; // pulsation angulaire
+            
+            // ajout des 7 premiers harmoniques pour chaque note (synth. additive)
+            // on enrichit une onde en ajoutant les multiples entiers de sa fondamentale
+            for (j = 1; j <= 7; j++) {
+                sample += (amp / count) / (pow(j, 2)
+                        * (1.0 + pow(t, j)))
+                        * sin(j * omega * t);
+                
+                // (amp / count) : repartir l'amplitude entre les notes
+                // 1 / pow(j, 2) : l'amplitude des harmoniques diminue prop à 1/j²
+                // 1 / (1 + pow(t, j)) : transitions douces (bof, on fera mieux après)
+                // sin(j * omega * t) : sinusoide de frequence j*f (harmonique j)
+            }
+        }
+
+        // Ajout du résultat dans les buffers stereo
+        left_buffer[i] += sample;
+        right_buffer[i] += sample;
+
+        // On incrémente le temps courant
+        t += dt;
+    }
+}
+
+
+void write_normalized_audio(FILE *file, int bits_per_sample) {
+    unsigned long i;
+    double max_val = 1e-16;
+    int max_amp = (1 << (bits_per_sample - 1)) - 1;
+
+    for (i = 0; i < total_samples; i++) {
+        if (fabs(left_buffer[i]) > max_val)  max_val = fabs(left_buffer[i]);
+        if (fabs(right_buffer[i]) > max_val) max_val = fabs(right_buffer[i]);
+    }
+
+    // Affichage diagnostic du bordel
+    double norm_factor = max_amp / max_val;
+    printf("------- Normalization ------\n");
+    printf("| Peak amplitude:       %.2f\n", max_val);
+    printf("| Normalization factor: %.2f\n", norm_factor);
+    if (max_val >= max_amp) {
+        printf("[!] Warning: signal is clipping, normalization will be insufficient.\n");
+    } else if (norm_factor < 1.0) {
+        printf("[!] Signal already over max range, normalizing down.\n");
+    } else if (norm_factor < 2.0) {
+        printf("[i] Signal was already close to full scale, slight normalization.\n");
+    } else {
+        printf("[+] Safe margin preserved.\n");
+    }
+    printf("----------------------------\n");
+
+    for (i = 0; i < total_samples; i++) {
+        int16_t s_l = (int16_t)((left_buffer[i]  / max_val) * max_amp);
+        int16_t s_r = (int16_t)((right_buffer[i] / max_val) * max_amp);
+        write_little_endian((unsigned short)s_l, 2, file);
+        write_little_endian((unsigned short)s_r, 2, file);
+    }
+}
+
+void generate_envelope(double t1, double t2, double attack, double decay, double sustain, double release, int sample_rate) {
+    unsigned int i;
+
+    unsigned int i1 = (unsigned int)(t1 * sample_rate);
+    unsigned int i5 = (unsigned int)(t2 * sample_rate);
+    if (i5 > total_samples) i5 = total_samples;
+
+    unsigned int i2 = i1 + (unsigned int)((i5 - i1) * (attack / 100.0));
+    unsigned int i3 = i1 + (unsigned int)((i5 - i1) * ((attack + decay) / 100.0));
+    unsigned int i4 = i1 + (unsigned int)((i5 - i1) * (1.0 - release / 100.0));
+
+    if (i2 > i5) i2 = i5;
+    if (i3 > i5) i3 = i5;
+    if (i4 > i5) i4 = i5;
+
+    // Attack
+    for (i = i1; i < i2; i++) {
+        double env = (i - i1) / (double)(i2 - i1);
+        left_buffer[i] *= env;
+        right_buffer[i] *= env;
+    }
+
+    // Decay
+    for (i = i2; i < i3; i++) {
+        double env = (100.0 - ((i - i2) / (double)(i3 - i2)) * (100.0 - sustain)) / 100.0;
+        left_buffer[i] *= env;
+        right_buffer[i] *= env;
+    }
+
+    // Sustain
+    for (i = i3; i < i4; i++) {
+        double env = sustain / 100.0;
+        left_buffer[i] *= env;
+        right_buffer[i] *= env;
+    }
+
+    // Release
+    for (i = i4; i < i5; i++) {
+        double env = (sustain - ((i - i4) / (double)(i5 - i4)) * sustain) / 100.0;
+        left_buffer[i] *= env;
+        right_buffer[i] *= env;
+    }
+}
+
+double note_to_frequency(const char *note_name, int octave) {
+
+    const char *notes[] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
+
+    int semitone_offset = -1;
 
     // Trouver l'index de la note dans le tableau
     for (int i = 0; i < 12; i++) {
@@ -25,93 +257,13 @@ double note_to_frequency(const char *note) {
         }
     }
 
+    if (semitone_offset == -1) {
+        return -1.0;
+    }
+
     // Calculer l'écart en demi-tons par rapport à LA4
     int total_semitones = semitone_offset + (octave - 4) * 12;
 
     // Appliquer la formule : f = 440 * 2^(n/12)
     return REF_FREQUENCY * pow(2.0, total_semitones / 12.0);
 }
-
-/**
- * @brief Ecrit l'en-tête d'un fichier WAV
- * 
- * @param file Pointeur vers le fichier ouvert en écriture
- * @param sample_count Nombre total d'échantillons audio à écrire
- * 
- */
-void write_wav_header(FILE *file, int sample_count) {
-
-    // Parametres WAV (format PCM 16-bit)
-    int32_t sample_rate = SAMPLE_RATE;
-    int32_t chunk_size = 36 + sample_count * sizeof(int16_t);
-    int32_t subchunk1_size = 16;
-    int32_t subchunk2_size = sample_count * sizeof(int16_t);
-    int16_t audio_format = 1;  // PCM pas compressé
-    int16_t num_channels = 1;  // Mono
-    int32_t byte_rate = SAMPLE_RATE * sizeof(int16_t);
-    int16_t block_align = sizeof(int16_t);
-    int16_t bits_per_sample = 16;
-
-    fwrite("RIFF", 1, 4, file);         // Chunck ID "RIFF"
-    fwrite(&chunk_size, 4, 1, file);    // Taille totale du fichier
-    fwrite("WAVE", 1, 4, file);         // Format WAV
-
-    fwrite("fmt ", 1, 4, file);             // Sous-chunk "fmt "
-    fwrite(&subchunk1_size, 4, 1, file);    // Taille du sous-chunk
-
-    fwrite(&audio_format, 2, 1, file);      // Format PCM
-    fwrite(&num_channels, 2, 1, file);      // Nombre de canaux (1 = mono)
-    fwrite(&sample_rate, 4, 1, file);       // Freq. echantillonage
-    fwrite(&byte_rate, 4, 1, file);         // Byte rate (nb octets par seconde)
-    fwrite(&block_align, 2, 1, file);       // Alignement des blocs
-    fwrite(&bits_per_sample, 2, 1, file);   // Bits par echantillon (16-bit)
-    fwrite("data", 1, 4, file);             // Chunk ID "data"
-    fwrite(&subchunk2_size, 4, 1, file);    // Taille des données audio
-}
-
-// Génère et écrit une onde sin.
-void play_sine_wave_old(FILE *file, double frequency, double duration) {
-    int sample_count = SAMPLE_RATE * duration;
-    int16_t sample;
-
-    for (int i = 0; i < sample_count; i++) {
-        sample = VOLUME * sin(2.0 * M_PI * frequency * i / SAMPLE_RATE);
-        fwrite(&sample, sizeof(int16_t), 1, file);
-    }
-}
-
-// Nouvelle version sans coupures :
-
-/**
- * @brief Génère une onde sinusoïdale correspondant à une note et l'écrit dans un fichier WAV
- * 
- * @param file Pointeur vers le fichier WAV ouvert en écriture
- * @param frequency Fréquence de la note (en Hz)
- * @param duration Durée de la note (en secondes)
- */
-void play_sine_wave(FILE *file, double frequency, double duration) {
-
-    int sample_count = SAMPLE_RATE * duration; // Nb total d'echantillons
-    int16_t sample; // Stocke chaque echantillon (16-bit signé)
-    
-    for (int i = 0; i < sample_count; i++) {
-        double envelope = 1.0;
-
-        // Ajout d'une courbe d'attaque et de relâchement pour eviter les "click"
-        double fade_time = 0.02;  // 20 ms de fade-in et fade-out
-        int fade_samples = SAMPLE_RATE * fade_time;
-
-        if (i < fade_samples) {
-            envelope = (double)i / fade_samples;  // Fade-in
-        } else if (i > sample_count - fade_samples) {
-            envelope = (double)(sample_count - i) / fade_samples;  // Fade-out
-        }
-
-        // Generation de l'onde + enveloppe
-        sample = VOLUME * envelope * sin(2.0 * M_PI * frequency * i / SAMPLE_RATE);
-
-        // Ecriture de l'echantillon dans le fichier
-        fwrite(&sample, sizeof(int16_t), 1, file);
-    }
-}
-

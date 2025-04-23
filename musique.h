@@ -21,16 +21,38 @@
 // Frequence reference du LA4 (changable)
 #define REF_FREQUENCY 440.0
 
+// Nombre max de notes dans un accord
+#define MAX_NOTES_IN_CHORD 8
+
 typedef struct Note {
-    char name[5];       // Nom de la note (DO, RE#, etc.)
-    double duration;    // Durée en secondes
+    char name[3]; // Nom de la note (C, D#, etc.)
 } Note;
 
-// Fonction pour le .wav
-void write_wav_header(FILE *file, int sample_count);
-void play_sine_wave(FILE *file, double frequency, double duration);
+typedef struct Chord {
+    Note notes[MAX_NOTES_IN_CHORD];
+    int note_count;
+    double duration;
+} Chord;
 
-// Conversion note en freq.
-double note_to_frequency(const char *note);
+// Buffers audio globaux
+extern double *left_buffer;
+extern double *right_buffer;
+extern unsigned long total_samples;
+
+// Fonctions d'ecriture dans le .wav
+void write_little_endian(unsigned int octets, int taille, FILE *fichier);
+void write_wav_header(FILE *file, int sample_rate, int num_channels, int bits_per_sample, double duration_sec);
+void write_normalized_audio(FILE *file, int bits_per_sample);
+
+// Gestion de base des buffers audio
+void init_audio_buffers(int sample_rate, int num_channels, double duration_sec);
+void free_audio_buffers(void);
+
+// Ecriture dans les buffers audio
+void generate_signal_perso(double t1, double t2, double freq, double amp, int sample_rate); // fonction en bordel qui m'a permi de comprendre des choses
+void generate_chord(double t1, double t2, const double *frequencies, int count, double amp, int sample_rate); // pour générer des accords
+void generate_envelope(double t1, double t2, double attack, double decay, double sustain, double release, int sample_rate); // generer de l'enveloppe
+
+double note_to_frequency(const char *note_name, int octave);
 
 #endif
