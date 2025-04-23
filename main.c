@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
     double note1 = note_to_frequency("C", 4);
     double note2 = note_to_frequency("E", 4);
     double note3 = note_to_frequency("G", 4);
-    printf("note1 = %.3f\nnote2 = %.3f\nnote3 = %.3f\n", note1, note2, note3);
+    printf("note1 = %.3f Hz\nnote2 = %.3f Hz\nnote3 = %.3f Hz\n", note1, note2, note3);
     double freqs_2[] = {note1, note2, note3}; // Do, Mi, Sol
     generate_chord(9.0, 11.0, freqs_2, 3, 3000.0, sample_rate);
     
