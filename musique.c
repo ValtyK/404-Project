@@ -150,7 +150,7 @@ void generate_chord(double t1, double t2, const double *frequencies, int count, 
                 
                 // (amp / count) : repartir l'amplitude entre les notes
                 // 1 / pow(j, 2) : l'amplitude des harmoniques diminue prop à 1/j²
-                // 1 / (1 + pow(t, j)) : transitions douces
+                // 1 / (1 + pow(t, j)) : transitions douces (bof, on fera mieux après)
                 // sin(j * omega * t) : sinusoide de frequence j*f (harmonique j)
             }
         }

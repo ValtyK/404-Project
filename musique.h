@@ -49,8 +49,8 @@ void init_audio_buffers(int sample_rate, int num_channels, double duration_sec);
 void free_audio_buffers(void);
 
 // Ecriture dans les buffers audio
-void generate_signal_perso(double t1, double t2, double freq, double amp, int sample_rate);
-void generate_chord(double t1, double t2, const double *frequencies, int count, double amp, int sample_rate);
-void generate_envelope(double t1, double t2, double attack, double decay, double sustain, double release, int sample_rate);
+void generate_signal_perso(double t1, double t2, double freq, double amp, int sample_rate); // fonction en bordel qui m'a permi de comprendre des choses
+void generate_chord(double t1, double t2, const double *frequencies, int count, double amp, int sample_rate); // pour générer des accords
+void generate_envelope(double t1, double t2, double attack, double decay, double sustain, double release, int sample_rate); // generer de l'enveloppe
 
 #endif
