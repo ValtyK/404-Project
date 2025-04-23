@@ -3,7 +3,7 @@
 wav/*.wav
 lexique/analyse_lexicale.c
 test_lexeme
-Table_symbole/testTS
+TStest
 ### C ###
 # Prerequisites
 *.d
