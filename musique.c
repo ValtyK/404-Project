@@ -88,7 +88,7 @@ void free_audio_buffers(void) {
     total_samples = 0;
 }
 
-void generate_signal(double t1, double t2, double freq, double amp, int sample_rate) {
+void generate_signal_perso(double t1, double t2, double freq, double amp, int sample_rate) {
     unsigned int i, j;
     double omega = 2.0 * M_PI * freq;
     double dt = 1.0 / sample_rate;
@@ -112,6 +112,35 @@ void generate_signal(double t1, double t2, double freq, double amp, int sample_r
         left_buffer[i] += sum;
         right_buffer[i] += sum;
 
+        t += dt;
+    }
+}
+
+void generate_chord(double t1, double t2, double freq, double amp, int sample_rate) {
+    unsigned int i, j;
+    double omega = 2.0 * M_PI * freq; // pulsation angulaire (base de l'onde sinusoidale)
+    double dt = 1.0 / sample_rate; // pas de temps entre chaque echantillon
+    double t = 0.0; // horloge locale (en secondes)
+
+    // Indices d'echantillon correspondant a t1 et t2
+    unsigned int start = (unsigned int)(t1 * sample_rate);
+    unsigned int end   = (unsigned int)(t2 * sample_rate);
+    if (end > total_samples) end = total_samples; // protec du buffer (end <= total_samples)
+
+    for (i = start; i < end; i++) { // parcours des echant. de t1 à t2
+        double sum = 0.0;
+
+        for (j = 1; j <= 7; j++) {
+            sum += amp / (pow(j, 2) * (1.0 + pow(t, j))) * (sin(j * omega * t)
+                + sin(j * omega * pow(2.0, 3.0 / 12.0) * t)
+                + sin(j * omega * pow(2.0, 7.0 / 12.0) * t));
+        }
+        
+        // ecriture dans le buffer
+        left_buffer[i] += sum;
+        right_buffer[i] += sum;
+        
+        // incrément de temps (en secondes toujours)
         t += dt;
     }
 }

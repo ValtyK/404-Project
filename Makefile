@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -std=c99 -O2
+CFLAGS = -Wall -std=c99 -O2 # std c99 pour le standard C
 LDFLAGS = -lm
 
 TARGET = main

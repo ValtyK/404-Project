@@ -45,7 +45,7 @@ void write_wav_header(FILE *file, int sample_rate, int num_channels, int bits_pe
 void init_audio_buffers(int sample_rate, int num_channels, double duration_sec);
 void free_audio_buffers(void);
 
-void generate_signal(double t1, double t2, double freq, double amp, int sample_rate);
+void generate_signal_perso(double t1, double t2, double freq, double amp, int sample_rate);
 void write_normalized_audio(FILE *file, int bits_per_sample);
 void generate_envelope(double t1, double t2, double attack, double decay, double sustain, double release, int sample_rate);
 

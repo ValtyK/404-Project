@@ -19,10 +19,10 @@ int main(int argc, char **argv) {
     write_wav_header(file, sample_rate, num_channels, bits_per_sample, duration);
 
     // Exemple : un accord autour de LA3 (220 Hz), de 1s à 3s
-    generate_signal(0, 3.0, 220.0, 3000.0, sample_rate);  // LA3
-    generate_signal(1.0, 3.0, 220.0 * pow(2.0, 7.0 / 12.0), 3000.0, sample_rate);  // MI
-    generate_signal(3.0, 5.0, 330.0 * pow(2.0, 7.0 / 12.0), 3000.0, sample_rate);  // MI
-    generate_signal(5.0, 7.0, 110.0 * pow(2.0, 7.0 / 12.0), 3000.0, sample_rate);  // MI
+    generate_signal_perso(0, 3.0, 220.0, 3000.0, sample_rate);  // LA3
+    generate_signal_perso(1.0, 3.0, 220.0 * pow(2.0, 7.0 / 12.0), 3000.0, sample_rate);  // MI
+    generate_signal_perso(3.0, 5.0, 330.0 * pow(2.0, 7.0 / 12.0), 3000.0, sample_rate);  // MI
+    generate_signal_perso(5.0, 7.0, 110.0 * pow(2.0, 7.0 / 12.0), 3000.0, sample_rate);  // MI
     
     // ici je génère plusieurs accords en synthèse additive qui se superposent dans le .wav
     
