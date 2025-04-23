@@ -175,6 +175,22 @@ void write_normalized_audio(FILE *file, int bits_per_sample) {
         if (fabs(right_buffer[i]) > max_val) max_val = fabs(right_buffer[i]);
     }
 
+    // Affichage diagnostic
+    double norm_factor = max_amp / max_val;
+    printf("-------------\n");
+    printf("| Peak amplitude:       %.2f\n", max_val);
+    printf("| Normalization factor: %.2f\n", norm_factor);
+    if (max_val >= max_amp) {
+        printf("[!] Warning: signal is clipping, normalization will be insufficient.\n");
+    } else if (norm_factor < 1.0) {
+        printf("[!] Signal already over max range, normalizing down.\n");
+    } else if (norm_factor < 2.0) {
+        printf("[i] Signal was already close to full scale, slight normalization.\n");
+    } else {
+        printf("[+] Safe margin preserved.\n");
+    }
+    printf("-------------\n");
+
     for (i = 0; i < total_samples; i++) {
         int16_t s_l = (int16_t)((left_buffer[i]  / max_val) * max_amp);
         int16_t s_r = (int16_t)((right_buffer[i] / max_val) * max_amp);

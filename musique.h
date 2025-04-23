@@ -25,7 +25,7 @@
 #define MAX_NOTES_IN_CHORD 8
 
 typedef struct Note {
-    char name[3];       // Nom de la note (C, D#, etc.)
+    char name[3]; // Nom de la note (C, D#, etc.)
 } Note;
 
 typedef struct Chord {
