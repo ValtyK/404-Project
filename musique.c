@@ -175,9 +175,9 @@ void write_normalized_audio(FILE *file, int bits_per_sample) {
         if (fabs(right_buffer[i]) > max_val) max_val = fabs(right_buffer[i]);
     }
 
-    // Affichage diagnostic
+    // Affichage diagnostic du bordel
     double norm_factor = max_amp / max_val;
-    printf("-------------\n");
+    printf("------- Normalization ------\n");
     printf("| Peak amplitude:       %.2f\n", max_val);
     printf("| Normalization factor: %.2f\n", norm_factor);
     if (max_val >= max_amp) {
@@ -189,7 +189,7 @@ void write_normalized_audio(FILE *file, int bits_per_sample) {
     } else {
         printf("[+] Safe margin preserved.\n");
     }
-    printf("-------------\n");
+    printf("----------------------------\n");
 
     for (i = 0; i < total_samples; i++) {
         int16_t s_l = (int16_t)((left_buffer[i]  / max_val) * max_amp);
