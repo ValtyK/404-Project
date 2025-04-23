@@ -11,11 +11,30 @@ char* couleurToString(Nature_Lexeme c) {
     }
 }
 
-void rec_melo() {
-    rec_mea();
+void rec_identifiant() {
+    if (lexeme_courant().nature != IDF) {
+        printf("Erreur : Identifiant attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
+        exit(1);
+    }
+    avancer();
+    if (lexeme_courant().nature != AFF) {
+        printf("Erreur : '=' attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
+        exit(1);
+    }
+    avancer();
+    switch (lexeme_courant().nature) {
+        case ENTIER:
+            break;
+        case ACCO:
+            rec_melo();
+            break;
+        default:
+            printf("Erreur : ENTIER/melo attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
+    }
 }
 
-void rec_mea() {
+
+void rec_melo() {
     if (lexeme_courant().nature != ACCO) {
         printf("Erreur : parenthese ouvrante attendu (ligne %u, colonne %u)", lexeme_courant().ligne, lexeme_courant().colonne);
         exit(1);
@@ -56,7 +75,7 @@ void rec_mesure() {
         printf("Erreur : PARF attendu (ligne %u, colonne %u)",lexeme_courant().ligne, lexeme_courant().colonne);
         exit(1);
     }
-    rec_suite_seqmelo();
+    rec_suite_mesure();
 }
 
 void rec_notes() {
@@ -89,6 +108,12 @@ void rec_suite_notes() {
     }
 }
 
+void rec_suite_mesure() {
+    avancer();
+    if (lexeme_courant().nature == DUREE_RYTHMIQUE) {
+        rec_mesure();
+    }
+}
 
 void rec_suite_seqmelo() {
     avancer();
@@ -104,14 +129,13 @@ void rec_suite_seqmelo() {
 // ------------------------------------------------------------------
 int analyser(char* nomFichier) {
     demarrer(nomFichier);
-    rec_melo();
+    rec_identifiant();
 
     if (lexeme_courant().nature == FIN_SEQUENCE) {
-        printf("\nSyntaxe : OK");
-        printf("\n");
+        printf("Syntaxe : OK\n");
         return 1;
     } else {
-        printf("Syntaxe : Erreur..");
+        printf("Syntaxe : Erreur..\n");
         return 0;
     }
 }

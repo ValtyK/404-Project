@@ -27,7 +27,7 @@ Nous définissons la grammaire pour une **séquence de notes** que nous appelons
 > melo &rarr; mea FIN_SEQUENCE \
 mea &rarr; ACCO seqmelo ACCF \
 seqmelo &rarr; mesure SEPMESURE suite_seqmelo \
-mesure &rarr; dr PARO notes PARF suite_seqmelo\
+mesure &rarr; dr PARO notes PARF suite_mesure\
 notes &rarr; note ENTIER suite_notes \
 suite_notes &rarr; SEPNOTE notes
 suite_notes &rarr; ACCORD notes
@@ -50,6 +50,8 @@ dr &rarr; c \
 dr &rarr; n \
 dr &rarr; b \
 dr &rarr; r \
+suite_mesure &rarr; mesure \
+suite_mesure &rarr; ε \
 suite_seqmelo &rarr; seqmelo \
 suite_seqmelo &rarr; ε
 

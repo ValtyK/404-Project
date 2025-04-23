@@ -18,6 +18,6 @@ int main (int argc, char* argv[]) {
             exit(1);
     }
     if (syntaxe_correcte) {
-        printf("Test_syntaxe : OK");
+        printf("Test_syntaxe : OK\n");
     }
 }
