@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../type_ast.h"
 
 Ast creer_operation(TypeOp op, Ast oprd_gauche, Ast oprd_droit){
     Ast expr;
