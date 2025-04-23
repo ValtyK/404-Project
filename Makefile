@@ -4,7 +4,7 @@ CC = gcc
 # -Wall      : avertissements courants
 # -Wextra    : avertissements supplémentaires
 # -O2        : Opti du code pour meilleures perf
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -pg
 # Biblio à lier (math.h nécessite -lm)
 LDFLAGS = -lm
 

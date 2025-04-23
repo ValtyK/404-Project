@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "lexique/syntaxe_lexique.h"
 #include "syntaxe/analyse_syntaxique.h"
 
 int main (int argc, char* argv[]) {
@@ -9,7 +8,7 @@ int main (int argc, char* argv[]) {
 
     switch (argc) {
         case 1:
-            syntaxe_correcte = analyer("");
+            syntaxe_correcte = analyser("");
             break;
         case 2:
             syntaxe_correcte = analyser(argv[1]);
