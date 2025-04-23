@@ -116,36 +116,6 @@ void generate_signal_perso(double t1, double t2, double freq, double amp, int sa
     }
 }
 
-void generate_truc(double t1, double t2, double freq, double amp, int sample_rate) {
-    unsigned int i, j;
-    double omega = 2.0 * M_PI * freq; // pulsation angulaire (base de l'onde sinusoidale)
-    double dt = 1.0 / sample_rate; // pas de temps entre chaque echantillon
-    double t = 0.0; // horloge locale (en secondes)
-
-    // Indices d'echantillon correspondant a t1 et t2
-    unsigned int start = (unsigned int)(t1 * sample_rate);
-    unsigned int end   = (unsigned int)(t2 * sample_rate);
-    if (end > total_samples) end = total_samples; // protec du buffer (end <= total_samples)
-
-    for (i = start; i < end; i++) { // parcours des echant. de t1 à t2
-        double sum = 0.0;
-
-        for (j = 1; j <= 7; j++) {
-            sum += amp / (pow(j, 2) * (1.0 + pow(t, j))) * (sin(j * omega * t)
-                + sin(j * omega * pow(2.0, 3.0 / 12.0) * t)
-                + sin(j * omega * pow(2.0, 7.0 / 12.0) * t));
-        }
-        
-        // ecriture dans le buffer
-        left_buffer[i] += sum;
-        right_buffer[i] += sum;
-        
-        // incrément de temps (en secondes toujours)
-        t += dt;
-    }
-}
-
-
 void generate_chord(double t1, double t2, const double *frequencies, int count, double amp, int sample_rate) {
     
     unsigned int i, j, k;
@@ -174,8 +144,10 @@ void generate_chord(double t1, double t2, const double *frequencies, int count, 
             // ajout des 7 premiers harmoniques pour chaque note (synth. additive)
             // on enrichit une onde en ajoutant les multiples entiers de sa fondamentale
             for (j = 1; j <= 7; j++) {
-                sample += (amp / count) / (pow(j, 2) * (1.0 + pow(t, j))) *
-                    sin(j * omega * t);
+                sample += (amp / count) / (pow(j, 2)
+                        * (1.0 + pow(t, j)))
+                        * sin(j * omega * t);
+                
                 // (amp / count) : repartir l'amplitude entre les notes
                 // 1 / pow(j, 2) : l'amplitude des harmoniques diminue prop à 1/j²
                 // 1 / (1 + pow(t, j)) : transitions douces (ajout perso)
