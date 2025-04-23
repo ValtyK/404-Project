@@ -42,14 +42,14 @@ extern void insererTS(char *idf, char *v) {
 // sinon
 //      ajoute le couple (idf,v) dans la TS
     for(int i=0; i<NbSymb; i++) {
-        if (estPresentTS(idf, v)) {
+        if (strcmp(idf, TS[i].nom) == 0) {
             strcpy(TS[i].melo, v);
             return;
         }
     }
-    NbSymb++;
+    
     strcpy(TS[NbSymb].nom, idf);
     strcpy(TS[NbSymb].melo, v);
-    
+    NbSymb++;
 
 }

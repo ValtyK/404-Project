@@ -4,7 +4,7 @@ CC = gcc
 # -Wall      : avertissements courants
 # -Wextra    : avertissements supplémentaires
 # -O2        : Opti du code pour meilleures perf
-CFLAGS = -Wall -Wextra -O2
+CFLAGS = -Wall -Wextra -O2 -fsanitize=address
 # Biblio à lier (math.h nécessite -lm)
 LDFLAGS = -lm
 
@@ -48,11 +48,12 @@ $(LEX).c: $(LEX).l
 test_lexeme: lexique/analyse_lexicale.o test_lexeme.o
 	$(CC) -o $@ $^ 
 
-test_TS: Table_symbole/test_TS.c Table_symbole/table_symbole.c 
-	$(CC) $(CFLAGS) $< -o $@
+
+TStest: Table_symbole/test_TS.o Table_symbole/table_symbole.o 
+	$(CC) $(CFLAGS) -o $@ $^
 
 
 
 # nettoyer les fichiers générés (executable, objets, fichier WAV)
 clean:
-	rm -f $(OBJS) $(EXEC) $(LEX).c musique.wav test_lexeme
+	rm -f $(OBJS) $(EXEC) $(LEX).c musique.wav test_lexeme TStest

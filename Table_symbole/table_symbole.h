@@ -1,12 +1,12 @@
 #ifndef ___TS___
 #define ___TS___
 
-#define LIDF 20  // nombre maximum de caractéres pour un IDF 
+#define LIDF 50  // nombre maximum de caractéres pour un IDF 
 #define NBMAXSYMB 100  // nombre maximum d'IDF 
 
 typedef struct {
    char nom[LIDF] ; // nom d'un identificateur
-   char melo[] ;     // valeur de cet identificateur
+   char melo[LIDF] ;     // valeur de cet identificateur
 } Couple ;
 
 

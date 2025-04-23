@@ -2,28 +2,23 @@
 #include "table_symbole.h"
 
 int main() {
-    char valeur[100];
-
+    char x[] = "n(C4)";
+    char v[] = "r(A2, C#2)";
+    char val[100];
     initTS();
+    
+    
+    insererTS("x", x);
     afficheTS();
-
-    insererTS("x", "42");
-    afficheTS();
-    insererTS("y", "abc");
-
-    if (estPresentTS("x", valeur)) {
-        printf("x trouvé : %s\n", valeur);
-    } else {
-        printf("x non trouvé\n");
+    if(estPresentTS("y", val)){
+        printf("y? Oui je l'ai vu\n");
+    }else{
+        printf("y? Chépa\n");
     }
-
-    insererTS("x", "99");
-
-    if (estPresentTS("x", valeur)) {
-        printf("x MAJ : %s\n", valeur);
-    }
-
+    
+    insererTS("x", v);
+    insererTS("y",x);
+    insererTS("z", "2424");
     afficheTS();
-
     return 0;
 }
