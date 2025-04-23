@@ -6,7 +6,7 @@ int main(int argc, char **argv) {
     int sample_rate = SAMPLE_RATE;  // 44100 Hz
     int num_channels = 2;           // 1 = mono, 2 = stéréo
     int bits_per_sample = 16;       // 16-bit PCM
-    double duration = 9;            // durée du fichier WAV en secondes
+    double duration = 11;            // durée du fichier WAV en secondes
 
     FILE *file = fopen(argv[1], "wb");
 
@@ -26,10 +26,18 @@ int main(int argc, char **argv) {
     generate_signal_perso(5.0, 7.0, 110.0 * pow(2.0, 7.0 / 12.0), 3000.0, sample_rate);  // MI
     
     // Hop là faire des accords sympa
-    double freqs[] = {261.63, 329.63, 392.00}; // Do, Mi, Sol
+    double freqs[] = {261.626, 329.628, 391.995}; // Do, Mi, Sol
     generate_chord(7.0, 9.0, freqs, 3, 3000.0, sample_rate);
     
-    generate_envelope(0.0, 9.0, 30.0, 20.0, 80.0, 30.0, sample_rate);
+    // Utilisation de note_to_frequency
+    double note1 = note_to_frequency("C", 4);
+    double note2 = note_to_frequency("E", 4);
+    double note3 = note_to_frequency("G", 4);
+    printf("note1 = %.3f\nnote2 = %.3f\nnote3 = %.3f\n", note1, note2, note3);
+    double freqs_2[] = {note1, note2, note3}; // Do, Mi, Sol
+    generate_chord(9.0, 11.0, freqs_2, 3, 3000.0, sample_rate);
+    
+    generate_envelope(0.0, 11.0, 30.0, 20.0, 80.0, 30.0, sample_rate);
 
     write_normalized_audio(file, bits_per_sample);
 

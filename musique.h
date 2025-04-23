@@ -53,4 +53,6 @@ void generate_signal_perso(double t1, double t2, double freq, double amp, int sa
 void generate_chord(double t1, double t2, const double *frequencies, int count, double amp, int sample_rate); // pour générer des accords
 void generate_envelope(double t1, double t2, double attack, double decay, double sustain, double release, int sample_rate); // generer de l'enveloppe
 
+double note_to_frequency(const char *note_name, int octave);
+
 #endif

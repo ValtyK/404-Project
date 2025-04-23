@@ -243,3 +243,27 @@ void generate_envelope(double t1, double t2, double attack, double decay, double
     }
 }
 
+double note_to_frequency(const char *note_name, int octave) {
+
+    const char *notes[] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
+
+    int semitone_offset = -1;
+
+    // Trouver l'index de la note dans le tableau
+    for (int i = 0; i < 12; i++) {
+        if (strcmp(note_name, notes[i]) == 0) {
+            semitone_offset = i - 9; // Décalage par rapport à LA (LA est l’index 9)
+            break;
+        }
+    }
+
+    if (semitone_offset == -1) {
+        return -1.0;
+    }
+
+    // Calculer l'écart en demi-tons par rapport à LA4
+    int total_semitones = semitone_offset + (octave - 4) * 12;
+
+    // Appliquer la formule : f = 440 * 2^(n/12)
+    return REF_FREQUENCY * pow(2.0, total_semitones / 12.0);
+}
