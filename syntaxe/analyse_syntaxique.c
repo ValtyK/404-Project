@@ -5,7 +5,7 @@
 #include "analyse_syntaxique.h"
 
 
-char* couleurToString(Nature_Lexeme c) {
+char* lexemeToString(Nature_Lexeme c) {
     switch (c) {
         case SEPMESURE: return "SEPMESURE";
         case ACCF:  return "ACCF";
@@ -54,7 +54,7 @@ void rec_seqmelo() {
     rec_mesure();
     if (lexeme_courant().nature != SEPMESURE) {
         printf("Erreur : '|' attendu après une mesure (ligne %u, colonne %u)\n",lexeme_courant().ligne, lexeme_courant().colonne);
-        printf("lexeme_courant().nature = %s\n", couleurToString(lexeme_courant().nature));
+        printf("lexeme_courant().nature = %s\n", lexemeToString(lexeme_courant().nature));
         exit(1);
     }
     rec_suite_seqmelo();
@@ -129,7 +129,7 @@ void rec_suite_seqmelo() {
 
 
 // ------------------------------------------------------------------
-int analyser(char* nomFichier) {
+int analyser(char* nomFichier, Ast* A) {
     demarrer(nomFichier);
     rec_identifiant();
 

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 Ast creer_operation(TypeOp op, Ast oprd_gauche, Ast oprd_droit){
     Ast expr;
     expr = (Ast) malloc (sizeof(NoeudAst));
