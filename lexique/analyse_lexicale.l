@@ -47,7 +47,7 @@ DIESE   "#"
 
 INTERVALLE  ":"
 
-COMMENTAIRE ("/*"({LETTRE}|{CHIFFRE}|" "|":"|\n|","|"_"|"."|"=")*"*/")|("//"({LETTRE}|{CHIFFRE}|" "|":"|","|"_"|"."|"=")\n)
+COMMENTAIRE ("/*"({LETTRE}|{CHIFFRE}|" "|":"|\n|","|"_"|"."|"=")*"*/")|("//"({LETTRE}|{CHIFFRE}|" "|":"|","|"_"|"."|"=")*\n)
 
 DUREE_RYTHMIQUE   "dc"|"c"|"n"|"b"|"r"
 

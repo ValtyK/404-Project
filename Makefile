@@ -4,7 +4,7 @@ CC = gcc
 # -Wall      : avertissements courants
 # -Wextra    : avertissements supplémentaires
 # -O2        : Opti du code pour meilleures perf
-CFLAGS = -Wall -Wextra -O2 -fsanitize=address
+CFLAGS = -Wall -Wextra -O2
 # Biblio à lier (math.h nécessite -lm)
 LDFLAGS = -lm
 
