@@ -24,66 +24,39 @@ Nous définissons la grammaire pour une **séquence de notes** que nous appelons
 ```
 ---
 
-> melo &rarr; ACCO seqmelo ACCF \
-seqmelo &rarr; mesure SEPMESURE suite_seqmelo \
-mesure &rarr; dr PARO notes PARF suite_mesure\
-notes &rarr; note ENTIER suite_notes \
-suite_notes &rarr; SEPNOTE notes
-suite_notes &rarr; ACCORD notes
-suite_notes &rarr; ε
-note &rarr; C \
-note &rarr; C# \
-note &rarr; D \
-note &rarr; D# \
-note &rarr; E \
-note &rarr; F \
-note &rarr; F# \
-note &rarr; C \
-note &rarr; G \
-note &rarr; G# \
-note &rarr; A \
-note &rarr; A# \
-note &rarr; B \
-dr &rarr; dc \
-dr &rarr; c \
-dr &rarr; n \
-dr &rarr; b \
-dr &rarr; r \
+> melo &rarr; ACCO seq_mesure ACCF \
+seq_mesure &rarr; mesure SEPMESURE suite_seq_mesure \
+suite_seq_mesure &rarr; seq_mesure \
+suite_seq_mesure &rarr; ε \
+mesure &rarr; dr PARO seq_note PARF suite_mesure \
 suite_mesure &rarr; mesure \
 suite_mesure &rarr; ε \
-suite_seqmelo &rarr; seqmelo \
-suite_seqmelo &rarr; ε
-
-## 3. Affectation
+seq_note &rarr; note ENTIER suite_seq_note \
+suite_seq_note &rarr; SEPNOTE seq_note \
+suite_seq_note &rarr; ACCORD seq_note \
+suite_seq_note &rarr; ε \
+note &rarr; C/C#, D/D#, E, F/F#, C, G/G#, A/A#, B \
+dr &rarr; dc, c, n, b, r
+## 3. Affectation / Fonctions
 
 ```
-melo_piano_2 = { c(D4, D4, D4, D4, D4, D4, D4, D4) | r(C4) | }
+melo_piano = { c(D4, D4, D4, D4, D4, D4, D4, D4) | r(C4) | }
 x = 10
+PLAY(melo_piano)
 ```
 
 > pgm &rarr; seq_inst \
 seq_inst &rarr; inst suite_seq_inst \
 suite_seq_inst &rarr; SEPINT seq_inst \
 suite_seq_inst &rarr; ε \
-inst &rarr; IDF AFF melo \
-inst &rarr; PLAY PARO IDF PARF \
-inst &rarr; autres instructions.. \ 
+inst &rarr; IDF AFF variable \
+inst &rarr; PLAY PARO IDF SEPNOTE GUIO IDF GUIF PARF \
+inst &rarr; COMMENTAIRE
+inst &rarr; autres instructions.. \
+variable &rarr; melo \
+variable &rarr; ENTIER 
 
-## 4. Fonctions
-
-```
-play(melo_piano, 1:3)
-play(melo_piano, 4)
-```
-
-> fonc &rarr; mc PARO zic SEPNOTE mesure PARF FINSEQ \
-mc &rarr; PLAY \
-zic &rarr; IDF \
-zic &rarr; melo \
-mesure &rarr; ENTIER \
-mesure &rarr; ENTIER MOINS ENTIER 
-
-## 5. Condition
+## 4. Condition
 ```
 idf << 5
 idf >> 5
