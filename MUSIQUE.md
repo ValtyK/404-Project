@@ -30,7 +30,7 @@
 
 ## Explications des paramètres principaux
 
-On vais essayer de répondre dans cette section aux questions principales que je me suis posé durant la création des fonctions de la librairie. On peut dire que cette section explique en détail les paramètres principaux utilisés dans la génération audio, leur rôle et leur portée et comment les utiliser correctement dans la librairie.
+On va essayer de répondre dans cette section aux questions principales que je me suis posé durant la création des fonctions de la librairie. On peut dire que cette section explique en détail les paramètres principaux utilisés dans la génération audio, leur rôle et leur portée et comment les utiliser correctement dans la librairie.
 
 ### 1. Buffers audio (`left_buffer`, `right_buffer`)
 
@@ -256,7 +256,7 @@ Valeurs typiques :
 - Sustain (niveau %) : 30-100
 - Release (durée %) : 0-40
 
-![representation_ADSR](./Envelopes-ADSR.png)
+![representation_ADSR](./images/adsr.png)
 
 ---
 
