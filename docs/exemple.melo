@@ -8,7 +8,7 @@ BPM: 120
 
 // Frequences en Hz
 SampleRate: 44100
-La4: 440 Hz
+La4: 440
 ---
 /* commentaire qque part dans le code */
 // commentaire sur une ligne...
