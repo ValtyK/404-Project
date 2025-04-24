@@ -15,24 +15,15 @@
 // Def de la frequence d'echantillonage (nb d'echantillons par seconde)
 #define SAMPLE_RATE 44100 // standard CD
 
-// Definition du volume (entre 0 et 32 pourdu son 16-bit)
-#define VOLUME 3000
+#define REF_FREQUENCY 440.0 // Frequence reference du LA4 (changable)
 
-// Frequence reference du LA4 (changable)
-#define REF_FREQUENCY 440.0
+#define BPM 120
+
+#define SIGNATURE_NUMERATEUR 4
+#define SIGNATURE_DENOMINATEUR 4
 
 // Nombre max de notes dans un accord
 #define MAX_NOTES_IN_CHORD 8
-
-typedef struct Note {
-    char name[3]; // Nom de la note (C, D#, etc.)
-} Note;
-
-typedef struct Chord {
-    Note notes[MAX_NOTES_IN_CHORD];
-    int note_count;
-    double duration;
-} Chord;
 
 // Buffers audio globaux
 extern double *left_buffer;
