@@ -2,7 +2,7 @@
   "name": "melo",
   "displayName": "Melo Language",
   "description": "Language support for Melo, a musical programming language - Valentin S.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "publisher": "ValentinS",
   "icon": "icon.jpg",
   "engines": {
@@ -17,7 +17,7 @@
         "id": "melo",
         "aliases": [
           "melo",
-          "melo"
+          "Melo"
         ],
         "extensions": [
           ".melo"
