@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "analyse_lexical.h"
+#include "analyse_lexicale.h"
 
    unsigned int numcol=1 ; // numero de colonne courant
 
@@ -37,6 +37,7 @@ ACCF    "}"
 LETTRE [a-z]|[A-Z]|"à"|"é"|"è"|"ù"|"ç"
 SEPINST ";"
 VIRG ","
+GUILLEMET "\""
 SEPMESURE  "|"
 AFF     "="
 
@@ -46,7 +47,7 @@ DIESE   "#"
 
 INTERVALLE  ":"
 
-COMMENTAIRE "/*"({LETTRE}|{CHIFFRE}|" "|":"|\n|","|"_"|"."|"=")*"*/"
+COMMENTAIRE ("/*"({LETTRE}|{CHIFFRE}|" "|":"|\n|","|"_"|"."|"=")*"*/")|("//"({LETTRE}|{CHIFFRE}|" "|":"|","|"_"|"."|"=")\n)
 
 DUREE_RYTHMIQUE   "dc"|"c"|"n"|"b"|"r"
 
@@ -59,7 +60,6 @@ WHILE "while"
 IF "if"
 
 IDF     ([H-Zh-z_àéèùç])([a-zA-Z0-9_àéèùç]*) 
-
 
 
 %%
