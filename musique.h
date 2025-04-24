@@ -12,6 +12,9 @@
 #define M_PI 3.14159265358979323846
 #endif
 
+#define NUM_CHANNELS 2 // stereo
+#define BITS_PER_SAMPLE 16
+
 // Def de la frequence d'echantillonage (nb d'echantillons par seconde)
 #define SAMPLE_RATE 44100 // standard CD
 
