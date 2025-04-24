@@ -50,6 +50,7 @@ void free_audio_buffers(void);
 
 // Ecriture dans les buffers audio gout caca
 void generate_signal_perso(double t1, double t2, double freq, double amp, int sample_rate); // fonction en bordel qui m'a permi de comprendre des choses
+void generate_signal(double t1, double t2, double freq, double amp, int sample_rate); // pour générer un signal simple (1 frequence)
 void generate_chord(double t1, double t2, const double *frequencies, int count, double amp, int sample_rate); // pour générer des accords
 void generate_envelope(double t1, double t2, double attack, double decay, double sustain, double release, int sample_rate); // generer de l'enveloppe
 
