@@ -24,8 +24,7 @@ Nous définissons la grammaire pour une **séquence de notes** que nous appelons
 ```
 ---
 
-> melo &rarr; mea FIN_SEQUENCE \
-mea &rarr; ACCO seqmelo ACCF \
+> melo &rarr; ACCO seqmelo ACCF \
 seqmelo &rarr; mesure SEPMESURE suite_seqmelo \
 mesure &rarr; dr PARO notes PARF suite_mesure\
 notes &rarr; note ENTIER suite_notes \
@@ -62,8 +61,13 @@ melo_piano_2 = { c(D4, D4, D4, D4, D4, D4, D4, D4) | r(C4) | }
 x = 10
 ```
 
-> identifiant &rarr; IDF AFF melo \
-identifiant &rarr; IDF AFF ENTIER
+> pgm &rarr; seq_inst \
+seq_inst &rarr; inst suite_seq_inst \
+suite_seq_inst &rarr; SEPINT seq_inst \
+suite_seq_inst &rarr; ε \
+inst &rarr; IDF AFF melo \
+inst &rarr; PLAY PARO IDF PARF \
+inst &rarr; autres instructions.. \ 
 
 ## 4. Fonctions
 

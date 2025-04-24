@@ -28,6 +28,7 @@ Ast creer_mesure(Ast oprd_gauche, Ast oprd_droit) {
     Ast expr;
     expr = (Ast) malloc (sizeof(NoeudAst));
     expr->nature = Noeud_MESURE;
+    expr->string = "|"
     if (oprd_gauche == NULL) {
         printf("ERREUR_EXPRESSION_ARBRE")
         exit(1);
