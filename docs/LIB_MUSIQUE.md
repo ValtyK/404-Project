@@ -17,11 +17,11 @@
     - [generate\_signal](#generate_signal)
       - [Paramètres de generate\_signal](#paramètres-de-generate_signal)
       - [Retour (generate\_signal)](#retour-generate_signal)
-      - [Exemple d'accord](#exemple-daccord)
+      - [Exemple de signal](#exemple-de-signal)
     - [generate\_chord](#generate_chord)
       - [Paramètres de generate\_chord](#paramètres-de-generate_chord)
       - [Retour (generate\_chord)](#retour-generate_chord)
-      - [Exemple d'accord](#exemple-daccord-1)
+      - [Exemple d'accord](#exemple-daccord)
     - [generate\_envelope](#generate_envelope)
       - [Paramètres de generate\_envelope](#paramètres-de-generate_envelope)
       - [Retour (generate\_envelope)](#retour-generate_envelope)
@@ -210,7 +210,7 @@ Génère un signal audio selon une fréquence et une amplitude données.
 
 - Aucun retour. Les signaux sont ajoutés dans les buffers audio globaux.
 
-#### Exemple d'accord
+#### Exemple de signal
 
 ```c
 double freq = 440
