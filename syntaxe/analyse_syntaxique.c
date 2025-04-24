@@ -135,7 +135,6 @@ void inst(Ast* A1) {
                 printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
                 exit(1);
             }
-            avancer();
         case COMMENTAIRE:
             avancer();
             rec_seq_inst(A1);
