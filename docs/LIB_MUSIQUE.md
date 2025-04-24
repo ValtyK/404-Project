@@ -38,7 +38,7 @@ On va essayer de répondre dans cette section aux questions principales que je m
 
 ### 1. Buffers audio (`left_buffer`, `right_buffer`)
 
-**Type** : `double *`  
+**Type** : `double *`
 
 **Description :**
 
