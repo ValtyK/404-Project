@@ -34,6 +34,7 @@ typedef enum
     DIFF,         // !=  
     NOTE,        // C, C#, D, D#, E, F, F#, G, G# A, A#, B
     DIESE,        // #
+    FICHIER,    // blabla.blabla
     INTERVALLE,   // :
     SEPMESURE,    // | séparateur de mesure
     DUREE_RYTHMIQUE, // dc, c, n, b, r
