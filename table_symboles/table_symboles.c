@@ -26,14 +26,18 @@ void afficheTS() {
 }
 
 
-int estIntMelo(Couple idf) {
+int estIntMelo(char *idf) {
 // Prend un couple (idf, v) 
 //  renvoie 1 si type(v) = INT
 //  renvoie 0 si type(v) = MELO (=STRING) 
-    if(idf.type == entier) {
-        return 1;
-    } else {
-        return 0;
+    for(int i=0; i<NbSymb; i++) {
+        if(strcmp(idf, TS[i].nom) == 0) {
+            if(TS[i].type==entier) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
     }
 }
 
@@ -44,7 +48,7 @@ int estPresentTS(char *idf, char *u, int *v) {
 // sinon
 //      estPresentTS renvoie faux
     for(int i=0; i<NbSymb; i++) {
-        if (strcmp(idf, TS[i].nom) == 0) {
+        if(strcmp(idf, TS[i].nom) == 0) {
             if(TS[i].type == melo){
                 strcpy(u, TS[i].melo);
             } else {

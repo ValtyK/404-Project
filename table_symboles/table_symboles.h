@@ -20,7 +20,7 @@ typedef struct {
 void initTS() ;
 // intialise la TS en effectant 0 à NbSymb
 
-int estIntMelo(Couple idf);
+int estIntMelo(char *idf);
 // Prend un couple (idf, v) 
 //  renvoie 1 si type(v) = INT
 //  renvoie 0 si type(v) = MELO (=STRING) 

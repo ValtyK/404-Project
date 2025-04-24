@@ -7,10 +7,19 @@ int main() {
     char str[100];
     int val;
     int val_est_genti = 2424;
+    
     initTS();
     
-    
     insererMeloTS("x", x);
+    if(estIntMelo("x")) {
+        estPresentTS("x", str, &val);
+        printf("x = %d\nC'EST UN ENTIER MAIS NAN !\n", val);
+    } else {
+        estPresentTS("x", str, &val);
+        printf("x = %s\nC'EST UN CHAR* MAIS NAN !\n", str);
+    }
+    
+    
     afficheTS();
     insererIntTS("x",val_est_genti);
     afficheTS();
@@ -23,13 +32,13 @@ int main() {
     
     insererMeloTS("x", v);
     insererMeloTS("y",x);
-    insererIntTS("z", val_est_genti);
     afficheTS();
+    insererIntTS("x", val_est_genti);
 
-    if(estPresentTS("z", str, &val)){
-        printf("z? Oui je l'ai vu avec %d\n", val);
+    if(estPresentTS("x", str, &val)){
+        printf("x? Oui je l'ai vu avec %d\n", val);
     }else{
-        printf("z? Chépa\n");
+        printf("x? Chépa\n");
     }
 
 
