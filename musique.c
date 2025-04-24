@@ -290,3 +290,8 @@ double note_to_frequency(const char *note_name, int octave) {
     // Appliquer la formule : f = 440 * 2^(n/12)
     return REF_FREQUENCY * pow(2.0, total_semitones / 12.0);
 }
+
+// Calculer la durée totale du morceau en fonction du bpm, de la sign. rythmique et du nb de mesures
+double duree_totale(double bpm, int numerateur, int nb_mesures) {
+    return nb_mesures * numerateur * (60.0 / bpm);
+}

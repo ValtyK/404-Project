@@ -54,6 +54,8 @@ void generate_signal(double t1, double t2, double freq, double amp, int sample_r
 void generate_chord(double t1, double t2, const double *frequencies, int count, double amp, int sample_rate); // pour générer des accords
 void generate_envelope(double t1, double t2, double attack, double decay, double sustain, double release, int sample_rate); // generer de l'enveloppe
 
+// Fonctions diverses (déplacer dans une autre fichier à l'avenir)
 double note_to_frequency(const char *note_name, int octave);
+double duree_totale(double bpm, int numerateur, int nb_mesures);
 
 #endif
