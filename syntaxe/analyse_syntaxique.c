@@ -52,10 +52,13 @@ void suite_seq_inst(Ast A1, Ast* A) {
     Ast A2;
     if (lexeme_courant().nature == SEPINST) {
         avancer();
-        rec_seq_inst(&A2);
-        *A = creer_seqint(A1, A2);
-    } else {
-        A = &A1;
+        if (lexeme_courant().nature == FIN_SEQUENCE) {
+            A = &A1;
+        } else {
+            rec_seq_inst(&A2);
+            *A = creer_seqint(A1, A2);
+        }
+        
     }
 }
 
@@ -135,6 +138,8 @@ void inst(Ast* A1) {
                 printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
                 exit(1);
             }
+            avancer();
+            break;
         case COMMENTAIRE:
             avancer();
             rec_seq_inst(A1);

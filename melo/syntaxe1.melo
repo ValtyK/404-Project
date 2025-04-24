@@ -1,5 +1,7 @@
 zizi = { c(D#3, D3, D3, D3, D3, D3, D3, D3) dc(F#4, G5) | r(C4) | r(C3) | } ;
 kiki = {dc(D5) | }; /*oui oui oui oui*/
 
-pipi = { r(G#2) dc(D8, A2) | } ;
-play(sisi, "sdf")
+pipi = { r(G#2) dc(D8, A2) | }; 
+play(sisi, "sdf") ; kdjfls = { r(D4) n(G19) c(A12) dc(B4) b(F#8) | } ;
+
+play(sdsd,") ; 
