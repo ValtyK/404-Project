@@ -117,7 +117,7 @@ void inst(Ast* A1) {
                 exit(1);
             }
             avancer();
-            if (lexeme_courant().nature != IDF) {
+            if (lexeme_courant().nature != FICHIER) {
                 printf("Erreur : nom de fichier attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
                 printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
                 exit(1);
