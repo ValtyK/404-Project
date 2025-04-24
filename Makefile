@@ -10,26 +10,39 @@ LDFLAGS = -lm
 
 # differents chemin des fichiers
 LEX_PATH = lexique
+SYNT_PATH = syntaxe
+ARB_PATH = arbre/ast_
 WAV_PATH = wav
-
-
+ 
 
 # variable pour FLEX
 LEX = $(LEX_PATH)/analyse_lexicale
 
+# variable pour TS
+TS = $(TS_PATH)/Table_symbole
+
+# variable pour FSYNT
+SYNT = $(SYNT_PATH)/analyse_syntaxique
+
+# variable pour ARBC
+ARBC = $(ARB_PATH)/construction
+
+# variable pour ARBP
+ARBP = $(ARB_PATH)/parcours
+
 # fichiers sources
-SRCS = $(LEX).c main.c musique.c test_lexeme.c 
+SRCS = $(LEX).c $(SYNT).c $(ARBC).c $(ARBP).c main.c musique.c test_lexeme.c test_syntaxe.c 
 
 
 # liste des fichiers objets en remplacant .c par .o
 OBJS = $(SRCS:.c=.o)
 
-
 # Nom de l'executable final
-EXEC = musique 
+EXEC = musique
+
 
 # Regle principale : compilation du programme
-all: $(LEX).c $(EXEC)
+all: $(LEX).c $(EXEC) 
 
 # créer l'executable
 $(EXEC): $(OBJS)
@@ -44,15 +57,16 @@ $(LEX).c: $(LEX).l
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-test_lexeme: lexique/analyse_lexicale.o test_lexeme.o
-	$(CC) -o $@ $^ 
+test_lexeme: $(LEX).o test_lexeme.o
+	$(CC) -o $@ $^
+
+test_syntaxe: $(LEX).o $(SYNT).o $(ARBC).o test_syntaxe.o
+	$(CC) -o $@ $^
 
 
 TStest: table_symboles/test_TS.o table_symboles/table_symboles.o
 	$(CC) $(CFLAGS) -o $@ $^
 
-
-
 # nettoyer les fichiers générés (executable, objets, fichier WAV)
 clean:
-	rm -f $(OBJS) $(EXEC) $(LEX).c musique.wav test_lexeme TStest
+	rm -f $(OBJS) $(EXEC) $(LEX).c musique.wav test_lexeme test_syntaxe TStest

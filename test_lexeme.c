@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "lexique/analyse_lexicale.h"
+#include "syntaxe/analyse_syntaxique.h"
 
 int main (int argc, char *argv[]) {
     switch (argc) {
