@@ -12,27 +12,21 @@
 #define M_PI 3.14159265358979323846
 #endif
 
+#define NUM_CHANNELS 2 // stereo
+#define BITS_PER_SAMPLE 16
+
 // Def de la frequence d'echantillonage (nb d'echantillons par seconde)
 #define SAMPLE_RATE 44100 // standard CD
 
-// Definition du volume (entre 0 et 32 pourdu son 16-bit)
-#define VOLUME 3000
+#define REF_FREQUENCY 440.0 // Frequence reference du LA4 (changable)
 
-// Frequence reference du LA4 (changable)
-#define REF_FREQUENCY 440.0
+#define BPM 120.0
+
+#define SIGNATURE_NUMERATEUR 4
+#define SIGNATURE_DENOMINATEUR 4
 
 // Nombre max de notes dans un accord
 #define MAX_NOTES_IN_CHORD 8
-
-typedef struct Note {
-    char name[3]; // Nom de la note (C, D#, etc.)
-} Note;
-
-typedef struct Chord {
-    Note notes[MAX_NOTES_IN_CHORD];
-    int note_count;
-    double duration;
-} Chord;
 
 // Buffers audio globaux
 extern double *left_buffer;
@@ -48,11 +42,14 @@ void write_normalized_audio(FILE *file, int bits_per_sample);
 void init_audio_buffers(int sample_rate, int num_channels, double duration_sec);
 void free_audio_buffers(void);
 
-// Ecriture dans les buffers audio
+// Ecriture dans les buffers audio gout caca
 void generate_signal_perso(double t1, double t2, double freq, double amp, int sample_rate); // fonction en bordel qui m'a permi de comprendre des choses
+void generate_signal(double t1, double t2, double freq, double amp, int sample_rate); // pour générer un signal simple (1 frequence)
 void generate_chord(double t1, double t2, const double *frequencies, int count, double amp, int sample_rate); // pour générer des accords
 void generate_envelope(double t1, double t2, double attack, double decay, double sustain, double release, int sample_rate); // generer de l'enveloppe
 
+// Fonctions diverses (déplacer dans une autre fichier à l'avenir)
 double note_to_frequency(const char *note_name, int octave);
+double duree_totale(double bpm, int numerateur, int nb_mesures);
 
 #endif

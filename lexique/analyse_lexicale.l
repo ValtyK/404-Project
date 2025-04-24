@@ -47,6 +47,8 @@ DIESE   "#"
 
 INTERVALLE  ":"
 
+FICHIER {LETTRE}+"."{LETTRE}+
+
 COMMENTAIRE ("/*"({LETTRE}|{CHIFFRE}|" "|":"|\n|","|"_"|"."|"=")*"*/")|("//"({LETTRE}|{CHIFFRE}|" "|":"|","|"_"|"."|"=")*\n)
 
 DUREE_RYTHMIQUE   "dc"|"c"|"n"|"b"|"r"
@@ -59,7 +61,8 @@ WHILE "while"
 
 IF "if"
 
-IDF     ([H-Zh-z_àéèùç])([a-zA-Z0-9_àéèùç]*) 
+IDF     ([H-Zad-mo-qs-z_àéèùç])([a-zA-Z0-9_àéèùç]*) 
+
 
 
 %%
@@ -199,6 +202,13 @@ IDF     ([H-Zh-z_àéèùç])([a-zA-Z0-9_àéèùç]*)
   return 0;
 }
 
+ /* lexeme de type FICHIER */
+{FICHIER} {
+  initLC();
+  LC.nature = FICHIER;
+  return 0;
+}
+
  /* lexeme de type VIRG */
 {VIRG} {
   initLC();
@@ -319,6 +329,7 @@ char *Nature_vers_Chaine (Nature_Lexeme nature) {
 
     case DIESE: return "DIESE";
     case INTERVALLE: return "INTERVALLE";
+    case FICHIER: return "FICHIER";
 
     case DUREE_RYTHMIQUE: return "DUREE_RYTHMIQUE";
 
