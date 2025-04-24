@@ -36,7 +36,7 @@ ACCF    "}"
 
 LETTRE [a-z]|[A-Z]|"à"|"é"|"è"|"ù"|"ç"
 SEPINST ";"
-SEPNOTE ","
+VIRG ","
 SEPMESURE  "|"
 AFF     "="
 
@@ -199,11 +199,18 @@ IDF     ([H-Zh-z_àéèùç])([a-zA-Z0-9_àéèùç]*)
   return 0;
 }
 
- /* lexeme de type SEPNOTE */
-{SEPNOTE} {
+ /* lexeme de type VIRG */
+{VIRG} {
   initLC();
-  LC.nature = SEPNOTE;
+  LC.nature = VIRG;
 
+  return 0;
+}
+
+ /* lexeme de type GUILLEMET */
+{GUILLEMET} {
+  initLC();
+  LC.nature = GUILLEMET;
   return 0;
 }
 
@@ -292,7 +299,8 @@ char *Nature_vers_Chaine (Nature_Lexeme nature) {
     case ACCF: return "ACCF";
     case IDF: return "IDF" ;
     case SEPINST: return "SEPINST" ;
-    case SEPNOTE: return "SEPNOTE";
+    case VIRG: return "VIRG";
+    case GUILLEMET: return "GUILLEMET";
     case SEPMESURE: return "SEPMESURE";
     case AFF: return "AFF" ;
     case FIN_SEQUENCE: return "FIN_SEQUENCE" ;

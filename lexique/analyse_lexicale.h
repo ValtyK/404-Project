@@ -26,18 +26,19 @@ typedef enum
     AFF,          // =
     FIN_SEQUENCE, // pseudo lexeme ajoute en fin de sequence
 //OPCOMP
-    INF,          // <<
+    INF,          // <
     INF_EG,       // <=
-    SUP,          // >>
+    SUP,          // >
     SUP_EG,       // >=
     EG,           // ==
     DIFF,         // !=  
-    NOTE,        // C, D, E, F, G, A, B
+    NOTE,        // C, C#, D, D#, E, F, F#, G, G# A, A#, B
     DIESE,        // #
     INTERVALLE,   // :
     SEPMESURE,    // | séparateur de mesure
     DUREE_RYTHMIQUE, // dc, c, n, b, r
-    SEPNOTE,    // ,
+    VIRG,    // ,
+    GUILLEMET,      // "
     COMMENTAIRE,    // /* blablabla */ ou //
     ACCORD, // @
 
