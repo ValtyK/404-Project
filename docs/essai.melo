@@ -21,6 +21,9 @@ ami_pierrot = {n(C4, C4, C4, D4) | b(E4, D4) | n(C4, E4, D4, D4) | r(C4) |}
 interlude = {n(D4, D4, D4, D4) | b(A4, A4) | n(D4, C4, B4, A4) | r(G3) |}
 au_clair_de_la_lune = (2 * ami_pierrot) + interlude + ami_pierrot
 
+// On peut refaire la mesure 1 de ami_pierrot en répartissant les temps autrement
+irregular_m1_pierrot = {n(C4) dc(C4, C4, C4) c(C4) dc(C4, C4, C4) n(D4) |}
+
 play(au_clair_de_la_lune, 1:, "clair_lune.wav") // Ecris toute la melodie a partir de la mesure 1
 
 /*
