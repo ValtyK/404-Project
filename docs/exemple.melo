@@ -1,10 +1,14 @@
 ---
-Name: Ma musique de ZINZIN
+Name: Mon nom de projet
 Authors: Tavib & MaTttThéEau & Vlnaeitn
 Date: aozidgyauzdhg 12 caca
 
 Signature: 4/4
 BPM: 120
+
+// Frequences en Hz
+SampleRate: 44100
+La4: 440 Hz
 ---
 /* commentaire qque part dans le code */
 // commentaire sur une ligne...
