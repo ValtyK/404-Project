@@ -12,12 +12,8 @@ LDFLAGS = -lm
 LEX_PATH = lexique
 WAV_PATH = wav
 
-
 # variable pour FLEX
 LEX = $(LEX_PATH)/analyse_lexicale
-
-# variable pour TS
-TS = $(TS_PATH)/Table_symbole
 
 # fichiers sources
 SRCS = $(LEX).c main.c musique.c test_lexeme.c 
@@ -49,7 +45,7 @@ test_lexeme: lexique/analyse_lexicale.o test_lexeme.o
 	$(CC) -o $@ $^ 
 
 
-TStest: Table_symbole/test_TS.o Table_symbole/table_symbole.o 
+TStest: table_symboles/test_TS.o table_symboles/table_symboles.o
 	$(CC) $(CFLAGS) -o $@ $^
 
 
