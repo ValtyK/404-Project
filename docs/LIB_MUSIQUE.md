@@ -14,10 +14,14 @@
       - [Paramètres](#paramètres)
       - [Valeur de retour](#valeur-de-retour)
       - [Exemple](#exemple)
+    - [generate\_signal](#generate_signal)
+      - [Paramètres de generate\_signal](#paramètres-de-generate_signal)
+      - [Retour (generate\_signal)](#retour-generate_signal)
+      - [Exemple d'accord](#exemple-daccord)
     - [generate\_chord](#generate_chord)
       - [Paramètres de generate\_chord](#paramètres-de-generate_chord)
       - [Retour (generate\_chord)](#retour-generate_chord)
-      - [Exemple d'accord](#exemple-daccord)
+      - [Exemple d'accord](#exemple-daccord-1)
     - [generate\_envelope](#generate_envelope)
       - [Paramètres de generate\_envelope](#paramètres-de-generate_envelope)
       - [Retour (generate\_envelope)](#retour-generate_envelope)
@@ -179,6 +183,38 @@ Cette fonction est utile pour générer des notes précises dans des buffers aud
 double a = note_to_frequency("A", 4);    // 440.0
 double cs = note_to_frequency("C#", 4);  // 277.18
 double err = note_to_frequency("H", 4);  // -1.0
+```
+
+---
+
+### generate_signal
+
+```c
+void generate_signal(double t1, double t2, double freq, double amp, int sample_rate);
+```
+
+**Description :**
+Génère un signal audio selon une fréquence et une amplitude données.
+
+#### Paramètres de generate_signal
+
+| Nom | Type | Description |
+|-|-|-|
+| `t1` | `double` | Temps de début de l'accord, en secondes |
+| `t2` | `double` | Temps de fin de l'accord, en secondes |
+| `freq` | `double` | Frequences (en Hz) de la notes à jouer |
+| `amp` | `double` | Amplitude |
+| `sample_rate` | `int` | Taux d'échantillonage en Hz (ex: 44100) |
+
+#### Retour (generate_signal)
+
+- Aucun retour. Les signaux sont ajoutés dans les buffers audio globaux.
+
+#### Exemple d'accord
+
+```c
+double freq = 440
+generate_signal(0.0, 2.0, freq, 3000.0, 44100); // joue le La4 = 440 Hz
 ```
 
 ---
