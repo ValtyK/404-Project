@@ -96,7 +96,6 @@ void generate_signal_perso(double t1, double t2, double freq, double amp, int sa
 
     unsigned int start = (unsigned int)(t1 * sample_rate);
     unsigned int end   = (unsigned int)(t2 * sample_rate);
-
     if (end > total_samples) end = total_samples;
 
     for (i = start; i < end; i++) {
@@ -111,6 +110,30 @@ void generate_signal_perso(double t1, double t2, double freq, double amp, int sa
 
         left_buffer[i] += sum;
         right_buffer[i] += sum;
+
+        t += dt;
+    }
+}
+
+void generate_signal(double t1, double t2, double freq, double amp, int sample_rate){
+    unsigned int i, j;
+    double omega = 2.0 * M_PI * freq;
+    double dt = 1.0 / sample_rate;
+    double t = 0.0;
+
+    unsigned int start = (unsigned int)(t1 * sample_rate);
+    unsigned int end = (unsigned int)(t2 * sample_rate);
+    if (end > total_samples) end = total_samples;
+
+    for (i = start; i < end; i++) {
+        double sample = 0.0;
+
+        for (j = 1; j <= 7; j++) {
+            sample += amp / (j * (1.0 + pow(t, j))) * sin(j * omega * t);
+        }
+
+        left_buffer[i] += sample;
+        right_buffer[i] += sample;
 
         t += dt;
     }
@@ -266,4 +289,9 @@ double note_to_frequency(const char *note_name, int octave) {
 
     // Appliquer la formule : f = 440 * 2^(n/12)
     return REF_FREQUENCY * pow(2.0, total_semitones / 12.0);
+}
+
+// Calculer la durée totale du morceau en fonction du bpm, de la sign. rythmique et du nb de mesures
+double duree_totale(double bpm, int numerateur, int nb_mesures) {
+    return nb_mesures * numerateur * (60.0 / bpm);
 }

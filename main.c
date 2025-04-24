@@ -3,10 +3,11 @@
 
 int main(int argc, char **argv) {
 
-    int sample_rate = SAMPLE_RATE;  // 44100 Hz
-    int num_channels = 2;           // 1 = mono, 2 = stéréo
-    int bits_per_sample = 16;       // 16-bit PCM
-    double duration = 11;            // durée du fichier WAV en secondes
+    int sample_rate = SAMPLE_RATE;          // 44100 Hz
+    int num_channels = NUM_CHANNELS;        // 1 = mono, 2 = stéréo
+    int bits_per_sample = BITS_PER_SAMPLE;  // 16-bit PCM
+    
+    double duration = 11; // durée du fichier WAV en secondes
 
     FILE *file = fopen(argv[1], "wb");
 
