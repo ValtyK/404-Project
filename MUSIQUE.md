@@ -1,6 +1,6 @@
-# Documentation général
+# Documentation générale
 
-- [Documentation général](#documentation-général)
+- [Documentation générale](#documentation-générale)
   - [Explications des paramètres principaux](#explications-des-paramètres-principaux)
     - [1. Buffers audio (`left_buffer`, `right_buffer`)](#1-buffers-audio-left_buffer-right_buffer)
     - [2. Amplitude (`amp`)](#2-amplitude-amp)
@@ -30,7 +30,7 @@
 
 ## Explications des paramètres principaux
 
-Cette section explique en détail les paramètres principaux utilisés dans la génération audio, leur rôle et leur portée et comment les utiliser correctement dans la librairie.
+On vais essayer de répondre dans cette section aux questions principales que je me suis posé durant la création des fonctions de la librairie. On peut dire que cette section explique en détail les paramètres principaux utilisés dans la génération audio, leur rôle et leur portée et comment les utiliser correctement dans la librairie.
 
 ### 1. Buffers audio (`left_buffer`, `right_buffer`)
 
@@ -84,19 +84,30 @@ Chaque case du tableau représente un échantillon du signal à un instant donn�
 
 **Description :**
 
-- Délimitent la zone temporelle d’un signal dans le buffer.
-- Convertis en index avec `i = t * sample_rate`.
+- Délimitent la zone temporelle d’un signal dans le buffer
+- Convertis en index avec `i = t * sample_rate`
 
 **Remarques :**
 
-- Tous les signaux doivent être correctement placés dans la timeline.
+- Tous les signaux doivent être correctement placés dans la timeline
 - `generate_chord(1.0, 2.0, ...)` écrit entre les échantillons 44100 et 88200 à 44.1 kHz
+
+---
+
+On peut résumer ces paramètres avec l'image suivante, qui représente un signal audio simple (fonction du temps et de l'amplitude) échantillonné.
+
+![illus_amp](./images/signal_echantillons.png)
 
 ---
 
 ### 4. Méthodes de création d'un accord
 
 Voici 3 méthodes différentes de superposer des fréquences / notes dans un buffer audio.
+
+Je me suis basé principalement sur les articles suivants, que je conseille de lire pour comprendre en détail le sujet :
+
+- [Créez des ondes sonores en C](https://connect.ed-diamond.com/GNU-Linux-Magazine/glmf-190/format-wav-creez-des-ondes-sonores-en-c)
+- [Des sons de plus en plus complexes](https://connect.ed-diamond.com/GNU-Linux-Magazine/glmf-190/format-wav-des-sons-de-plus-en-plus-complexes)
 
 #### Méthode 1 : Superposition
 
