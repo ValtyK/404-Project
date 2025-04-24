@@ -47,8 +47,8 @@ PLAY(melo_piano)
 
 > pgm &rarr; seq_inst \
 seq_inst &rarr; inst suite_seq_inst \
-suite_seq_inst &rarr; SEPINT seq_inst \
-suite_seq_inst &rarr; ε \
+suite_seq_inst &rarr; SEPINST seq_inst \
+suite_seq_inst &rarr; SEPINST \
 inst &rarr; IDF AFF variable \
 inst &rarr; PLAY PARO IDF SEPNOTE GUIO IDF GUIF PARF \
 inst &rarr; COMMENTAIRE
