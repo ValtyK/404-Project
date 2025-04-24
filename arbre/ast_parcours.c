@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "../musique.h"
 
 void aff_operateur(TypeOp op) {
 	switch (op) {
@@ -49,4 +50,32 @@ void afficherA(Ast expr) {
             printf("%d", expr->valeur);
             break ;
 	}
+}
+
+// typedef enum {
+//     Noeud_FICHIER, 
+//     Noeud_PLAY, 
+//     Noeud_AFF, 
+//     Noeud_NOTE,
+//     Noeud_SUITE_NOTE,
+//     Noeud_DR, 
+//     Noeud_MESURE,
+//     Noeud_SEPMESURE, 
+//     Noeud_ENTIER,
+//     Noeud_OPERATION, 
+//     Noeud_ID,
+//     Noeud_JOINTURE,
+//     Noeud_INST
+// } TypeAst;
+
+int evaluation(Ast melodie) {
+
+    switch(melodie.nature) {
+        case Noeud_NOTE:
+            note_to_frequency(melodie.string, melodie.val);
+        default:
+            printf("ERREUR AST pas valide ! \n");
+            exit(0);
+        }
+
 }
