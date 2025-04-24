@@ -50,5 +50,7 @@ Durée Totale = $(nb\_mesures \times numerateur \times \frac{60}{BPM})$ secondes
 On peut écrire la fonction suivante :
 
 ```c
-
+double duree_totale(double bpm, int numerateur, int nb_mesures) {
+    return nb_mesures * numerateur * (60 / bpm);
+}
 ```
