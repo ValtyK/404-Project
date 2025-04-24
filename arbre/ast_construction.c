@@ -21,7 +21,9 @@ Ast creer_seqint(Ast A1, Ast A2) {
     Ast expr;
     expr = (Ast) malloc (sizeof(NoeudAst));
     expr->nature = Noeud_INST;
-    
+    expr->gauche = A1;
+    expr->droite = A2;
+    return expr;
 }
 
 Ast creer_jointure_note(TypeJointure j) {

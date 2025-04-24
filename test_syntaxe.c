@@ -3,6 +3,7 @@
 
 #include "arbre/type_ast.h"
 #include "syntaxe/analyse_syntaxique.h"
+#include "arbre/ast_parcours.h"
 
 int main (int argc, char* argv[]) {
     int syntaxe_correcte ; 
@@ -20,5 +21,6 @@ int main (int argc, char* argv[]) {
     }
     if (syntaxe_correcte) {
         printf("Test_syntaxe : OK\n");
+        printf("Nombre de mesures: %d\n", calcul_nb_mesures(A));
     }
 }

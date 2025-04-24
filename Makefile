@@ -4,7 +4,7 @@ CC = gcc
 # -Wall      : avertissements courants
 # -Wextra    : avertissements supplémentaires
 # -O2        : Opti du code pour meilleures perf
-CFLAGS = -Wall -Wextra -O2
+CFLAGS = -Wall -Wextra -O2 -g
 # Biblio à lier (math.h nécessite -lm)
 LDFLAGS = -lm
 
@@ -60,7 +60,7 @@ $(LEX).c: $(LEX).l
 test_lexeme: $(LEX).o test_lexeme.o
 	$(CC) -o $@ $^
 
-test_syntaxe: $(LEX).o $(SYNT).o $(ARBC).o test_syntaxe.o
+test_syntaxe: $(LEX).o $(SYNT).o $(ARBC).o $(ARBP).o test_syntaxe.o
 	$(CC) -o $@ $^
 
 

@@ -260,6 +260,8 @@ void rec_suite_seqmesure(Ast* A) {
     avancer();
     if (lexeme_courant().nature == DUREE_RYTHMIQUE) {
         rec_seqmesure(A);
+    }else{
+        *A = NULL;
     }
 }
 
