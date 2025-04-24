@@ -7,8 +7,33 @@
 
 char* lexemeToString(Nature_Lexeme c) {
     switch (c) {
-        case SEPMESURE: return "SEPMESURE";
+        case ENTIER: return "ENTIER";
+        case ACCO: return "ACCO";
         case ACCF:  return "ACCF";
+        case PARO: return "PARO";
+        case PARF: return "PARF";
+        case SEPINST: return "SEPINST";
+        case AFF: return "AFF";
+        case INF: return "INF";
+        case INF_EG: return "INF_EG";
+        case SUP: return "SUP";
+        case SUP_EG: return "SUP_EG";
+        case EG: return "EG";
+        case DIFF: return "DIFF";
+        case NOTE: return "NOTE";
+        case DIESE: return "DIESE";
+        case INTERVALLE: return "INTERVALLE";
+        case SEPMESURE: return "SEPMESURE";
+        case DUREE_RYTHMIQUE: return "DUREE_RYTHMIQUE";
+        case VIRG: return "VIRG";
+        case GUILLEMET: return "GUILLEMET";
+        case COMMENTAIRE: return "COMMENTAIRE";
+        case ACCORD: return "ACCORD";
+        case PLAY: return "PLAY";
+        case WHILE: return "WHILE";
+        case IF: return "IF";
+        case IDF: return "IDF";
+        case ERREUR: return "ERREUR";
         default:    return "INCONNU";
     }
 }
@@ -26,6 +51,7 @@ void rec_seq_inst(Ast* A) {
 void suite_seq_inst(Ast A1, Ast* A) {
     Ast A2;
     if (lexeme_courant().nature == SEPINST) {
+        avancer();
         rec_seq_inst(&A2);
         *A = creer_seqint(A1, A2);
     } else {
@@ -41,6 +67,7 @@ void inst(Ast* A1) {
             avancer();
             if (lexeme_courant().nature != AFF) {
                 printf("Erreur : '=' attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
+                printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
                 exit(1); 
             }
             avancer();
@@ -52,7 +79,8 @@ void inst(Ast* A1) {
                     rec_melo(&Ad);
                     break;
                 default:
-                    printf("Erreur : type variable inconnu.. (ligne %u, colonne %u)", lexeme_courant().ligne, lexeme_courant().colonne);
+                    printf("Erreur : type variable inconnu.. (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
+                    printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
                     exit(1);
             }
             *A1 = creer_aff(Ag, Ad);
@@ -61,29 +89,34 @@ void inst(Ast* A1) {
             avancer();
             if (lexeme_courant().nature != PARO) {
                 printf("Erreur : PARO attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
+                printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
                 exit(1);
             }
             avancer();
             if (lexeme_courant().nature != IDF) {
                 printf("Erreur : IDF attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
+                printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
                 exit(1);
             }
 
             Ag = creer_id(lexeme_courant().chaine); // creation de l'arbre du premiere argument de play().
             
             avancer();
-            if (lexeme_courant().nature != SEPNOTE) {
+            if (lexeme_courant().nature != VIRG) {
                 printf("Erreur : virgule attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
+                printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
                 exit(1);
             }
             avancer();
-            if (lexeme_courant().nature != GUIO) {
+            if (lexeme_courant().nature != GUILLEMET) {
                 printf("Erreur : guillemet attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
+                printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
                 exit(1);
             }
             avancer();
             if (lexeme_courant().nature != IDF) {
                 printf("Erreur : nom de fichier attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
+                printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
                 exit(1);
             }
 
@@ -91,33 +124,41 @@ void inst(Ast* A1) {
             *A1 = creer_play(Ag, Ad); // creation de du noeud play.
 
             avancer();
-            if (lexeme_courant().nature != GUIF) {
+            if (lexeme_courant().nature != GUILLEMET) {
                 printf("Erreur : GUIF attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
+                printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
                 exit(1);
             }
             avancer();
             if (lexeme_courant().nature != PARF) {
                 printf("Erreur : PARF attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
+                printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
                 exit(1);
             }
             avancer();
         case COMMENTAIRE:
+            avancer();
+            rec_seq_inst(A1);
             break;
         default:
-            printf("Erreur : Une instruction ne peut commencer que par une fonction ou bien une affectation");
+            printf("Erreur : Une instruction ne peut commencer que par une fonction ou bien une affectation\n");
+            printf("ligne %u, colonne %u\n", lexeme_courant().ligne, lexeme_courant().colonne);
+            printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
             exit(1);
     }
 }
 
 void rec_melo(Ast* A) {
     if (lexeme_courant().nature != ACCO) {
-        printf("Erreur : accolade ouvrante attendu (ligne %u, colonne %u)", lexeme_courant().ligne, lexeme_courant().colonne);
+        printf("Erreur : accolade ouvrante attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
+        printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
         exit(1);
     }
     avancer();
     rec_seqmesure(A);
     if (lexeme_courant().nature != ACCF) {
-        printf("Erreur : accolade fermante attendu (ligne %u, colonne %u)", lexeme_courant().ligne, lexeme_courant().colonne);
+        printf("Erreur : accolade fermante attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
+        printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature)); 
         exit(1);
     }
     avancer();
@@ -128,7 +169,7 @@ void rec_seqmesure(Ast* A) {
     rec_mesure(&A1);
     if (lexeme_courant().nature != SEPMESURE) {
         printf("Erreur : '|' attendu après une mesure (ligne %u, colonne %u)\n",lexeme_courant().ligne, lexeme_courant().colonne);
-        printf("lexeme_courant().nature = %s\n", lexemeToString(lexeme_courant().nature));
+        printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
         exit(1);
     }
     rec_suite_seqmesure(&A2);
@@ -139,19 +180,22 @@ void rec_mesure(Ast* A) {
     Ast Adr, Aseq_note, Asousmesure;     // sous arbre ou arbre fils
 
     if (lexeme_courant().nature != DUREE_RYTHMIQUE) {
-        printf("Erreur : DUREE_RYTHMIQUE attendu (ligne %u, colonne %u)", lexeme_courant().ligne, lexeme_courant().colonne);
+        printf("Erreur : DUREE_RYTHMIQUE attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
+        printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
         exit(1);
     }
     Adr = creer_dr(lexeme_courant().chaine);
     avancer();
     if (lexeme_courant().nature != PARO) {
-        printf("Erreur : PARO attendu (ligne %u, colonne %u)",lexeme_courant().ligne, lexeme_courant().colonne);
+        printf("Erreur : PARO attendu (ligne %u, colonne %u)\n",lexeme_courant().ligne, lexeme_courant().colonne);
+        printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
         exit(1);
     }
     avancer();
     rec_seq_note(&Aseq_note);
     if (lexeme_courant().nature != PARF) {
-        printf("Erreur : PARF attendu (ligne %u, colonne %u)",lexeme_courant().ligne, lexeme_courant().colonne);
+        printf("Erreur : PARF attendu (ligne %u, colonne %u)\n",lexeme_courant().ligne, lexeme_courant().colonne);
+        printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
         exit(1);
     }
     rec_suite_mesure(&Asousmesure);
@@ -167,7 +211,8 @@ void rec_seq_note(Ast* A) {
             note = lexeme_courant().chaine;
             avancer();
             if (lexeme_courant().nature != ENTIER) {
-                printf("Erreur : ENTIER attendu (ligne %u, colonne %u)",lexeme_courant().ligne, lexeme_courant().colonne);
+                printf("Erreur : ENTIER attendu (ligne %u, colonne %u)\n",lexeme_courant().ligne, lexeme_courant().colonne);
+                printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
                 exit(1);
             }
             Anote = creer_note(note, lexeme_courant().valeur);
@@ -175,7 +220,8 @@ void rec_seq_note(Ast* A) {
             rec_suite_notes(&Asuite_seq_note);
             break;
         default:
-            printf("Erreur : Une note est attendu (ligne %u, colonne %u)",lexeme_courant().ligne, lexeme_courant().colonne);
+            printf("Erreur : Une note est attendue (ligne %u, colonne %u)\n",lexeme_courant().ligne, lexeme_courant().colonne);
+            printf("Lexeme actuel : %s, chaine : %s\n", lexemeToString(lexeme_courant().nature), lexeme_courant().chaine);
             exit(1);
     }
 
@@ -186,18 +232,21 @@ void rec_seq_note(Ast* A) {
 void rec_suite_notes(Ast* A) {
     Ast Aj, Aseq_note;
     switch (lexeme_courant().nature) {
-        case SEPNOTE:
-            Aj = creer_jointure_note(N_SEPNOTE);
+        case VIRG:
+            Aj = creer_jointure_note(N_VIRG);
+            avancer();
+            rec_seq_note(&Aseq_note);
+            *A = creer_suite_note(Aj, Aseq_note);
             break;
         case ACCORD:
             Aj = creer_jointure_note(N_ACCORD);
             avancer();
+            rec_seq_note(&Aseq_note);
+            *A = creer_suite_note(Aj, Aseq_note);
             break;
         default:
             break;
     }
-    rec_seq_note(&Aseq_note);
-    *A = creer_suite_note(Aj, Aseq_note);
 }
 
 void rec_suite_mesure(Ast* A) {
@@ -224,10 +273,11 @@ int analyser(char* nomFichier, Ast* A) {
     if (lexeme_courant().nature == FIN_SEQUENCE) {
         printf("Syntaxe : OK\n");
         //afficherA(*A);
-        printf("\n");
         return 1;
     } else {
         printf("Syntaxe : Erreur..\n");
+        printf("ligne %u, colonne %u\n", lexeme_courant().ligne, lexeme_courant().colonne);
+        printf("Lexeme actuel : %s, chaine : %s\n", lexemeToString(lexeme_courant().nature), lexeme_courant().chaine);
         return 0;
     }
 }

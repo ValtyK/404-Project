@@ -16,7 +16,7 @@ typedef enum {
     Noeud_JOINTURE,
     Noeud_INST
 } TypeAst;
-typedef enum {N_SEPNOTE, N_ACCORD} TypeJointure;
+typedef enum {N_VIRG, N_ACCORD} TypeJointure;
 
 typedef struct noeud {
     TypeAst nature;

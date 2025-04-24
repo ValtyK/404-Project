@@ -11,7 +11,7 @@ LDFLAGS = -lm
 # differents chemin des fichiers
 LEX_PATH = lexique
 SYNT_PATH = syntaxe
-ARB_PATH = arbre/ast_
+ARB_PATH = arbre/ast
 WAV_PATH = wav
  
 
@@ -25,10 +25,10 @@ TS = $(TS_PATH)/Table_symbole
 SYNT = $(SYNT_PATH)/analyse_syntaxique
 
 # variable pour ARBC
-ARBC = $(ARB_PATH)/construction
+ARBC = $(ARB_PATH)_construction
 
 # variable pour ARBP
-ARBP = $(ARB_PATH)/parcours
+ARBP = $(ARB_PATH)_parcours
 
 # fichiers sources
 SRCS = $(LEX).c $(SYNT).c $(ARBC).c $(ARBP).c main.c musique.c test_lexeme.c test_syntaxe.c 

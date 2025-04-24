@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "ast_construction.h"
 // Ast creer_operation(TypeOp op, Ast oprd_gauche, Ast oprd_droit){
 //     Ast expr;
 //     expr = (Ast) malloc (sizeof(NoeudAst));
 //     expr->nature = Noeud_OPERATION;
 //     expr->operateur = op;
 //     if (oprd_gauche == NULL || oprd_droit == NULL) {
-//         printf("ERREUR_EXPRESSION_ARBRE");
+//         printf("ERREUR_EXPRESSION_ARBRE\n");
 //         exit(1);
 //     } else {
 //         expr->gauche = oprd_gauche;
@@ -16,7 +17,7 @@
 //     return expr;
 // }
 
-Ast creer_seqint(Ast A1, A2) {
+Ast creer_seqint(Ast A1, Ast A2) {
     Ast expr;
     expr = (Ast) malloc (sizeof(NoeudAst));
     expr->nature = Noeud_INST;
@@ -35,12 +36,12 @@ Ast creer_play(Ast A1, Ast A2) {
     Ast expr;
     expr = (Ast) malloc (sizeof(NoeudAst));
     expr->nature = Noeud_PLAY;
-    if (A1 == NULL, A2 == NULL) {
-        printf("ERREUR_EXPRESSION_ARBRE");
+    if (A1 == NULL || A2 == NULL) {
+        printf("ERREUR_EXPRESSION_ARBRE\n");
         exit(1);
     }
     expr->gauche = A1;
-    expr->droit = A2;
+    expr->droite = A2;
     return expr;
 }
 
@@ -65,11 +66,11 @@ Ast creer_mesure(Ast Adr, Ast Anote, Ast Asousmesure) {
     expr = (Ast) malloc (sizeof(NoeudAst));
     expr->nature = Noeud_MESURE;
     if (Adr == NULL || Anote == NULL) {
-        printf("ERREUR_EXPRESSION_ARBRE");
+        printf("ERREUR_EXPRESSION_ARBRE\n");
         exit(1);
     }
     expr->gauche = Adr;
-    expr->droit = Anote;
+    expr->droite = Anote;
     expr->suite = Asousmesure;
     return expr;
 }
@@ -78,12 +79,12 @@ Ast creer_sepmesure(Ast gauche, Ast droit) {
     Ast expr;
     expr = (Ast) malloc (sizeof(NoeudAst));
     expr->nature = Noeud_SEPMESURE;
-    if (oprd_gauche == NULL) {
-        printf("ERREUR_EXPRESSION_ARBRE");
+    if (gauche == NULL) {
+        printf("ERREUR_EXPRESSION_ARBRE\n");
         exit(1);
     }
-    expr->gauche = oprd_gauche;
-    expr->droit = oprd_droit;
+    expr->gauche = gauche;
+    expr->droite = droit;
     return expr;
 }
 
@@ -100,20 +101,20 @@ Ast creer_seq_note(Ast Anote, Ast Asuite_note) {
     expr = (Ast) malloc (sizeof(NoeudAst));
     expr->nature = Noeud_SUITE_NOTE;
     expr->gauche = Anote;
-    expr->droit = Asuite_note;
+    expr->droite = Asuite_note;
     return expr;
 }
 
 Ast creer_suite_note(Ast Aj, Ast Aseq_note) {
     Ast expr;
     expr = (Ast) malloc (sizeof(NoeudAst));
-    expr->nature = Noeud_suite_seq_note;
+    expr->nature = Noeud_SUITE_NOTE;
     if (Aj == NULL) {
-        printf("ERREUR_EXPRESSION_ARBRE");
+        printf("ERREUR_EXPRESSION_ARBRE\n");
         exit(1);
     }
     expr->gauche = Aj;
-    expr->droit = Aseq_note;
+    expr->droite = Aseq_note;
     return expr;
 }
 
@@ -140,10 +141,10 @@ Ast creer_aff(Ast Ag, Ast Ad) {
     expr->nature = Noeud_AFF;
     expr->string = "=";
     if (Ag == NULL || Ad == NULL) {
-        printf("ERREUR_EXPRESSION_ARBRE");
+        printf("ERREUR_EXPRESSION_ARBRE\n");
         exit(1);
     }
     expr->gauche = Ag;
-    expr->droit = Ad;
+    expr->droite = Ad;
     return expr;
 }
