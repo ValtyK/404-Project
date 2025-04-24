@@ -17,7 +17,7 @@
 
 #define REF_FREQUENCY 440.0 // Frequence reference du LA4 (changable)
 
-#define BPM 120
+#define BPM 120.0
 
 #define SIGNATURE_NUMERATEUR 4
 #define SIGNATURE_DENOMINATEUR 4
