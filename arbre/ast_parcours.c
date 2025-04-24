@@ -72,20 +72,25 @@ void afficherA(Ast expr) {
 //     Noeud_INST
 // } TypeAst;
 
-/*
-int evaluation(Ast melodie) {
-
+void evaluation(Ast melodie, double t) {
+    if(A==NULL) {
+        return;
+    }
     switch(melodie.nature) {
         case Noeud_NOTE:
             double frq;
             frq = note_to_frequency(melodie.string, melodie.val);
+            generate_signal
             break;
+
+        case Noeud_MESURE:
+            int dr = (A->gauche)->valeur;
         default:
             printf("ERREUR AST pas valide ! \n");
             exit(0);
         }
 
-}*/
+}
 
 int calcul_nb_mesures(Ast A) {
     if(A==NULL) {
@@ -93,18 +98,14 @@ int calcul_nb_mesures(Ast A) {
     }
     switch(A->nature) {
         case Noeud_MESURE:
-            printf("GAMBERGE\n");
             return 1;
         case Noeud_INST:
-            printf("INSTRUIT MOI LE CUL\n");
             return calcul_nb_mesures(A->gauche) + calcul_nb_mesures(A->droite);
         case Noeud_SEPMESURE:
-            printf("OH TU SEPARE ENCULE\n");
             return calcul_nb_mesures(A->gauche) + calcul_nb_mesures(A->droite);
         case Noeud_AFF:
             return calcul_nb_mesures(A->droite);
         default:
-            printf("NATUREL PD %d\n", A->nature);
             return 0;
     }
 }

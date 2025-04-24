@@ -53,7 +53,7 @@ void suite_seq_inst(Ast A1, Ast* A) {
     if (lexeme_courant().nature == SEPINST) {
         avancer();
         if (lexeme_courant().nature == FIN_SEQUENCE) {
-            A = &A1;
+            *A = A1;
         } else {
             rec_seq_inst(&A2);
             *A = creer_seqint(A1, A2);
@@ -249,6 +249,7 @@ void rec_suite_notes(Ast* A) {
             *A = creer_suite_note(Aj, Aseq_note);
             break;
         default:
+            *A = NULL;
             break;
     }
 }
@@ -257,6 +258,8 @@ void rec_suite_mesure(Ast* A) {
     avancer();
     if (lexeme_courant().nature == DUREE_RYTHMIQUE) {
         rec_mesure(A);
+    }else{
+        *A = NULL;
     }
 }
 

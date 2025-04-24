@@ -94,7 +94,18 @@ Ast creer_dr(char* duree_rythmique) {
     Ast expr;
     expr = (Ast) malloc (sizeof(NoeudAst));
     expr->nature = Noeud_DR;
-    expr->string = duree_rythmique;
+    //expr->string = duree_rythmique;
+    if(!strcmp(duree_rythmique, "dc")){
+        expr->valeur = 16;
+    } else if(!strcmp(duree_rythmique, "c")){
+        expr->valeur = 8;
+    } else if(!strcmp(duree_rythmique, "n")){
+        expr->valeur = 4;
+    } else if(!strcmp(duree_rythmique, "b")){
+        expr->valeur = 2;
+    }else{
+        expr->valeur = 1;
+    }
     return expr;
 }
 
