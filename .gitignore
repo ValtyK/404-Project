@@ -4,6 +4,7 @@ wav/*.wav
 lexique/analyse_lexicale.c
 test_lexeme
 TStest
+.vscode/
 ### C ###
 # Prerequisites
 *.d
