@@ -3,6 +3,7 @@
 wav/*.wav
 lexique/analyse_lexicale.c
 test_lexeme
+test_syntaxe
 TStest
 .vscode/
 ### C ###
