@@ -13,7 +13,6 @@ typedef enum {
     Noeud_ENTIER,
     Noeud_OPERATION, 
     Noeud_ID,
-    Noeud_JOINTURE,
     Noeud_INST
 } TypeAst;
 typedef enum {N_VIRG, N_ACCORD} TypeJointure;

@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 
 #include "../musique.h"
 #include "ast_parcours.h"
@@ -72,24 +73,44 @@ void afficherA(Ast expr) {
 //     Noeud_INST
 // } TypeAst;
 
-void evaluation(Ast melodie, double t) {
-    if(A==NULL) {
+void evaluation_mesure(Ast melodie, double* t) {
+    double dr = (double) (melodie->gauche)->valeur;
+    Ast n = melodie->droite;
+    while(n != NULL){
+        double frq = note_to_frequency(n->gauche->string, n->gauche->valeur);
+        double tfin = (1/dr)*4*(BPM/60) + *t;
+        generate_signal(*t, tfin, frq, 3000.0, SAMPLE_RATE);
+        printf("SIGNAL pour note\n");
+        *t = tfin;
+        n = n->droite;
+    }
+}
+
+void evaluer_seq_mesure(Ast melodie, double* t){
+    if(melodie == NULL){
         return;
     }
-    switch(melodie.nature) {
-        case Noeud_NOTE:
-            double frq;
-            frq = note_to_frequency(melodie.string, melodie.val);
-            generate_signal
+    evaluation_mesure(melodie->gauche, t);
+    evaluer_seq_mesure(melodie->droite, t);
+}
+
+void parcours(Ast melodie, double* t){
+    if(melodie==NULL) {
+        return;
+    }
+    switch(melodie->nature) {
+        case Noeud_INST:
+            parcours(melodie->gauche, t);
+            parcours(melodie->droite, t);
             break;
-
-        case Noeud_MESURE:
-            int dr = (A->gauche)->valeur;
+        case Noeud_SEPMESURE:
+            evaluer_seq_mesure(melodie, t);
+            break;
+        case Noeud_AFF:
+            parcours(melodie->droite, t);
+            break;
         default:
-            printf("ERREUR AST pas valide ! \n");
-            exit(0);
-        }
-
+    }
 }
 
 int calcul_nb_mesures(Ast A) {

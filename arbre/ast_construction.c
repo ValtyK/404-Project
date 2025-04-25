@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "ast_construction.h"
 // Ast creer_operation(TypeOp op, Ast oprd_gauche, Ast oprd_droit){
@@ -26,22 +27,12 @@ Ast creer_seqint(Ast A1, Ast A2) {
     return expr;
 }
 
-Ast creer_jointure_note(TypeJointure j) {
-    Ast expr;
-    expr = (Ast) malloc (sizeof(NoeudAst));
-    expr->nature = Noeud_JOINTURE;
-    expr->jointure = j;
-    return expr;
-}
+
 
 Ast creer_play(Ast A1, Ast A2) {
     Ast expr;
     expr = (Ast) malloc (sizeof(NoeudAst));
     expr->nature = Noeud_PLAY;
-    if (A1 == NULL || A2 == NULL) {
-        printf("ERREUR_EXPRESSION_ARBRE\n");
-        exit(1);
-    }
     expr->gauche = A1;
     expr->droite = A2;
     return expr;

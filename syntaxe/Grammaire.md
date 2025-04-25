@@ -56,15 +56,4 @@ inst &rarr; autres instructions.. \
 variable &rarr; melo \
 variable &rarr; ENTIER 
 
-## 4. Condition
-```
-idf << 5
-idf >> 5
-idf <= 5
-idf >= 5
-idf == 5
-idf != 5
-```
-
-## 6. Boucle
 

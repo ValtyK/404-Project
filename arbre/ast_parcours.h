@@ -3,3 +3,4 @@
 //void aff_operateur(TypeOp op);
 void afficherA(Ast expr);
 int calcul_nb_mesures(Ast A);
+void parcours(Ast melodie, double* t);

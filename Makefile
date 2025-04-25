@@ -46,7 +46,7 @@ all: $(LEX).c $(EXEC)
 
 # créer l'executable
 $(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
+	$(CC) $(LDFLAGS) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
 
 # crée le .c d'analyse lexicale
 $(LEX).c: $(LEX).l 
@@ -55,13 +55,13 @@ $(LEX).c: $(LEX).l
 # compiler chaque fichier .c en .o
 # (générique et s'applique à tous les fichiers sources)
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(LDFLAGS) $(CFLAGS) -c $< -o $@
 
 test_lexeme: $(LEX).o test_lexeme.o
 	$(CC) -o $@ $^
 
-test_syntaxe: $(LEX).o $(SYNT).o $(ARBC).o $(ARBP).o test_syntaxe.o
-	$(CC) -o $@ $^
+test_syntaxe: $(LEX).o $(SYNT).o $(ARBC).o $(ARBP).o test_syntaxe.o musique.o
+	$(CC) $(LDFLAGS) -o $@ $^
 
 
 TStest: table_symboles/test_TS.o table_symboles/table_symboles.o

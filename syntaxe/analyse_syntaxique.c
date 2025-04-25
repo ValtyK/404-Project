@@ -237,16 +237,14 @@ void rec_suite_notes(Ast* A) {
     Ast Aj, Aseq_note;
     switch (lexeme_courant().nature) {
         case VIRG:
-            Aj = creer_jointure_note(N_VIRG);
             avancer();
-            rec_seq_note(&Aseq_note);
-            *A = creer_suite_note(Aj, Aseq_note);
+            rec_seq_note(A);
+            (*A)->jointure = N_VIRG;
             break;
         case ACCORD:
-            Aj = creer_jointure_note(N_ACCORD);
             avancer();
-            rec_seq_note(&Aseq_note);
-            *A = creer_suite_note(Aj, Aseq_note);
+            rec_seq_note(A);
+            (*A)->jointure = N_ACCORD;
             break;
         default:
             *A = NULL;
