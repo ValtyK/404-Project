@@ -59,7 +59,7 @@ int estIntMelo(char *idf) {
     exit(0);
 }
 
-int estPresentTS(char *idf, char *u, int *v, double *w) {
+int estPresentTS(char *idf, Ast *u, int *v, double *w) {
 // si un couple (idf, v') est present dans la table alors 
 //      affecte v' à *u ou *v selon si c'est un STRING ou un INT
 //      estPresentTS renvoie vrai
