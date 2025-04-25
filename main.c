@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
     int num_channels = NUM_CHANNELS;        // 1 = mono, 2 = stéréo
     int bits_per_sample = BITS_PER_SAMPLE;  // 16-bit PCM
     
-    double duration = 11; // durée du fichier WAV en secondes
+    double duration = 8; // durée du fichier WAV en secondes
 
     FILE *file = fopen(argv[1], "wb");
 
@@ -41,13 +41,20 @@ int main(int argc, char **argv) {
     // generate_envelope(0.0, 11.0, 30.0, 20.0, 80.0, 30.0, sample_rate);
 
     double ma_freq = note_to_frequency("C", 4);
-    generate_signal(0, 2, ma_freq, 3000.0, sample_rate);
-    generate_signal(2, 4, ma_freq, 3000.0, sample_rate);
-    generate_signal(4, 11, ma_freq, 3000.0, sample_rate);
+    generate_signal(0, 0.3, ma_freq, 3000.0, sample_rate);
+    generate_signal(0.3, 0.6, ma_freq, 3000.0, sample_rate);
+    generate_signal(0.6, 0.9, ma_freq, 3000.0, sample_rate);
+    generate_signal(0.9, 1.2, note_to_frequency("D", 4), 3000.0, sample_rate);
+
+    generate_signal(1.2, 1.8, note_to_frequency("E", 4), 3000, sample_rate);
+    generate_signal(1.8, 2.4, note_to_frequency("D", 4), 3000, sample_rate);
+
+    generate_signal(2.4, 2.7, note_to_frequency("C", 4), 3000, sample_rate);
+    generate_signal(2.7, 3.0, note_to_frequency("E", 4), 3000, sample_rate);
+    generate_signal(3.0, 3.3, note_to_frequency("D", 4), 3000, sample_rate);
+    generate_signal(3.3, 3.6, note_to_frequency("D", 4), 3000, sample_rate);
     
-    generate_signal(6, 11, 440, 1000, sample_rate);
-    generate_signal(6, 11, 330, 1000, sample_rate);
-    generate_signal(6, 11, 220, 1000, sample_rate);
+    generate_signal(3.6, 3.9, note_to_frequency("C", 4), 3000, sample_rate);
 
     write_normalized_audio(file, bits_per_sample);
 
