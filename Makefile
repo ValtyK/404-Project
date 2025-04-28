@@ -40,6 +40,7 @@ OBJS = $(SRCS:.c=.o)
 # Nom de l'executable final
 EXEC = melodie
 
+
 # créer l'executable
 $(EXEC): $(OBJS)
 	$(CC) $(LDFLAGS) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
