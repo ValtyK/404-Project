@@ -2,9 +2,10 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=c
 wav/*.wav
 lexique/analyse_lexicale.c
-test_lexeme
-test_syntaxe
+test/test_lexeme
+test/test_syntaxe
 TStest
+*/*.o
 .vscode/
 ### C ###
 # Prerequisites

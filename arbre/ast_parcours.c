@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-#include "../musique.h"
+#include "../lib/musique.h"
 #include "ast_parcours.h"
 
 /*

@@ -31,22 +31,22 @@ ARBC = $(ARB_PATH)_construction
 ARBP = $(ARB_PATH)_parcours
 
 # fichiers sources
-SRCS = melodie.c $(LEX).c $(SYNT).c $(ARBC).c $(ARBP).c main.c musique.c test_lexeme.c test_syntaxe.c 
-
+SRCS = melodie.c $(LEX).c $(SYNT).c $(ARBC).c $(ARBP).c lib/main.c lib/musique.c test/test_lexeme.c test/test_syntaxe.c 
 
 # liste des fichiers objets en remplacant .c par .o
 OBJS = $(SRCS:.c=.o)
 
+
 # Nom de l'executable final
 EXEC = melodie
-
-
-# Regle principale : compilation du programme
-all: $(EXEC) 
 
 # créer l'executable
 $(EXEC): $(OBJS)
 	$(CC) $(LDFLAGS) $(CFLAGS) -o $(EXEC) $(OBJS) $(LDFLAGS)
+
+
+# Regle principale : compilation du programme
+all: $(EXEC) 
 
 # crée le .c d'analyse lexicale
 $(LEX).c: $(LEX).l 
@@ -57,10 +57,10 @@ $(LEX).c: $(LEX).l
 %.o: %.c
 	$(CC) $(LDFLAGS) $(CFLAGS) -c $< -o $@
 
-test_lexeme: $(LEX).o test_lexeme.o
+test_lexeme: $(LEX).o test/test_lexeme.o
 	$(CC) -o $@ $^
 
-test_syntaxe: $(LEX).o $(SYNT).o $(ARBC).o $(ARBP).o test_syntaxe.o musique.o
+test_syntaxe: $(LEX).o $(SYNT).o $(ARBC).o $(ARBP).o test/test_syntaxe.o lib/musique.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
 TStest: table_symboles/test_TS.o table_symboles/table_symboles.o
@@ -68,4 +68,4 @@ TStest: table_symboles/test_TS.o table_symboles/table_symboles.o
 
 # nettoyer les fichiers générés (executable, objets, fichier WAV)
 clean:
-	rm -f $(OBJS) $(EXEC) $(LEX).c musique.wav test_lexeme test_syntaxe TStest
+	rm -f $(OBJS) $(EXEC) $(LEX).c test/test_lexeme test/test_syntaxe TStest
