@@ -13,6 +13,7 @@ LEX_PATH = lexique
 SYNT_PATH = syntaxe
 ARB_PATH = arbre/ast
 WAV_PATH = wav
+LIB_PATH = lib
  
 
 # variable pour FLEX
@@ -26,12 +27,13 @@ SYNT = $(SYNT_PATH)/analyse_syntaxique
 
 # variable pour ARBC
 ARBC = $(ARB_PATH)_construction
-
-# variable pour ARBP
 ARBP = $(ARB_PATH)_parcours
 
+# variable pour la librairie musique
+LIB = $(LIB_PATH)/musique
+
 # fichiers sources
-SRCS = melodie.c $(LEX).c $(SYNT).c $(ARBC).c $(ARBP).c lib/main.c lib/musique.c test/test_lexeme.c test/test_syntaxe.c 
+SRCS = melodie.c $(LEX).c $(SYNT).c $(LIB).c $(ARBC).c $(ARBP).c
 
 # liste des fichiers objets en remplacant .c par .o
 OBJS = $(SRCS:.c=.o)
