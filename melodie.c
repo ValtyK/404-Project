@@ -24,7 +24,7 @@ int main (int argc, char* argv[]) {
         printf("Test_syntaxe : OK\n");
         printf("Nombre de mesures: %d\n", calcul_nb_mesures(A));
         int nbm = calcul_nb_mesures(A);
-        FILE* f = fopen("musique.wav","wb");
+        FILE* f = fopen("wav/musique.wav","wb");
         init_audio_buffers(SAMPLE_RATE, NUM_CHANNELS, duree_totale(BPM, 4, nbm));
         write_wav_header(f, SAMPLE_RATE, NUM_CHANNELS, BITS_PER_SAMPLE, duree_totale(BPM, 4, nbm));
 
