@@ -31,18 +31,18 @@ ARBC = $(ARB_PATH)_construction
 ARBP = $(ARB_PATH)_parcours
 
 # fichiers sources
-SRCS = $(LEX).c $(SYNT).c $(ARBC).c $(ARBP).c main.c musique.c test_lexeme.c test_syntaxe.c 
+SRCS = melodie.c $(LEX).c $(SYNT).c $(ARBC).c $(ARBP).c main.c musique.c test_lexeme.c test_syntaxe.c 
 
 
 # liste des fichiers objets en remplacant .c par .o
 OBJS = $(SRCS:.c=.o)
 
 # Nom de l'executable final
-EXEC = musique
+EXEC = melodie
 
 
 # Regle principale : compilation du programme
-all: $(LEX).c $(EXEC) 
+all: $(EXEC) 
 
 # créer l'executable
 $(EXEC): $(OBJS)
@@ -62,7 +62,6 @@ test_lexeme: $(LEX).o test_lexeme.o
 
 test_syntaxe: $(LEX).o $(SYNT).o $(ARBC).o $(ARBP).o test_syntaxe.o musique.o
 	$(CC) $(LDFLAGS) -o $@ $^
-
 
 TStest: table_symboles/test_TS.o table_symboles/table_symboles.o
 	$(CC) $(CFLAGS) -o $@ $^
