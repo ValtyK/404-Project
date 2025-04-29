@@ -51,15 +51,24 @@ void rec_seq_inst(Ast* A) {
 void suite_seq_inst(Ast A1, Ast* A) {
     Ast A2;
     if (lexeme_courant().nature == SEPINST) {
+        printf("suite_seq_inst : in the if\n");
         avancer();
-        if (lexeme_courant().nature == FIN_SEQUENCE) {
-            *A = A1;
-        } else {
-            rec_seq_inst(&A2);
-            *A = creer_seqint(A1, A2);
+        //printf("%s\n", lexemeToString(lexeme_courant().nature));
+        switch (lexeme_courant().nature) {
+            case FIN_SEQUENCE:
+                *A = A1;
+                break;
+            case COMMENTAIRE:
+                printf("COMMENTAIRE\n");
+                avancer();
+                suite_seq_inst(A1, A);
+                break;
+            default:
+                rec_seq_inst(&A2);
+                *A = creer_seqinst(A1, A2);
+                break;
         }
-        
-    }
+    } 
 }
 
 void inst(Ast* A1) {
@@ -77,6 +86,7 @@ void inst(Ast* A1) {
             switch (lexeme_courant().nature) {
                 case ENTIER:
                     Ad = creer_entier(lexeme_courant().valeur);
+                    avancer();
                     break;
                 case ACCO:
                     rec_melo(&Ad);
@@ -141,8 +151,16 @@ void inst(Ast* A1) {
             avancer();
             break;
         case COMMENTAIRE:
+            printf("un commentaire dans inst\n");
             avancer();
-            rec_seq_inst(A1);
+            switch (lexeme_courant().nature) {
+                case FIN_SEQUENCE:
+                    *A1 = NULL;
+                    break;
+                default:
+                    inst(A1);
+                    break;
+            }
             break;
         default:
             printf("Erreur : Une instruction ne peut commencer que par une fonction ou bien une affectation\n");

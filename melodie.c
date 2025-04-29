@@ -22,8 +22,8 @@ int main (int argc, char* argv[]) {
     }
     if (syntaxe_correcte) {
         printf("Test_syntaxe : OK\n");
-        printf("Nombre de mesures: %d\n", calcul_nb_mesures(A));
         int nbm = calcul_nb_mesures(A);
+        printf("Nombre de mesures: %d\n", nbm);
         FILE* f = fopen("wav/musique.wav","wb");
         init_audio_buffers(SAMPLE_RATE, NUM_CHANNELS, duree_totale(BPM, 4, nbm));
         write_wav_header(f, SAMPLE_RATE, NUM_CHANNELS, BITS_PER_SAMPLE, duree_totale(BPM, 4, nbm));

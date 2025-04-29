@@ -1,7 +1,7 @@
 #include "type_ast.h"
 
 //Ast creer_operation(TypeOp op, Ast oprd_gauche, Ast oprd_droit);
-Ast creer_seqint(Ast A1, Ast A2);
+Ast creer_seqinst(Ast A1, Ast A2);
 Ast creer_jointure_note(TypeJointure j);
 Ast creer_play(Ast A1, Ast A2);
 Ast creer_fichier(char* fichier);
