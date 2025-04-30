@@ -51,7 +51,6 @@ void rec_seq_inst(Ast* A) {
 void suite_seq_inst(Ast A1, Ast* A) {
     Ast A2;
     if (lexeme_courant().nature == SEPINST) {
-        printf("suite_seq_inst : in the if\n");
         avancer();
         //printf("%s\n", lexemeToString(lexeme_courant().nature));
         switch (lexeme_courant().nature) {
@@ -59,7 +58,6 @@ void suite_seq_inst(Ast A1, Ast* A) {
                 *A = A1;
                 break;
             case COMMENTAIRE:
-                printf("COMMENTAIRE\n");
                 avancer();
                 suite_seq_inst(A1, A);
                 break;
@@ -231,6 +229,8 @@ void rec_seq_note(Ast* A) {
     switch (lexeme_courant().nature) {
         case NOTE:
             note = lexeme_courant().chaine;
+            printf("note.chaine = %s\n", note);
+            printf("ligne : %d / colonne : %d \n", lexeme_courant().ligne, lexeme_courant().colonne);
             avancer();
             if (lexeme_courant().nature != ENTIER) {
                 printf("Erreur : ENTIER attendu (ligne %u, colonne %u)\n",lexeme_courant().ligne, lexeme_courant().colonne);
@@ -252,7 +252,6 @@ void rec_seq_note(Ast* A) {
 
 
 void rec_suite_notes(Ast* A) {
-    Ast Aj, Aseq_note;
     switch (lexeme_courant().nature) {
         case VIRG:
             avancer();

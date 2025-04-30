@@ -73,14 +73,16 @@ void afficherA(Ast expr) {
 //     Noeud_INST
 // } TypeAst;
 
-void evaluation_mesure(Ast melodie, double* t) {
-    double dr = (double) (melodie->gauche)->valeur;
-    Ast n = melodie->droite;
+void evaluation_mesure(Ast mesure, double* t) {
+    double dr = (double) (mesure->gauche)->valeur;
+    printf("duree rythmique valeur : %f\n", dr);
+    Ast n = mesure->droite;     // n -> (sequence de notes : Ast)
     while(n != NULL){
         double frq = note_to_frequency(n->gauche->string, n->gauche->valeur);
+        printf("note : %s, octave : %d\n",n->gauche->string, n->gauche->valeur);
         double tfin = (1/dr)*4*(BPM/60) + *t;
         generate_signal(*t, tfin, frq, 3000.0, SAMPLE_RATE);
-        printf("SIGNAL pour note\n");
+        //printf("SIGNAL pour note\n");
         *t = tfin;
         n = n->droite;
     }
@@ -88,6 +90,7 @@ void evaluation_mesure(Ast melodie, double* t) {
 
 void evaluer_seq_mesure(Ast melodie, double* t){
     if(melodie == NULL){
+        //printf("NOEUD_SEPMESURE = NULL\n");
         return;
     }
     evaluation_mesure(melodie->gauche, t);
