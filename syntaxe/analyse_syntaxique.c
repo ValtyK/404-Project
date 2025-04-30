@@ -38,6 +38,9 @@ char* lexemeToString(Nature_Lexeme c) {
     }
 }
 
+
+// debut d'analyse syntaxique
+
 void pgm(Ast* A) {
     rec_seq_inst(A);
 }
@@ -234,7 +237,6 @@ void rec_seq_note(Ast* A) {
 
 
 void rec_suite_notes(Ast* A) {
-    Ast Aj, Aseq_note;
     switch (lexeme_courant().nature) {
         case VIRG:
             avancer();

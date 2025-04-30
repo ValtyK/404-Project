@@ -103,24 +103,12 @@ Ast creer_dr(char* duree_rythmique) {
 Ast creer_seq_note(Ast Anote, Ast Asuite_note) {
     Ast expr;
     expr = (Ast) malloc (sizeof(NoeudAst));
-    expr->nature = Noeud_SUITE_NOTE;
+    expr->nature = Noeud_SEQNOTE;
     expr->gauche = Anote;
     expr->droite = Asuite_note;
     return expr;
 }
 
-Ast creer_suite_note(Ast Aj, Ast Aseq_note) {
-    Ast expr;
-    expr = (Ast) malloc (sizeof(NoeudAst));
-    expr->nature = Noeud_SUITE_NOTE;
-    if (Aj == NULL) {
-        printf("ERREUR_EXPRESSION_ARBRE\n");
-        exit(1);
-    }
-    expr->gauche = Aj;
-    expr->droite = Aseq_note;
-    return expr;
-}
 
 Ast creer_note(char* note, int entier) {
     Ast expr;

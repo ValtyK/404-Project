@@ -73,10 +73,33 @@ void afficherA(Ast expr) {
 //     Noeud_INST
 // } TypeAst;
 
-void evaluation_mesure(Ast melodie, double* t) {
-    double dr = (double) (melodie->gauche)->valeur;
-    Ast n = melodie->droite;
+const char* type_ast_to_string(TypeAst x) {
+    switch (x) {
+        case Noeud_FICHIER:     return "Noeud_FICHIER";
+        case Noeud_PLAY:        return "Noeud_PLAY";
+        case Noeud_AFF:         return "Noeud_AFF";
+        case Noeud_NOTE:        return "Noeud_NOTE";
+        case Noeud_SEQNOTE:  return "Noeud_SEQNOTE";
+        case Noeud_DR:          return "Noeud_DR";
+        case Noeud_MESURE:      return "Noeud_MESURE";
+        case Noeud_SEPMESURE:   return "Noeud_SEPMESURE";
+        case Noeud_ENTIER:      return "Noeud_ENTIER";
+        case Noeud_OPERATION:   return "Noeud_OPERATION";
+        case Noeud_ID:          return "Noeud_ID";
+        case Noeud_INST:        return "Noeud_INST";
+        default:                return "Type inconnu";
+    }
+}
+
+
+void evaluation_mesure(Ast mesure, double* t) {
+    double dr = (double) (mesure->gauche)->valeur;
+    Ast sdr = mesure->suite;       // s
+    Ast n = mesure->droite;        // n->nature = Noeud_SEQNOTE
     while(n != NULL){
+        printf("------------------\n");
+        printf("Nature Noeud : %s\n",type_ast_to_string(n->gauche->nature));
+        printf("string : %s\n",n->gauche->string);
         double frq = note_to_frequency(n->gauche->string, n->gauche->valeur);
         double tfin = (1/dr)*4*(BPM/60) + *t;
         generate_signal(*t, tfin, frq, 3000.0, SAMPLE_RATE);
@@ -87,11 +110,10 @@ void evaluation_mesure(Ast melodie, double* t) {
 }
 
 void evaluer_seq_mesure(Ast melodie, double* t){
-    if(melodie == NULL){
-        return;
+    if(melodie != NULL){
+        evaluation_mesure(melodie->gauche, t);      // Evaluation d'une mesure
+        evaluer_seq_mesure(melodie->droite, t);     // Evaluation de la mesure suivante
     }
-    evaluation_mesure(melodie->gauche, t);
-    evaluer_seq_mesure(melodie->droite, t);
 }
 
 void parcours(Ast melodie, double* t){

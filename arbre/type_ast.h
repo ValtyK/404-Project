@@ -6,7 +6,7 @@ typedef enum {
     Noeud_PLAY, 
     Noeud_AFF, 
     Noeud_NOTE,
-    Noeud_SUITE_NOTE,
+    Noeud_SEQNOTE,
     Noeud_DR, 
     Noeud_MESURE,
     Noeud_SEPMESURE, 
