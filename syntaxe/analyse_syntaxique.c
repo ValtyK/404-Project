@@ -222,6 +222,7 @@ void rec_seq_note(Ast* A) {
                 printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
                 exit(1);
             }
+            printf("rec_seq_note:\nnote=%s\n", note);
             Anote = creer_note(note, lexeme_courant().valeur);
             avancer();
             rec_suite_notes(&Asuite_seq_note);
