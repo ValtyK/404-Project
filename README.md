@@ -6,7 +6,8 @@
 - **main.c** : écriture de la mélodie
 - **Makefile** : deux commandes diponibles
   - ``make`` : crée un executable musique qui génère un .wav
-  - ``make tes
+  - ``make test_lexeme`` : crée l'éxecutable "test_lexeme" qui prend un argument de type ".melo" et qui analyse le lexique
+  - ``make test_syntaxe`` : crée l'éxecutable "test_syntaxe" qui prend un argument de type ".melo" et qui analyse la syntaxe en s'aidant du lexeme
   - ``make clean`` : retire tout les fichiers générés (même le .wav)
 
 ## Format WAV
