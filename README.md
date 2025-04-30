@@ -6,6 +6,7 @@
 - **main.c** : écriture de la mélodie
 - **Makefile** : deux commandes diponibles
   - ``make`` : crée un executable musique qui génère un .wav
+  - ``make tes
   - ``make clean`` : retire tout les fichiers générés (même le .wav)
 
 ## Format WAV
@@ -21,7 +22,6 @@ On a choisi de générer un fichier WAV pour gagner en fluidité et en maniabili
 - [Les langages & environnements de programmation audio](http://linuxmao.org/Cat%C3%A9gorie+langages+de+programmation+audio)
 - [ABC (notation)](https://fr.wikipedia.org/wiki/ABC_(notation)) - Langage de prog de musique !
 
-> Idée : reprendre l'idée des notations du langage ABC et au lieu d'en faire une partition, en faire un fichier audio ?
 
 ## Format de fichier
 
@@ -37,12 +37,6 @@ BPM : 120
 # Interpreteur
 
 L'idee de base est de lire un fichier avec une syntaxe arbitraire afin de generer un "fichier.wav".
-
-## Alphabet 
-- **notes** : {"A", "B", "C", "D", "E", "F", "G"}
-- **alteration** : {"#"}
-- **lettres minuscules** : {"a", "b",...,"z"}
-- **chiffres** : {1,2,3,4,5,6,7,8,9}
 
 ## Exemple 1 : Au clair de la lune
 

@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "arbre/type_ast.h"
-#include "syntaxe/analyse_syntaxique.h"
-#include "arbre/ast_parcours.h"
+#include "../arbre/type_ast.h"
+#include "../syntaxe/analyse_syntaxique.h"
+#include "../arbre/ast_parcours.h"
 #include "../lib/musique.h"
 
 int main (int argc, char* argv[]) {
