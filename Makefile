@@ -71,4 +71,4 @@ TStest: table_symboles/test_TS.o table_symboles/table_symboles.o
 
 # nettoyer les fichiers générés (executable, objets, fichier WAV)
 clean:
-	rm -f $(OBJS) $(EXEC) $(LEX).c test/test_lexeme test/test_syntaxe TStest
+	rm -f *.wav $(OBJS) $(EXEC) $(LEX).c test_lexeme test_syntaxe TStest

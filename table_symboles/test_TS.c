@@ -3,9 +3,9 @@
 #include <string.h>
 #include "table_symboles.h"
 int main() {
-    Ast *A = malloc(sizeof(Ast));
-    Ast *Adr = malloc(sizeof(Ast));
-    Ast *Anote = malloc(sizeof(Ast));
+    Ast *A = calloc(1, sizeof(Ast));
+    Ast *Adr = calloc(1, sizeof(Ast));
+    Ast *Anote = calloc(1, sizeof(Ast));
     int val;
     double w;
 

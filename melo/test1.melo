@@ -22,10 +22,10 @@ play(melo_piano, 4)
 
 x = 0
 while (x < 4) {
-    play(melo_piano_2, 1:2)
+    play(melo_piano_2, 1:2, "melo1.wav")
 
     if (x != 3) {
-        play(melo_piano, 1)
+        play(melo_piano, 1:, "melo2.wav")
     }
 
     x = x + 1
