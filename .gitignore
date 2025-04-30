@@ -1,6 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/c
 # Edit at https://www.toptal.com/developers/gitignore?templates=c
 wav/*.wav
+melodie
 lexique/analyse_lexicale.c
 test/test_lexeme
 test/test_syntaxe
