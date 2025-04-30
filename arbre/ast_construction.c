@@ -54,17 +54,17 @@ Ast creer_id(char* nom_variable) {
     return expr;
 }
 
-Ast creer_mesure(Ast Adr, Ast Anote, Ast Asousmesure) {
+Ast creer_seq_dr(Ast Adr, Ast Aseqnote, Ast Aseqdr) { // séquence de durée rythmique = mesure
     Ast expr;
     expr = (Ast) malloc (sizeof(NoeudAst));
-    expr->nature = Noeud_MESURE;
-    if (Adr == NULL || Anote == NULL) {
+    expr->nature = Noeud_SEQDR;
+    if (Adr == NULL || Aseqnote == NULL) {
         printf("ERREUR_EXPRESSION_ARBRE\n");
         exit(1);
     }
     expr->gauche = Adr;
-    expr->droite = Anote;
-    expr->suite = Asousmesure;
+    expr->droite = Aseqnote;
+    expr->suite = Aseqdr;
     return expr;
 }
 

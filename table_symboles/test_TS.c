@@ -10,7 +10,7 @@ int main() {
     double w;
 
     // Initialisation des noeuds
-    A->nature = Noeud_MESURE;
+    A->nature = Noeud_SEQDR;
     A->gauche = Adr;
     A->droite = Anote;
     A->suite = NULL;

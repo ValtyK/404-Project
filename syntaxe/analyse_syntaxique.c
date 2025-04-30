@@ -184,7 +184,7 @@ void rec_seqmesure(Ast* A) {
 }
 
 void rec_mesure(Ast* A) {
-    Ast Adr, Aseq_note, Asousmesure;     // sous arbre ou arbre fils
+    Ast Adr, Aseq_note, Aseqdr;     // sous arbre ou arbre fils
 
     if (lexeme_courant().nature != DUREE_RYTHMIQUE) {
         printf("Erreur : DUREE_RYTHMIQUE attendu (ligne %u, colonne %u)\n", lexeme_courant().ligne, lexeme_courant().colonne);
@@ -205,8 +205,8 @@ void rec_mesure(Ast* A) {
         printf("Lexeme actuel : %s\n", lexemeToString(lexeme_courant().nature));
         exit(1);
     }
-    rec_suite_mesure(&Asousmesure);
-    *A = creer_mesure(Adr, Aseq_note, Asousmesure);
+    rec_suite_mesure(&Aseqdr);
+    *A = creer_seq_dr(Adr, Aseq_note, Aseqdr);
 }
 
 void rec_seq_note(Ast* A) {

@@ -81,7 +81,7 @@ const char* type_ast_to_string(TypeAst x) {
         case Noeud_NOTE:        return "Noeud_NOTE";
         case Noeud_SEQNOTE:  return "Noeud_SEQNOTE";
         case Noeud_DR:          return "Noeud_DR";
-        case Noeud_MESURE:      return "Noeud_MESURE";
+        case Noeud_SEQDR:      return "Noeud_SEQDR";
         case Noeud_SEPMESURE:   return "Noeud_SEPMESURE";
         case Noeud_ENTIER:      return "Noeud_ENTIER";
         case Noeud_OPERATION:   return "Noeud_OPERATION";
@@ -94,7 +94,7 @@ const char* type_ast_to_string(TypeAst x) {
 
 void evaluation_mesure(Ast mesure, double* t) {
     double dr = (double) (mesure->gauche)->valeur;
-    Ast sdr = mesure->suite;       // s
+    Ast sdr = mesure->suite;       // s->nature = Noeud_SEQDR
     Ast n = mesure->droite;        // n->nature = Noeud_SEQNOTE
     while(n != NULL){
         printf("------------------\n");
@@ -140,12 +140,10 @@ int calcul_nb_mesures(Ast A) {
         return 0;
     }
     switch(A->nature) {
-        case Noeud_MESURE:
-            return 1;
         case Noeud_INST:
             return calcul_nb_mesures(A->gauche) + calcul_nb_mesures(A->droite);
         case Noeud_SEPMESURE:
-            return calcul_nb_mesures(A->gauche) + calcul_nb_mesures(A->droite);
+            return 1 + calcul_nb_mesures(A->droite);
         case Noeud_AFF:
             return calcul_nb_mesures(A->droite);
         default:

@@ -8,7 +8,7 @@ typedef enum {
     Noeud_NOTE,
     Noeud_SEQNOTE,
     Noeud_DR, 
-    Noeud_MESURE,
+    Noeud_SEQDR,
     Noeud_SEPMESURE, 
     Noeud_ENTIER,
     Noeud_OPERATION, 
