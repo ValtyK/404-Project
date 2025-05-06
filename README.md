@@ -23,7 +23,6 @@ On a choisi de générer un fichier WAV pour gagner en fluidité et en maniabili
 - [Les langages & environnements de programmation audio](http://linuxmao.org/Cat%C3%A9gorie+langages+de+programmation+audio)
 - [ABC (notation)](https://fr.wikipedia.org/wiki/ABC_(notation)) - Langage de prog de musique !
 
-
 ## Format de fichier
 
 `my_file.melo`, notation anglo-saxone
@@ -35,14 +34,15 @@ BPM : 120
 
 ```
 
-# Interpreteur
+## Interpreteur
 
 L'idee de base est de lire un fichier avec une syntaxe arbitraire afin de generer un "fichier.wav".
 
 ## Exemple 1 : Au clair de la lune
 
-**Suite de notes** 
-```
+**Suite de notes**:
+
+```melo
 {
     n(C4, C4-D5-E#4, C4, D4) | b(E4, D4) |
     n(C4, E4, D4, D4) | r(C4) |
