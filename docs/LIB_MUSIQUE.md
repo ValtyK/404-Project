@@ -214,7 +214,7 @@ Génère un signal audio selon une fréquence et une amplitude données.
 
 ```c
 double freq = 440
-generate_signal(0.0, 2.0, freq, 3000.0, 44100); // joue le La4 = 440 Hz
+generate_signal(0.0, 2.0, freq, 3000.0, 44100); // joue le La4 = 440 Hz de la seconde 0 à la seconde 2
 ```
 
 ---

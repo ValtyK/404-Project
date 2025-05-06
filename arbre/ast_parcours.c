@@ -99,19 +99,26 @@ void evaluation_mesure(Ast seqdr, double* t) {
     Ast* n = malloc(sizeof(Ast));
 
     while (*Pseqdr != NULL) {
+
         dr = (double) (seqdr->gauche)->valeur;
         *n = seqdr->droite;        // n->nature = Noeud_SEQNOTE
+
         printf("Nature Noeud : %s\n",type_ast_to_string((*n)->gauche->nature));
         printf("premiere note : %s\n",(*n)->gauche->string);
+
         while(n != NULL){
+
             printf("------------------\n");
             printf("Nature Noeud : %s\n",type_ast_to_string((*n)->gauche->nature));
             printf("string : %s\n",(*n)->gauche->string);
             printf("octave : %d\n", (*n)->gauche->valeur);
+
             double frq = note_to_frequency((*n)->gauche->string, (*n)->gauche->valeur);
             double tfin = (1/dr)*4*(BPM/60) + *t;
+
             generate_signal(*t, tfin, frq, 3000.0, SAMPLE_RATE);
             printf("SIGNAL pour note\n");
+            
             *t = tfin;
             *n = (*n)->droite;
         }
